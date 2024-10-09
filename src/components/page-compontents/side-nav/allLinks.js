@@ -4,23 +4,19 @@ const allLinks = [
         children: [
             {
                 name: 'My Sales',
-                url: '',
+                url: 'mysales',
             },
             {
                 name: 'New Sale',
-                url: '',
-            },
-            {
-                name: 'My sales',
-                url: '',
+                url: 'newsale',
             },
             {
                 name: 'My report',
-                url: '',
+                url: 'myreport',
             },
             {
                 name: 'Employee report',
-                url: '',
+                url: 'empreport',
             },
 
 
@@ -31,11 +27,11 @@ const allLinks = [
         children: [
             {
                 name: 'Add Campaign',
-                url: '',
+                url: 'addcampaign',
             },
             {
                 name: 'All Campaigns',
-                url: '',
+                url: 'allcampaigns',
             },
             
         ]
@@ -45,15 +41,15 @@ const allLinks = [
         children: [
             {
                 name: 'Add Goal',
-                url: '',
+                url: 'layout/addgoal',
             },
             {
                 name: 'All Goals',
-                url: '',
+                url: 'layout/allgoals',
             },
             {
                 name: 'My Goals',
-                url: '',
+                url: 'layout/mygoals',
             },
         ]
     },
@@ -62,11 +58,11 @@ const allLinks = [
         children: [
             {
                 name: 'Add Employee',
-                url: '',
+                url: 'layout/addemployee',
             },
             {
                 name: 'Full Report',
-                url: '',
+                url: 'layout/fullreport',
             },
             
         ]

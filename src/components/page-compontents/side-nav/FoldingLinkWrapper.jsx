@@ -15,7 +15,7 @@ function FoldingLinkWrapper({name='', subLinks=[]}) {
             className={ `w-full min-w-full pl-10 py-3 box-border min-h-12 flex flex-col ${isFolded ? '' : 'unfold'} h-10 overflow-hidden justify-start items-start`}>
                 
                 <button 
-                className="w-full text-start flex justify-between items-center h-4 pr-16 my-3"
+                className="w-full text-start flex justify-between items-center h-4 pr-20 my-3"
                 onClick={()=> setIsFolded((prev) => !prev)}
                 >
                     <span className="text-mygreen-100 w-full roboto-light ">{name}</span>
