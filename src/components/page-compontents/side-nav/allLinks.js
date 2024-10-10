@@ -19,7 +19,6 @@ const allLinks = [
                 url: 'empreport',
             },
 
-
         ]
     },
     {
@@ -41,15 +40,15 @@ const allLinks = [
         children: [
             {
                 name: 'Add Goal',
-                url: 'layout/addgoal',
+                url: 'addgoal',
             },
             {
                 name: 'All Goals',
-                url: 'layout/allgoals',
+                url: 'allgoals',
             },
             {
                 name: 'My Goals',
-                url: 'layout/mygoals',
+                url: 'mygoals',
             },
         ]
     },
