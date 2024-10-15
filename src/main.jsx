@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-import { Sales, Dashboard, Registration, PageNotFound, AddSale, Report, Campaigns, AddCampaign, AddGoal, Goals} from './components/pages/index.js'
+import { Sales, Dashboard, Registration, PageNotFound, AddSale, Report, Campaigns, AddCampaign, AddGoal, Goals, Campaign, Sale} from './components/pages/index.js'
 import MainBody from './components/page-compontents/dashboard-body/MainBody.jsx'
 
 const router = createBrowserRouter([
@@ -20,6 +20,11 @@ const router = createBrowserRouter([
       {
         path: '/layout/mysales',
         element: <Sales />,
+        errorElement: <PageNotFound />
+      },
+      {
+        path: '/layout/mysales/sale',
+        element: <Sale />,
         errorElement: <PageNotFound />
       },
       {
@@ -45,7 +50,12 @@ const router = createBrowserRouter([
       {
         path: '/layout/allcampaigns',
         element: <Campaigns />,
-        errorElement: <PageNotFound />
+        errorElement: <PageNotFound />,
+      },
+      {
+        path: '/layout/allcampaigns/campaign',
+        element: <Campaign />,
+        errorElement: <PageNotFound />,
       },
       {
         path: '/layout/addgoal',
