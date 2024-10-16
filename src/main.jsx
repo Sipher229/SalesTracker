@@ -2,8 +2,9 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
+import { Store } from './Store.js'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-import { Sales, Dashboard, Registration, PageNotFound, AddSale, Report, Campaigns, AddCampaign, AddGoal, Goals, Campaign, Sale} from './components/pages/index.js'
+import { Sales, Dashboard, Registration, PageNotFound, AddSale, Report, Campaigns, AddCampaign, AddGoal, Goals, Campaign, Sale, Goal} from './components/pages/index.js'
 import MainBody from './components/page-compontents/dashboard-body/MainBody.jsx'
 
 const router = createBrowserRouter([
@@ -65,6 +66,11 @@ const router = createBrowserRouter([
       {
         path: '/layout/allgoals',
         element: <Goals />,
+        errorElement: <PageNotFound />
+      },
+      {
+        path: '/layout/allgoals/goal',
+        element: <Goal />,
         errorElement: <PageNotFound />
       },
     ]
