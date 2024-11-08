@@ -2,10 +2,12 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import { Store } from './Store.js'
+import store from './store.js'
+import {Provider} from 'react-redux'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-import { Sales, Dashboard, Registration, PageNotFound, AddSale, Report, Campaigns, AddCampaign, AddGoal, Goals, Campaign, Sale, Goal} from './components/pages/index.js'
+import { Sales, VerifyOtp, Dashboard, PageNotFound, AddSale, Report, Campaigns, AddCampaign, AddGoal, Goals, Campaign, Sale, Goal, ConfirmEmail, ResetPassword} from './components/pages/index.js'
 import MainBody from './components/page-compontents/dashboard-body/MainBody.jsx'
+
 
 const router = createBrowserRouter([
   {
@@ -76,14 +78,26 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: '/register',
-    element: <Registration />,
+    path: '/confirmemail',
+    element: <ConfirmEmail />,
+    errorElement: <PageNotFound />
+  },
+  {
+    path: '/resetpassword',
+    element: <ResetPassword />,
+    errorElement: <PageNotFound />
+  },
+  {
+    path: '/verifyotp',
+    element: <VerifyOtp />,
     errorElement: <PageNotFound />
   }
 ])
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store} >
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>,
 )

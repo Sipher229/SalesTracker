@@ -1,0 +1,14 @@
+.error-display-animation{
+    animation: smooth-display .1s ease-in normal forwards;
+    transform-origin: top;
+}
+
+@keyframes smooth-display {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+        transform: translateY(.6rem);
+    }
+}

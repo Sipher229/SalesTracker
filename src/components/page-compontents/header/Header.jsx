@@ -4,7 +4,7 @@ import Logo from "./Logo.jsx"
 import ChevronUp from "../../utils/icons/ChevronUp.jsx"
 import ChevronDown from "../../utils/icons/ChevronDown.jsx"
 
-function UserProfile({name='User\'s full name', picture}){
+function UserProfile({name='User\'s full name'}){
   const [showing, setShowing] = useState(false)
   return (
     <>
@@ -12,7 +12,7 @@ function UserProfile({name='User\'s full name', picture}){
       onClick={() => setShowing((prev)=> !prev)}
       onBlur={() => setShowing((prev)=> !prev)}
       className="min-w-52 h-12 rounded-xl flex justify-center items-center gap-10">
-        <span className="text-white roboto-medium">{name}</span>
+        <span className="text-white roboto-medium">Hello, {name}</span>
         {  showing? <ChevronUp /> : <ChevronDown />}
         <ul className={`w-24 h-16 bg-white absolute ${showing? '' : 'hidden'} right-5 top-12 shadow-lg rounded-md overflow-hidden`}>
           <li className="hover:bg-gray-200 roboto-medium h-1/2 w-full text-left pl-2 ">Log Out</li>

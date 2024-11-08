@@ -1,6 +1,7 @@
 import PageNotFound from './PageNotFound.jsx'
 import Dashboard  from './Dashboard.jsx'
-import Registration from './Registration.jsx'
+import ConfirmEmail from './ConfirmEmail.jsx'
+import ResetPassword from './ResetPassword.jsx'
 import Sales from './Sales.jsx'
 import Sale from './Sale.jsx'
 import Campaign from './Campaign.jsx'
@@ -14,12 +15,12 @@ import AddSale from './FormPages/Addsale.jsx'
 import AddEmployee from './FormPages/AddEmployee.jsx'
 import AddGoal from './FormPages/AddGoal.jsx'
 import AddCampaign from './FormPages/AddCampaign.jsx'
+import VerifyOtp from './VerifyOtp.jsx'
 
 
 export {
     PageNotFound, 
     Dashboard, 
-    Registration, 
     Sales, 
     Sale,
     Campaign, 
@@ -32,6 +33,9 @@ export {
     AddSale,
     AddEmployee,
     AddGoal,
-    AddCampaign
+    AddCampaign,
+    ConfirmEmail,
+    ResetPassword,
+    VerifyOtp
 
 }

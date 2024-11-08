@@ -10,7 +10,18 @@ function SaveButton({handleClick, rowStart=1}) {
     )
 }
 
+function EditButton({handleClick, rowStart=1}) {
+    return (
+        <>
+            <button
+             onClick={handleClick}
+             className={`bg-mygreen-700 text-white rounded-md col-start-10 col-end-12 row-start-${rowStart} row-span-2`} >Save</button>
+        </>
+    )
+}
+
 function EmployeeForm() {
+    const [showSave, setShowSave] = useState()
     const saveNames = () => {
         //save names to the database
         return
@@ -133,5 +144,15 @@ function EmployeeForm() {
     </>
   )
 }
+/* 
+need to implement the following: 
+create a button component to allow edit and save functionalities.
+the button should be able to do the following:
+manipulate the state of its corresponding input fied
+manage its own state to display save or edit depending on the circumstances
+call the relevant save function when clicked
+the save functions should be passed as props to the button and declared with usecallback for
+optimizaton
 
+*/
 export default EmployeeForm
