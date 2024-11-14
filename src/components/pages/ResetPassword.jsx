@@ -4,11 +4,17 @@ import LeftSubContainer from '../page-compontents/Authpages-components/LeftSubco
 import { HEIGHT, WIDTH } from '../utils/authFormContainerSize'
 import ShowPasswordCheckBox from '../page-compontents/Authpages-components/ShowPasswordCheckBox'
 import toggleShowPassword from '../utils/toggleShowpassword'
-import { Link } from 'react-router-dom'
-import ErrorDiplayer from '../page-compontents/Authpages-components/ErrorDiplayer'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { setErrorTickets, updateBgColor } from '../../store/features/errorTicketsSlice'
+import ErrorDiplayer from '../page-compontents/ErrorDiplayer'
+import AuthSubmitBtn from '../page-compontents/Authpages-components/AuthSubmitBtn'
+import Api from '../utils/API-calling-functions/Api'
 
 
 function ResetPassword() {
+  const errorDispayBg = 'bg-red-200'
+  const api = new Api()
 
   const [credentials, setCredentials] = useState({
     newPassword: '',
@@ -16,10 +22,18 @@ function ResetPassword() {
   })
   const [checked, setChecked] = useState(false)
 
-  const [errorTickets, SetErrorTickets] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const [isInvalid, setIsInvalid] = useState()
+
+  const {errorTickets} = useSelector((state) => state.errorTickets)
+  const {otpCredentials} = useSelector((state) => state.otpCredentials)
 
   const newPasswordRef = useRef(null)
-  const  confirmPasswordRef = useRef(null)
+  const confirmPasswordRef = useRef(null)
 
   const handleChange = (e) => {
     const {name, value} =  e.target
@@ -41,49 +55,68 @@ function ResetPassword() {
     const symbolRegex = /[^a-zA-Z0-9\s]/
     const capitalRegex =  /[A-Z]/
     if( !symbolRegex.test(credentials.newPassword)){
-      newPasswordRef.current.classList.remove('border-gray-200')
-      newPasswordRef.current.classList.add('border-red-300')
-      SetErrorTickets((prev) => {
-        return [...prev, errorMessages.lacksSymbol ]
-      })
+      setIsInvalid(true)
+      dispatch(setErrorTickets([...errorTickets, errorMessages.lacksSymbol ]))
+      dispatch(updateBgColor(errorDispayBg))
     }
 
     if (!capitalRegex.test(credentials.newPassword)) {
-      newPasswordRef.current.classList.remove('border-gray-200')
-      newPasswordRef.current.classList.add('border-red-300')
-      SetErrorTickets((prev) => {
-        return [...prev, errorMessages.lacksCapLetter ]
-      })
+      setIsInvalid(true)
+      dispatch(setErrorTickets([...errorTickets, errorMessages.lacksCapLetter ]))
+      dispatch(updateBgColor(errorDispayBg))
     }
 
 
     if (credentials.newPassword.length <  8){
-      newPasswordRef.current.classList.remove('border-gray-200')
-      newPasswordRef.current.classList.add('border-red-300')
-      SetErrorTickets((prev) => {
-        return [...prev, errorMessages.tooShort ]
-      })
+      setIsInvalid(true)
+      dispatch(setErrorTickets([...errorTickets, errorMessages.tooShort ]))
+      dispatch(updateBgColor(errorDispayBg))
     }
 
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    emptyTickets()
+    setIsLoading(true)
+    dispatch(setErrorTickets([]))
     validatePasswordField()
-    if (errorTickets.length !== 0) return
+    if (errorTickets.length !== 0) {setIsLoading(false)}
 
     if (credentials.newPassword !== credentials.confirmPassword){
-      SetErrorTickets(prev => [...prev, errorMessages.passwordsNOtSame])
+      dispatch(updateBgColor(errorDispayBg))
+      dispatch(setErrorTickets([...errorTickets, errorMessages.passwordsNOtSame]))
+      setIsLoading(false)
+      return
+    }
+    
+    try {
+      const response = await api.resetPassword(
+        {
+          newPassword: credentials.newPassword, 
+          username: otpCredentials.email, 
+          otpId: otpCredentials.otpId
+        }
+      )
+      if ( response.status === 200){
+        setIsLoading(false)
+        navigate('/')
+  
+      }
+      else{
+        setIsLoading(false)
+        dispatch(setErrorTickets([errorMessages.internalServerError]))
+      }
+    // eslint-disable-next-line no-unused-vars
+    } catch (error) {
+      setIsLoading(false)
+      dispatch(setErrorTickets([errorMessages.internalServerError]))
     }
 
   }
 
 
   const emptyTickets = () => {
-    newPasswordRef.current.classList.add('border-gray-200')
-    newPasswordRef.current.classList.remove('border-red-300')
-    SetErrorTickets(() => [])
+    dispatch(setErrorTickets([]))
   }
 
   const handleShowPassword = () => {
@@ -102,7 +135,7 @@ function ResetPassword() {
   return (
     <>
       <main className='h-screen w-screen bg-green-landscape-hd bg-no-repeat bg-cover flex flex-col justify-center items-center gap-4'>
-        <ErrorDiplayer emptyTickets={emptyTickets} errorTickets={errorTickets} />
+        <ErrorDiplayer emptyTickets={emptyTickets} />
 
         <div id='loginWrapper' className={`w-[${WIDTH}rem] h-[${HEIGHT}rem] overflow-x-hidden flex scroll-smooth scrollbar-hide`}>
 
@@ -123,11 +156,11 @@ function ResetPassword() {
                   id='newPassword' 
                   autoFocus
                   name='newPassword'
-                  className='h-10 w-72 roboto-light outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md px-2' 
+                  className={`h-10 w-72 outline-offset-2 outline-3 ${isInvalid? 'outline outline-red-400': 'outline-mylightgreen-300'} border border-mygreen-300 rounded-md px-2`} 
                   autoComplete='on' 
                   required
                   value={credentials.newPassword}
-                  
+                  onFocus={isInvalid && setIsInvalid(false)}
                   onChange={handleChange}
                   />
                 </label>
@@ -150,7 +183,7 @@ function ResetPassword() {
                 </div>
                 <span>Login instead?  <span className='text-mygreen-700 hover:underline underline-offset-2'><Link to={'/'} >Login</Link></span></span>
 
-                <button type='submit' className='text-white bg-mygreen-700 w-16 h-8 rounded-md' onClick={handleSubmit}>Reset</button>
+                <AuthSubmitBtn handleSubmit={handleSubmit} name='Reset' isLoading={isLoading} />
 
               </form>
             </div>

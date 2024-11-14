@@ -36,6 +36,6 @@ export {
     AddCampaign,
     ConfirmEmail,
     ResetPassword,
-    VerifyOtp
+    VerifyOtp,
 
 }

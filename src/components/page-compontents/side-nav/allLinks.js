@@ -57,11 +57,11 @@ const allLinks = [
         children: [
             {
                 name: 'Add Employee',
-                url: 'layout/addemployee',
+                url: '/layout/addemployee',
             },
             {
-                name: 'Full Report',
-                url: 'layout/fullreport',
+                name: 'full Report',
+                url: '/fullreport',
             },
             
         ]

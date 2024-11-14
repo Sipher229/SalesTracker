@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
-import DeleteIconX from "../../utils/icons/DeleteIconX"
+import DeleteIconX from "../utils/icons/DeleteIconX"
 import './css-files/ErrorDisplayer.css'
+import { useSelector } from "react-redux"
 
-function ErrorDiplayer({errorTickets = [], emptyTickets}) {
+function ErrorDiplayer({emptyTickets, position="1/6"}) {
+  const {errorTickets, bgColor} = useSelector((state) => state.errorTickets)
   return (
     <>
         {
@@ -10,7 +12,7 @@ function ErrorDiplayer({errorTickets = [], emptyTickets}) {
           ? ''  
           :
           <div 
-          className='error-display-animation w-2/5 h-1/5 bg-red-200 flex flex-col justify-center items-start px-5 pt-1 rounded-md overflow-scroll scrollbar-hide absolute top-0 right-1/6 shadow-lg'>
+          className={`error-display-animation w-2/5 h-1/5 ${bgColor} flex flex-col justify-center items-start px-5 rounded-md overflow-scroll scrollbar-hide absolute top-0 right-${position} shadow-lg`}>
             <div className='flex justify-between w-full'>  
               <h1 className='text-red-700 roboto-bold'>Please correct the following errors</h1>
               <button className='text-red-700 '  onClick={emptyTickets}>

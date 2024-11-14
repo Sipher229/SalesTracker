@@ -2,10 +2,10 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import store from './store.js'
+import store from './store/store.js'
 import {Provider} from 'react-redux'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-import { Sales, VerifyOtp, Dashboard, PageNotFound, AddSale, Report, Campaigns, AddCampaign, AddGoal, Goals, Campaign, Sale, Goal, ConfirmEmail, ResetPassword} from './components/pages/index.js'
+import { Sales,AddEmployee, VerifyOtp, Dashboard, PageNotFound, AddSale, Report, Campaigns, AddCampaign, AddGoal, Goals, Campaign, Sale, Goal, ConfirmEmail, ResetPassword} from './components/pages/index.js'
 import MainBody from './components/page-compontents/dashboard-body/MainBody.jsx'
 
 
@@ -75,6 +75,12 @@ const router = createBrowserRouter([
         element: <Goal />,
         errorElement: <PageNotFound />
       },
+      {
+        path: '/layout/addemployee',
+        element: <AddEmployee />,
+        errorElement: <PageNotFound />
+      },
+
     ]
   },
   {

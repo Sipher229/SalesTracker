@@ -5,7 +5,13 @@ import errorMessages from './components/utils/errorMessages'
 import toggleShowPassword from './components/utils/toggleShowpassword'
 import ShowPasswordCheckBox from './components/page-compontents/Authpages-components/ShowPasswordCheckBox'
 import LeftSubContainer from './components/page-compontents/Authpages-components/LeftSubcontainer'
-import ErrorDiplayer from './components/page-compontents/Authpages-components/ErrorDiplayer'
+import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { setErrorTickets, updateBgColor } from './store/features/errorTicketsSlice'
+import ErrorDiplayer from './components/page-compontents/ErrorDiplayer'
+import { updateIsLoggedIn } from './store/features/employeeSlice'
+import AuthSubmitBtn from './components/page-compontents/Authpages-components/AuthSubmitBtn'
+import Api from './components/utils/API-calling-functions/Api'
 
 
 function App() {
@@ -14,9 +20,17 @@ function App() {
     username: '',
     password: '',
   })
+  const api = new Api()
+
+  const [isLoading, setIsLoading] = useState(false)
   const [checked, setChecked] = useState(false)
 
-  const [errorTickets, SetErrorTickets] = useState([])
+  const [isInvalid, setIsInvalid] = useState(false)
+
+  const {errorTickets} = useSelector((state) => state.errorTickets)
+  const dispatch = useDispatch()
+
+  const navigate = useNavigate()
 
   const passwordRef = useRef(null)
 
@@ -38,19 +52,18 @@ function App() {
   const  emailRef = useRef(null)
 
   const validateEmailField = () => {
-    // const {value} = e.target
+    dispatch(setErrorTickets([]))
     const emailRegex = /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;   
     if(!emailRegex.test(credentials.username)){
-      SetErrorTickets((prev) => {
-        return [...prev, errorMessages.invalidEmail]
-      })
+      setIsInvalid(true)
+      dispatch(setErrorTickets([...errorTickets, errorMessages.invalidEmail]))
+      dispatch(updateBgColor('bg-red-200'))
     }
+
   }
 
   const emptyTickets = () => {
-    passwordRef.current.classList.add('border-gray-200')
-    passwordRef.current.classList.remove('border-red-300')
-    SetErrorTickets(() => [])
+    dispatch(setErrorTickets([]))
   }
 
   const handleShowPassword = () => {
@@ -64,10 +77,45 @@ function App() {
     }
 
   }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setIsLoading(true)
+    validateEmailField()
+    
+
+    if (errorTickets.length !== 0) {
+      return
+    }
+    
+    try {
+      const response = await api.logUserIn(credentials)
+      if (response.status === 200){
+        setIsLoading(false)
+        dispatch(updateIsLoggedIn(true))
+        
+        navigate('/layout/dashboard')
+        
+      }
+      else{
+        setIsLoading(false)
+        dispatch(setErrorTickets([errorMessages.failedLogin]))
+        return
+      }
+      
+    // eslint-disable-next-line no-unused-vars
+    } catch (error) {
+      setIsLoading(false)
+      emptyTickets()
+      dispatch(setErrorTickets([errorMessages.failedLogin]))
+    }
+    
+  }
   return (
     <>
       <main className='h-screen w-screen bg-green-landscape-hd bg-no-repeat bg-cover flex flex-col justify-center items-center gap-4'>
-        <ErrorDiplayer emptyTickets={emptyTickets} errorTickets={errorTickets} />
+
+        <ErrorDiplayer emptyTickets={emptyTickets} />
 
         <div id='loginWrapper' className={`w-[50rem] h-[26rem] overflow-x-hidden flex scrollbar-hide`}>
 
@@ -87,12 +135,12 @@ function App() {
                   type='email' 
                   id='username' 
                   name='username'
-                  className='h-10 w-72 outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md px-2' 
+                  className={`h-10 w-72 outline-offset-2 outline-3 ${isInvalid? 'outline outline-red-400': 'outline-mylightgreen-300'} border border-mygreen-300 rounded-md px-2`} 
                   autoComplete='on' 
                   required
                   value={credentials.username}
-                  onBlur={validateEmailField}
                   onChange={handleChange}
+                  onFocus={() => setIsInvalid(false)}
                   />
                 </label>
 
@@ -104,7 +152,7 @@ function App() {
                     type='password' 
                     id='password'
                     name= 'password' 
-                    className='h-10 w-72 outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 roboto-light rounded-md px-2' 
+                    className='h-10 w-72 outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 roboto-medium rounded-md px-2' 
                     autoComplete='on' 
                     required
                     value={credentials.password}
@@ -116,7 +164,7 @@ function App() {
 
                 <span>Forgot password?  <span className='text-mygreen-700'><Link to={'/confirmemail'} className='hover:underline decoration-inherit underline-offset-2'>Reset</Link></span></span>
 
-                <button type='submit' className='text-white bg-mygreen-700 w-16 h-8 rounded-md'>Login</button>
+                <AuthSubmitBtn isLoading={isLoading} handleSubmit={handleSubmit} />
 
               </form>
             </div>

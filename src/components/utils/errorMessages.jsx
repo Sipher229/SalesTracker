@@ -6,7 +6,8 @@ const errorMessages = {
     passwordsNOtSame: 'The passwords do not match',
     failedLogin: 'Wrong email or password',
     noSuchEmail: 'No such email. Please contact your administrator if this is unexpected.',
-    wrongOtp: 'Wrong passcode.'
+    wrongOtp: 'Wrong passcode.',
+    internalServerError: 'Internal server errror. Please contact your administrator'
 }
 
 export default errorMessages

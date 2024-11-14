@@ -3,19 +3,49 @@ import { useState } from "react"
 import Logo from "./Logo.jsx"
 import ChevronUp from "../../utils/icons/ChevronUp.jsx"
 import ChevronDown from "../../utils/icons/ChevronDown.jsx"
+import ErrorDiplayer from "../ErrorDiplayer.jsx"
+import { useSelector, useDispatch } from "react-redux"
+import { setErrorTickets } from "../../../store/features/errorTicketsSlice.js"
+import { useNavigate } from "react-router-dom"
+import errorMessages from "../../utils/errorMessages.jsx"
+import { updateIsLoggedIn } from "../../../store/features/employeeSlice.js"
+import Api from "../../utils/API-calling-functions/Api.js"
 
 function UserProfile({name='User\'s full name'}){
   const [showing, setShowing] = useState(false)
+  const api = new Api()
+
+
+  const navigate = useNavigate()
+  const dispacth = useDispatch()
+  const handleLogOut = async () => {
+    try{
+      const response = await api.logUserOut()
+      if( response.status === 200 ) {
+        dispacth(updateIsLoggedIn(false))
+        navigate('/')
+        navigate(0)
+      }
+      else{
+        dispacth(setErrorTickets([errorMessages.internalServerError]))
+        
+      }
+    }
+    // eslint-disable-next-line no-unused-vars
+    catch(error) {
+      dispacth(setErrorTickets([errorMessages.internalServerError]))
+    }
+  }
   return (
     <>
       <button
       onClick={() => setShowing((prev)=> !prev)}
       onBlur={() => setShowing((prev)=> !prev)}
-      className="min-w-52 h-12 rounded-xl flex justify-center items-center gap-10">
+      className="min-w-52 h-12 rounded-xl flex justify-center items-center gap-4">
         <span className="text-white roboto-medium">Hello, {name}</span>
         {  showing? <ChevronUp /> : <ChevronDown />}
-        <ul className={`w-24 h-16 bg-white absolute ${showing? '' : 'hidden'} right-5 top-12 shadow-lg rounded-md overflow-hidden`}>
-          <li className="hover:bg-gray-200 roboto-medium h-1/2 w-full text-left pl-2 ">Log Out</li>
+        <ul className={`w-24 h-16 bg-white absolute ${showing? '' : 'hidden'} active:bg-white right-5 top-12 shadow-lg rounded-md overflow-hidden`}>
+          <li className="hover:bg-gray-200 roboto-medium h-1/2 w-full text-left pl-2 " onClick={handleLogOut}>Log Out</li>
           <li className="hover:bg-gray-200 roboto-medium h-1/2 w-full text-left pl-2 border-t">View Profile</li>
         </ul>
       </button>
@@ -24,11 +54,19 @@ function UserProfile({name='User\'s full name'}){
 }
 
 function Header() {
+  const {errorTickets} = useSelector((state) => state.errorTickets)
+  const {user} = useSelector((state) => state.employee)
+  const dispacth = useDispatch()
+
+  const emptyTickets = () => {
+    dispacth(setErrorTickets([]))
+  }
   return (
     <header className="w-screen h-16 bg-gradient-to-tr from-mygreen-750 via-mygreen-500 to-mygreen-300">
+      <ErrorDiplayer errorTickets={errorTickets} emptyTickets={emptyTickets} position="1/4"/>
       <nav className="w-full h-full flex justify-between items-center px-7">
         <Logo />
-        <UserProfile />
+        <UserProfile name={user.firstName}/>
       </nav>
     </header>
   )

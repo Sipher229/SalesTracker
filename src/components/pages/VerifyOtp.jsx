@@ -1,24 +1,30 @@
-import {useState, useRef} from 'react'
-import ErrorDiplayer from "../page-compontents/Authpages-components/ErrorDiplayer"
-import errorMessages from "../utils/errorMessages"
+import {useState} from 'react'
 import { Link } from 'react-router-dom'
 import LeftSubContainer from "../page-compontents/Authpages-components/LeftSubcontainer"
 import { WIDTH, HEIGHT } from "../utils/authFormContainerSize"
 import { useNavigate } from 'react-router-dom'
+import ErrorDiplayer from '../page-compontents/ErrorDiplayer'
+import { useDispatch, useSelector } from 'react-redux'
+import { setErrorTickets, updateBgColor } from '../../store/features/errorTicketsSlice'
+import errorMessages from '../utils/errorMessages'
+import AuthSubmitBtn from '../page-compontents/Authpages-components/AuthSubmitBtn'
+import { updateOtpId } from '../../store/features/otpCredentialsSlice'
+import Api from '../utils/API-calling-functions/Api'
+
 
 
 function VerifyOtp() {
-
+    const errorDisplayBg = 'bg-red-200'
+    const api = new Api()
     const otpLenth = 6
+    const [isLoading, setIsLoading] = useState()
     const navigate = useNavigate()
+
+    const {otpCredentials} = useSelector((state) => state.otpCredentials)
     
-    const [errorTickets, SetErrorTickets] = useState([])
+    const dispatch = useDispatch()
 
     const [otp, setOtp ] = useState(new Array(otpLenth).fill(""))
-
-
-
-    const  otpRef = useRef(null)
 
     const handleChange = (element, index) => {
         if (/^[0-9]$/.test(element.value)) {
@@ -49,26 +55,61 @@ function VerifyOtp() {
             newOtp[index] = "";
             setOtp(newOtp)
         }
-      };
+    };
 
     const emptyTickets = () => {
-        otpRef.current.classList.add('border-gray-200')
-        otpRef.current.classList.remove('border-red-300')
-        SetErrorTickets(() => [])
+      dispatch(setErrorTickets([]))
     }
+  
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        const userOtp = getOtpValue()
-        navigate('/resetpassword')
-        
+        setIsLoading(true)
+        const otp = getOtpValue()
 
+        try {
+          const response = await api.verifyOtp({otp, id: otpCredentials.otpId})
+          if ( response.status === 200) {
+            setIsLoading(false)
+            navigate('/resetpassword')
+          }
+          else{
+            setIsLoading(false)
+            dispatch(updateBgColor(errorDisplayBg))
+            dispatch(setErrorTickets([errorMessages.wrongOtp]))
+          }
+        // eslint-disable-next-line no-unused-vars
+        } catch (error) {
+          setIsLoading(false)
+          dispatch(updateBgColor(errorDisplayBg))
+          dispatch(setErrorTickets([errorMessages.wrongOtp]))
+        }
+        
     }
 
-    return (
+    const handleResendOtp = async (e) => {
+      e.preventDefault()
+      setIsLoading(true)
+      try {
+        const response = await api.resendOtp({username: otpCredentials.email})
+        if (response.status === 200){
+          dispatch(updateOtpId(response.data.otp))
+          setIsLoading(false)
+        }
+        else{
+          dispatch(setErrorTickets([errorMessages.internalServerError]))
+          setIsLoading(false)
+        }
+      // eslint-disable-next-line no-unused-vars
+      } catch (error) {
+        setIsLoading(false)
+        dispatch(setErrorTickets([errorMessages.internalServerError]))
+      }
+    }
+  return (
     <>
         <main className='h-screen w-screen bg-green-landscape-hd bg-no-repeat bg-cover flex flex-col justify-center items-center gap-4'>
-        <ErrorDiplayer emptyTickets={emptyTickets} errorTickets={errorTickets} />
+        <ErrorDiplayer emptyTickets={emptyTickets} />
 
         <div id='loginWrapper' className={`w-[${WIDTH}rem] h-[${HEIGHT}rem] overflow-x-hidden flex scrollbar-hide`}>
 
@@ -104,11 +145,11 @@ function VerifyOtp() {
                   </div>
                 </label>
 
-                <button className='text-mygreen-500 roboto-medium active:underline-none underline underline-offset-2 decoration-inherit '> Resend Code </button>
+                <button onClick={handleResendOtp} disabled={isLoading} className='text-mygreen-500 roboto-medium active:underline-none underline underline-offset-2 decoration-inherit '> Resend Code </button>
 
                 <span>Login instead?  <span className='text-mygreen-700'><Link to={'/'} >Login</Link></span></span>
 
-                <button type='submit' className='text-white bg-mygreen-700 w-16 h-8 rounded-md' onClick={handleSubmit}>Verify</button>
+                <AuthSubmitBtn handleSubmit={handleSubmit} isLoading={isLoading} name='Verify'/>
 
               </form>
             </div>
