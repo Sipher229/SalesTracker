@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    bgColor: 'bg-red-300',
+    error: false,
     errorTickets: [],
 }
 
@@ -13,13 +13,13 @@ const errorTicketsSlice = createSlice({
             if ( action.payload === null ) return
             state.errorTickets = action.payload
         },
-        updateBgColor: (state, action) => {
+        updateErrorFlag: (state, action) => {
             if ( action.payload === null ) return
-            state.bgColor == action.payload
+            state.error = action.payload
         }
     }
 })
 
-export const {setErrorTickets, updateBgColor} = errorTicketsSlice.actions
+export const {setErrorTickets, updateErrorFlag} = errorTicketsSlice.actions
 
 export default errorTicketsSlice.reducer

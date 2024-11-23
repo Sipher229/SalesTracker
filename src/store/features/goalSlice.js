@@ -1,16 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    goals: [
-        {
-            name: 'goal name',
-            hourlySales: 3,
-            entryDate: "",
-            creator: 'created by',
-            id: -1
-        },
-
-    ]
+    goals: []
 }
 
 const goalSlice = createSlice({

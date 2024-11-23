@@ -59,7 +59,7 @@ function EmployeesComponent({employees, query}) {
 }
 
 
-function Employees() {
+function MyTeam() {
   const [isLoading, setIsLoading] = useState(false)
   const [query, setQuery] = useState('')
   const {employees} = useSelector((state) => state.employees)
@@ -72,7 +72,7 @@ function Employees() {
     const fetchData = async () => {
       setIsLoading(true)
       try{
-        const response = await api.getAllEmployees()
+        const response = await api.getSubordinates(user.id)
         if (response.status === 200){
           dispatch(initializeEmployees(response.data.requestedData))
           
@@ -90,7 +90,7 @@ function Employees() {
     <>
       <main className="grid w-full h-full grid-cols-12 grid-rows-12 gap-3 bg-fadedGrayBg">
         <div className="w-full h-full mt-3 flex justify-between items-center col-start-2 col-span-10 row-start-1 row-span-1">
-          <h1 className="roboto-bold text-2xl p-1 text-left">All Employees</h1>
+          <h1 className="roboto-bold text-2xl p-1 text-left">My Team</h1>
           <form className="w-80 h-full flex justify-center">
             <label htmlFor="query" className="roboto-medium w-44 h-full flex items-center justify-center gap-4">
               Search:
@@ -117,4 +117,4 @@ function Employees() {
   )
 }
 
-export default Employees
+export default MyTeam

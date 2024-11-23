@@ -5,7 +5,7 @@ import { WIDTH, HEIGHT } from "../utils/authFormContainerSize"
 import { useNavigate } from 'react-router-dom'
 import ErrorDiplayer from '../page-compontents/ErrorDiplayer'
 import { useDispatch, useSelector } from 'react-redux'
-import { setErrorTickets, updateBgColor } from '../../store/features/errorTicketsSlice'
+import { setErrorTickets, updateErrorFlag } from '../../store/features/errorTicketsSlice'
 import errorMessages from '../utils/errorMessages'
 import AuthSubmitBtn from '../page-compontents/Authpages-components/AuthSubmitBtn'
 import { updateOtpId } from '../../store/features/otpCredentialsSlice'
@@ -14,7 +14,7 @@ import Api from '../utils/API-calling-functions/Api'
 
 
 function VerifyOtp() {
-    const errorDisplayBg = 'bg-red-200'
+    
     const api = new Api()
     const otpLenth = 6
     const [isLoading, setIsLoading] = useState()
@@ -75,13 +75,13 @@ function VerifyOtp() {
           }
           else{
             setIsLoading(false)
-            dispatch(updateBgColor(errorDisplayBg))
+            dispatch(updateErrorFlag(true))
             dispatch(setErrorTickets([errorMessages.wrongOtp]))
           }
         // eslint-disable-next-line no-unused-vars
         } catch (error) {
           setIsLoading(false)
-          dispatch(updateBgColor(errorDisplayBg))
+          dispatch(updateErrorFlag(true))
           dispatch(setErrorTickets([errorMessages.wrongOtp]))
         }
         

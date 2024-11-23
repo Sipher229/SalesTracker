@@ -6,14 +6,13 @@ import ShowPasswordCheckBox from '../page-compontents/Authpages-components/ShowP
 import toggleShowPassword from '../utils/toggleShowpassword'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { setErrorTickets, updateBgColor } from '../../store/features/errorTicketsSlice'
+import { setErrorTickets, updateErrorFlag } from '../../store/features/errorTicketsSlice'
 import ErrorDiplayer from '../page-compontents/ErrorDiplayer'
 import AuthSubmitBtn from '../page-compontents/Authpages-components/AuthSubmitBtn'
 import Api from '../utils/API-calling-functions/Api'
 
 
 function ResetPassword() {
-  const errorDispayBg = 'bg-red-200'
   const api = new Api()
 
   const [credentials, setCredentials] = useState({
@@ -57,20 +56,20 @@ function ResetPassword() {
     if( !symbolRegex.test(credentials.newPassword)){
       setIsInvalid(true)
       dispatch(setErrorTickets([...errorTickets, errorMessages.lacksSymbol ]))
-      dispatch(updateBgColor(errorDispayBg))
+      dispatch(updateErrorFlag(true))
     }
 
     if (!capitalRegex.test(credentials.newPassword)) {
       setIsInvalid(true)
       dispatch(setErrorTickets([...errorTickets, errorMessages.lacksCapLetter ]))
-      dispatch(updateBgColor(errorDispayBg))
+      dispatch(updateErrorFlag(true))
     }
 
 
     if (credentials.newPassword.length <  8){
       setIsInvalid(true)
       dispatch(setErrorTickets([...errorTickets, errorMessages.tooShort ]))
-      dispatch(updateBgColor(errorDispayBg))
+      dispatch(updateErrorFlag(true))
     }
 
   }
@@ -83,7 +82,7 @@ function ResetPassword() {
     if (errorTickets.length !== 0) {setIsLoading(false)}
 
     if (credentials.newPassword !== credentials.confirmPassword){
-      dispatch(updateBgColor(errorDispayBg))
+      dispatch(updateErrorFlag(true))
       dispatch(setErrorTickets([...errorTickets, errorMessages.passwordsNOtSame]))
       setIsLoading(false)
       return
@@ -105,11 +104,13 @@ function ResetPassword() {
       else{
         setIsLoading(false)
         dispatch(setErrorTickets([errorMessages.internalServerError]))
+        dispatch(updateErrorFlag(true))
       }
     // eslint-disable-next-line no-unused-vars
     } catch (error) {
       setIsLoading(false)
       dispatch(setErrorTickets([errorMessages.internalServerError]))
+      dispatch(updateErrorFlag(true))
     }
 
   }

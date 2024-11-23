@@ -1,18 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    campaigns: [
-        {
-            name: 'campain name',
-            commission: 10,
-            tax: 13,
-            goalName: 'corresponding goal',
-            employeeName: 'employeeName',
-            entryDate: '',
-            id: -1
-        },
-
-    ]
+    campaigns: []
 }
 
 const campaignSlice = createSlice({

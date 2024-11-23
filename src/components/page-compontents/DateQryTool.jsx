@@ -1,0 +1,57 @@
+import { useState } from "react"
+import AuthSubmitBtn from "./Authpages-components/AuthSubmitBtn"
+import Api from "../utils/API-calling-functions/Api"
+import { initializeSales } from "../../store/features/salesSlice"
+import { useDispatch } from "react-redux"
+import { setErrorTickets } from "../../store/features/errorTicketsSlice"
+import errorMessages from "../utils/errorMessages"
+
+
+// eslint-disable-next-line react/prop-types
+function DateQryTool({isLoading, setIsLoading}) {
+    const [dt, setDt] = useState('')
+    const dispatch = useDispatch()
+    const api = new Api()
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setIsLoading(true)
+        console.log(dt)
+        try{
+
+            const response = await api.getSalesByDate(dt)
+            if( response.status === 200){
+                dispatch(initializeSales(response.data.requestedData))
+
+            }
+            else
+            {
+                dispatch(setErrorTickets([errorMessages.failedFetch]))
+            }
+            setIsLoading(false)
+
+        }
+        catch(err){
+            dispatch(setErrorTickets([errorMessages.failedFetch]))
+            setIsLoading(false)
+            console.log(err)
+        }
+    }
+  return (
+    <>
+        <form className="w-80 h-full flex justify-center gap-4">
+            
+            <input 
+            className="w-44 h-full outline-mylightgreen-300 border rounded-md border-mygreen-300 outline-offset-2"
+            value={dt}
+            onChange={(e) => setDt(e.target.value)}
+            type='date'
+            autoComplete="off"
+            />
+            
+            <AuthSubmitBtn name="Query"  handleSubmit={handleSubmit} isLoading={isLoading} />
+        </form>
+    </>
+  )
+}
+
+export default DateQryTool

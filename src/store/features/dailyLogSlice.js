@@ -1,17 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    logs: [
-        {
-            logintime: 10,
-            loginDate: 13,
-            salesperhour: 'corresponding goal',
-            commission: 'employeeName',
-            shiftduration: '',
-            id: -1
-        },
-
-    ]
+    logs: []
 }
 
 const dailyLogSlice = createSlice({

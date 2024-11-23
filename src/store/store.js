@@ -6,6 +6,7 @@ import dailyLogReducer from './features/dailyLogSlice.js'
 import goalReducer from './features/goalSlice.js'
 import errorTicketsReducer from './features/errorTicketsSlice.js'
 import otpCredintialsReducer from './features/otpCredentialsSlice.js'
+import employeesReducer from './features/employeesSlice.js'
 
 const store = configureStore({
     reducer: {
@@ -15,7 +16,9 @@ const store = configureStore({
         logs: dailyLogReducer,
         employee: employeeReducer,
         errorTickets: errorTicketsReducer,
-        otpCredentials: otpCredintialsReducer
+        otpCredentials: otpCredintialsReducer,
+        employees: employeesReducer,
+        
     }
 })
 

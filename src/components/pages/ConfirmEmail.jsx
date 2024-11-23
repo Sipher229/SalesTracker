@@ -5,16 +5,15 @@ import { HEIGHT, WIDTH } from "../utils/authFormContainerSize"
 import { Link } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { setErrorTickets, updateBgColor } from "../../store/features/errorTicketsSlice"
+import { setErrorTickets, updateErrorFlag } from "../../store/features/errorTicketsSlice"
 import ErrorDiplayer from "../page-compontents/ErrorDiplayer"
 import AuthSubmitBtn from "../page-compontents/Authpages-components/AuthSubmitBtn"
 import { updateEmail, updateOtpId } from "../../store/features/otpCredentialsSlice"
 import Api from "../utils/API-calling-functions/Api"
 
 
-
 function ConfirmEmail() {
-  const errorDisplayBg = 'bg-red-200'
+
   const api = new Api()
   const [credentials, setCredentials] = useState({
     username: '',
@@ -50,7 +49,7 @@ function ConfirmEmail() {
     if(!emailRegex.test(credentials.username)){
       setIsInvalid(true)
       dispatch(setErrorTickets([...errorTickets, errorMessages.invalidEmail]))
-      dispatch(updateBgColor(errorDisplayBg))
+      dispatch(updateErrorFlag(true))
     }
   }
   const handleSubmit = async (e) => {
@@ -69,7 +68,7 @@ function ConfirmEmail() {
       else {
         setIsLoading(false)
         dispatch(setErrorTickets([errorMessages.noSuchEmail]))
-        dispatch(updateBgColor(errorDisplayBg))
+        dispatch(updateErrorFlag(true))
         return
       }
     }
@@ -77,7 +76,7 @@ function ConfirmEmail() {
     catch(error) {
       setIsLoading(false)
       dispatch(setErrorTickets([errorMessages.noSuchEmail]))
-      dispatch(updateBgColor(errorDisplayBg))
+      dispatch(updateErrorFlag(true))
       return
     } 
 

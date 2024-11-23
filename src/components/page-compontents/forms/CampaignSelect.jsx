@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
 
-function CampaignSelect({campaigns = ['No campaigns available']}, rowStart=5) {
+function CampaignSelect({campaigns = ['No campaigns available'], rowStart=5}) {
   return (
     <label className={`flex flex-col row-start-${rowStart} row-span-2 col-start-2 col-span-6`}>
         <span className="roboto-medium">Campaign:</span>

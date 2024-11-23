@@ -1,20 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    sales: [
-        {
-            name: 'sale name',
-            customernumber: '',
-            campaignname: 'campaign name',
-            price: '',
-            discount: 0.00,
-            tax: 13,
-            employeename: 'sold by',
-            entrydate: '',
-            id: -1
-        },
-
-    ]
+    sales: []
 }
 
 const salesSlice = createSlice({

@@ -2,7 +2,7 @@ import './css-files/Spinner.css'
 
 function Spiner(){
     return(
-        <div className="loader"></div>
+        <div className="spinner"></div>
     )
 }
 

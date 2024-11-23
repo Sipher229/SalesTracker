@@ -10,14 +10,6 @@ const allLinks = [
                 name: 'New Sale',
                 url: 'newsale',
             },
-            {
-                name: 'My report',
-                url: 'myreport',
-            },
-            {
-                name: 'Employee report',
-                url: 'empreport',
-            },
 
         ]
     },
@@ -46,10 +38,6 @@ const allLinks = [
                 name: 'All Goals',
                 url: 'allgoals',
             },
-            {
-                name: 'My Goals',
-                url: 'mygoals',
-            },
         ]
     },
     {
@@ -60,8 +48,12 @@ const allLinks = [
                 url: '/layout/addemployee',
             },
             {
-                name: 'full Report',
-                url: '/fullreport',
+                name: 'My Team',
+                url: '/layout/myteam',
+            },
+            {
+                name: 'Employees',
+                url: '/layout/allemployees',
             },
             
         ]

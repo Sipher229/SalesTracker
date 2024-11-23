@@ -13,7 +13,7 @@ function RowComponent({name="N/A", campaignName='N/A', salesPerHour=3}) {
   
           <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm roboto-medium text-mygreen-300">{name || 'N/A'}</td>
           <td className="w-[30rem] h-full text-left px-3 roboto-bold text-sm">{campaignName || 'N/A'}</td>
-          <td className="w-[30rem] h-full text-left px-3 roboto-bold text-sm">{salesPerHour || 'N/A'}</td>
+          <td className="w-[30rem] h-full text-left px-3 roboto-bold text-sm">{salesPerHour?.toFixed(2) || 'N/A'}</td>
                         
         </tr>
       </>
@@ -25,8 +25,8 @@ function RowComponent({name="N/A", campaignName='N/A', salesPerHour=3}) {
   function BodyComponent({employees=[]}) {
     return (
       <>
-        <div className="w-full h-full bg-white box-border overflow-y-scoll flex flex-col justify-between items-center gap-5">
-              <h1 className="roboto-bold text-xl text-left px-3 w-full h-4">Weekly Billboard</h1>
+        <div className="w-full h-full bg-white box-border overflow-y-scroll flex flex-col justify-start items-center">
+              <h1 className="roboto-bold text-xl text-left px-3 w-full">Daily Billboard</h1>
               <table className=" w-full   ">
                   <tbody className="w-full">
                     <tr className="w-full h-9">
@@ -66,11 +66,11 @@ function WeeklyBillBoard() {
       }
       // eslint-disable-next-line no-unused-vars
       catch(error) {
-        console.log(error)
         setIsLoding(false)
       }
     }
-    fetchData()
+    const id = setTimeout(() => fetchData(), 1000)
+    return () => clearTimeout(id)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -78,10 +78,10 @@ function WeeklyBillBoard() {
     <>
       <main className="grid w-full h-full grid-cols-12 rounded-md overflow-hidden grid-rows-12 gap-3 bg-white shadow-xl">
       
-        <div className="w-[56rem] min-h-[4rem] flex justify-start items-start">
+        <div className="w-[56rem] h-[14rem] flex justify-start items-start">
         {
           isLoading ?
-          <Loading />
+          <div className='w-full h-full flex justify-center items-center'><Loading /></div>
           :
           <BodyComponent employees={logs} /> || "No data to display."
         }

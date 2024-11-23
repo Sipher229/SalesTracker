@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     isLoggedIn: false,
+    shiftDuration: 'N/A',
+    salesPerHour: 'N/A',
     user:{
         firstName: 'Company',
         lastName: 'Employee',
@@ -24,14 +26,13 @@ const employeeSlice = createSlice({
     reducers: {
         initializeEmployee: (state, action) => {
             if ( action.payload === null) return
-            const {first_name, last_name, employee_number, employee_role, id, email, campaignname, shift_duration, login_time, manger_id, hourlysales, hourlydecisions, salse_per_hour} = action.payload
+            const {first_name, last_name, employee_number, employee_role, id, email, campaignname, login_time, manger_id, hourlysales, hourlydecisions, sales_per_hour, shift_duration} = action.payload
 
             state.user = {
                 firstName: first_name,
                 lastName: last_name,
                 employeeNumber: employee_number,
                 role: employee_role,
-                shiftDuration: shift_duration,
                 id: id,
                 email,
                 campaignName: campaignname,
@@ -39,16 +40,27 @@ const employeeSlice = createSlice({
                 managerId: manger_id,
                 hourlyDecisions: hourlydecisions,
                 hourlySales: hourlysales,
-                salesPerHour: salse_per_hour
+                
             }
+            state.salesPerHour =sales_per_hour
+            state.shiftDuration = shift_duration
         },
 
         updateIsLoggedIn: (state, action) => {
             if ( action.payload === null) return
-            state.isLoggedIn == action.payload
+            state.isLoggedIn = action.payload
+        },
+        updateShiftDuration: (state, action) => {
+            if ( action.payload === null ) return 
+            state.shiftDuration = action.payload
+        },
+        updateSalesPerHour: (state, action) => {
+            if (action.payload === null ) return
+            if (!state.isLoggedIn) return
+            state.salesPerHour = action.payload
         }
     }
 
 })
-export const {initializeEmployee, updateIsLoggedIn} = employeeSlice.actions 
+export const {initializeEmployee, updateIsLoggedIn, updateShiftDuration, updateSalesPerHour} = employeeSlice.actions 
 export default employeeSlice.reducer

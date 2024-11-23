@@ -13,10 +13,13 @@ function MainBody() {
     const api = new Api()
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const {user} = useSelector((state) => state.employee )
+    const {user, shiftDuration, salesPerHour} = useSelector((state) => state.employee )
+    
+    
+
     useEffect( () => {
-        const fetchData =  async () => {
-            try{
+      const fetchData =  async () => {
+        try{
                 const response = await api.getEmployee()
                 if (response.status === 200){
                     dispatch(initializeEmployee(response.data.requestedData.pop()))
@@ -34,8 +37,11 @@ function MainBody() {
             }
         }
         fetchData()
+        
 
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [])
+
   return (
     <>
         <div className="w-full h-full flex flex-col justify-start items-start p-10  bg-fadedGrayBg gap-4 overflow-y-scroll">
@@ -44,12 +50,12 @@ function MainBody() {
                     <GoalCard hourlyDecisions={user.hourlyDecisions} hourlySales={user.hourlySales} campaignName={user.campaignName}/>
                 </div>
                 <div className="w-1/2 h-44">
-                    <ReportCard shiftDuration={user.shiftDuration} salesPerHour={user.salesPerHour} loginTime={user.loginTime} />
+                    <ReportCard shiftDuration={shiftDuration} salesPerHour={salesPerHour} loginTime={user.loginTime} />
                 </div>
 
             </div>
 
-            <div className="w-full h-64">
+            <div className="w-full h-60">
                 <WeeklyBillBoard />
             </div>
             <div className="w-full h-72">

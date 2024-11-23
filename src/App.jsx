@@ -7,7 +7,7 @@ import ShowPasswordCheckBox from './components/page-compontents/Authpages-compon
 import LeftSubContainer from './components/page-compontents/Authpages-components/LeftSubcontainer'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { setErrorTickets, updateBgColor } from './store/features/errorTicketsSlice'
+import { setErrorTickets, updateErrorFlag } from './store/features/errorTicketsSlice'
 import ErrorDiplayer from './components/page-compontents/ErrorDiplayer'
 import { updateIsLoggedIn } from './store/features/employeeSlice'
 import AuthSubmitBtn from './components/page-compontents/Authpages-components/AuthSubmitBtn'
@@ -57,7 +57,7 @@ function App() {
     if(!emailRegex.test(credentials.username)){
       setIsInvalid(true)
       dispatch(setErrorTickets([...errorTickets, errorMessages.invalidEmail]))
-      dispatch(updateBgColor('bg-red-200'))
+      dispatch(updateErrorFlag(true))
     }
 
   }
@@ -100,6 +100,7 @@ function App() {
       else{
         setIsLoading(false)
         dispatch(setErrorTickets([errorMessages.failedLogin]))
+        dispatch(updateErrorFlag(true))
         return
       }
       
@@ -108,6 +109,7 @@ function App() {
       setIsLoading(false)
       emptyTickets()
       dispatch(setErrorTickets([errorMessages.failedLogin]))
+      dispatch(updateErrorFlag(true))
     }
     
   }

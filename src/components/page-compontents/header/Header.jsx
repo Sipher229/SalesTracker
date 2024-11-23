@@ -5,11 +5,12 @@ import ChevronUp from "../../utils/icons/ChevronUp.jsx"
 import ChevronDown from "../../utils/icons/ChevronDown.jsx"
 import ErrorDiplayer from "../ErrorDiplayer.jsx"
 import { useSelector, useDispatch } from "react-redux"
-import { setErrorTickets } from "../../../store/features/errorTicketsSlice.js"
+import { setErrorTickets, updateErrorFlag } from "../../../store/features/errorTicketsSlice.js"
 import { useNavigate } from "react-router-dom"
 import errorMessages from "../../utils/errorMessages.jsx"
 import { updateIsLoggedIn } from "../../../store/features/employeeSlice.js"
 import Api from "../../utils/API-calling-functions/Api.js"
+import './Header.css'
 
 function UserProfile({name='User\'s full name'}){
   const [showing, setShowing] = useState(false)
@@ -28,25 +29,28 @@ function UserProfile({name='User\'s full name'}){
       }
       else{
         dispacth(setErrorTickets([errorMessages.internalServerError]))
+        dispacth(updateErrorFlag(true))
         
       }
     }
     // eslint-disable-next-line no-unused-vars
     catch(error) {
       dispacth(setErrorTickets([errorMessages.internalServerError]))
+      dispacth(updateErrorFlag(true))
     }
   }
+
   return (
     <>
       <button
       onClick={() => setShowing((prev)=> !prev)}
       onBlur={() => setShowing((prev)=> !prev)}
-      className="min-w-52 h-12 rounded-xl flex justify-center items-center gap-4">
+      className="min-w-52 h-12 rounded-xl flex justify-center items-center gap-4 ">
         <span className="text-white roboto-medium">Hello, {name}</span>
         {  showing? <ChevronUp /> : <ChevronDown />}
-        <ul className={`w-24 h-16 bg-white absolute ${showing? '' : 'hidden'} active:bg-white right-5 top-12 shadow-lg rounded-md overflow-hidden`}>
+        <ul className={`w-24 h-16 bg-white absolute ${showing? '' : 'hidden'} active:bg-white right-5 top-12 shadow-lg rounded-md overflow-hidden logout-popup-animation`}>
           <li className="hover:bg-gray-200 roboto-medium h-1/2 w-full text-left pl-2 " onClick={handleLogOut}>Log Out</li>
-          <li className="hover:bg-gray-200 roboto-medium h-1/2 w-full text-left pl-2 border-t">View Profile</li>
+          <li className="hover:bg-gray-200 roboto-medium h-1/2 w-full text-left pl-2 border-t" onClick={() => navigate('/layout/myprofile')}>View Profile</li>
         </ul>
       </button>
     </>
@@ -63,8 +67,8 @@ function Header() {
   }
   return (
     <header className="w-screen h-16 bg-gradient-to-tr from-mygreen-750 via-mygreen-500 to-mygreen-300">
-      <ErrorDiplayer errorTickets={errorTickets} emptyTickets={emptyTickets} position="1/4"/>
-      <nav className="w-full h-full flex justify-between items-center px-7">
+      <ErrorDiplayer errorTickets={errorTickets} emptyTickets={emptyTickets} positionForHeader={true} />
+      <nav className="w-full h-full flex justify-between items-center pl-7 pr-2">
         <Logo />
         <UserProfile name={user.firstName}/>
       </nav>

@@ -12,7 +12,7 @@ function FoldingLinkWrapper({name='', subLinks=[]}) {
     return (
         <>
             <span 
-            className={ `w-full min-w-full pl-10 py-3 my-2 min-h-10 flex flex-col ${isFolded ? '' : 'unfold'} h-8 overflow-hidden justify-start items-start`}>
+            className={ `w-full min-w-full pl-10 py-3 min-h-10 flex flex-col ${isFolded ? 'fold' : 'unfold'} h-8 overflow-hidden justify-start items-start`}>
                 
                 <button 
                 className="w-full text-start flex justify-between items-center h-4 pr-20 hover:underline hover:decoration-mygreen-100 hover:underline-offset-2 my-2"
@@ -25,7 +25,7 @@ function FoldingLinkWrapper({name='', subLinks=[]}) {
                 
                 {subLinks.map((child, idx) => {
                     return (
-                        <span className="ml-7 my-1" key={idx}> <NavLink className={({isActive})=> [isActive? 'text-white roboto-medium':'text-mygreen-100 roboto-light']} to={child.url}>{child.name}</NavLink></span>
+                        <span className="ml-7 " key={idx}> <NavLink className={({isActive})=> [isActive? 'text-white roboto-bold':'text-mygreen-100 roboto-light']} to={child.url}>{child.name}</NavLink></span>
                     )
                 })}
             </span>
