@@ -2,7 +2,7 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*",
   ],
   theme: {  
     screens: {
@@ -30,7 +30,7 @@ export default {
         myyellow: '#FCDE70',
       },
       backgroundImage: {
-        'green-landscape-hd': "url('./green-landscape-hd.jpg')",
+        'green-landscape-hd': "url('./src/green-landscape-hd.jpg')",
       }
     },
   },
