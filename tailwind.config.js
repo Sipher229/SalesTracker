@@ -30,7 +30,7 @@ export default {
         myyellow: '#FCDE70',
       },
       backgroundImage: {
-        'green-landscape-hd': "url('./public/green-landscape-hd.jpg')",
+        'green-landscape-hd': "url('./green-landscape-hd.jpg')",
       }
     },
   },
