@@ -1,6 +1,7 @@
 export default {
-  plugins: {
+ plugins: {
     tailwindcss: {},
     autoprefixer: {},
-  },
+    ...(import.meta.PROD ? { cssnano: {} } : {})
+  }
 }
