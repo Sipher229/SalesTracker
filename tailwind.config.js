@@ -30,8 +30,7 @@ export default {
         myyellow: '#FCDE70',
       },
       backgroundImage: {
-        'green-landscape-lg': "url('src/salestracker-img-resources/greater-landscape-bg.jpeg')",
-        'green-landscape-hd': "url('src/salestracker-img-resources/green-landscape-hd.jpg')"
+        'green-landscape-hd': "url('./public/green-landscape-hd.jpg')",
       }
     },
   },
