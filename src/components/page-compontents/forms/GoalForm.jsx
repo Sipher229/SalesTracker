@@ -82,6 +82,7 @@ function GoalForm() {
                 setErrorTickets([errorMessages.editSuccessFul])
                 updateErrorFlag(false)
                 setTimeout(() => {
+                    setIsLoading(false)
                     navigate('/layout/allgoals')
                 }, delay)
             }

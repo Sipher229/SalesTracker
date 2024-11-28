@@ -5,7 +5,7 @@ import './index.css'
 import store from './store/store.js'
 import {Provider} from 'react-redux'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-import { Sales, AddEmployee, VerifyOtp, Dashboard, PageNotFound, AddSale, Report, Campaigns, AddCampaign, AddGoal, Goals, Campaign, Sale, Goal, ConfirmEmail, ResetPassword, Employees, Employee, MyTeam, MyProfile} from './components/pages/index.js'
+import { Sales, AddEmployee, VerifyOtp, Dashboard, PageNotFound, AddSale, Campaigns, AddCampaign, AddGoal, Goals, Campaign, Sale, Goal, ConfirmEmail, ResetPassword, Employees, Employee, MyTeam, MyProfile, AddJobAid, JobAids} from './components/pages/index.js'
 import MainBody from './components/page-compontents/dashboard-body/MainBody.jsx'
 
 
@@ -36,13 +36,13 @@ const router = createBrowserRouter([
         errorElement: <PageNotFound />
       },
       {
-        path: '/layout/dashboard',
-        element: <MainBody />,
+        path: '/layout/mysales/sale/edit/:id',
+        element: <AddSale />,
         errorElement: <PageNotFound />
       },
       {
-        path: '/layout/myreport',
-        element: <Report />,
+        path: '/layout/dashboard',
+        element: <MainBody />,
         errorElement: <PageNotFound />
       },
       {
@@ -118,6 +118,21 @@ const router = createBrowserRouter([
       {
         path: '/layout/allemployees/employee/edit/:id',
         element: <AddEmployee />,
+        errorElement: <PageNotFound />
+      },
+      {
+        path: '/layout/addjobaid',
+        element: <AddJobAid />,
+        errorElement: <PageNotFound />
+      },
+      {
+        path: '/layout/alljobaids',
+        element: <JobAids />,
+        errorElement: <PageNotFound />
+      },
+      {
+        path: '/layout/alljobaids/edit/:id',
+        element: <AddJobAid />,
         errorElement: <PageNotFound />
       },
 

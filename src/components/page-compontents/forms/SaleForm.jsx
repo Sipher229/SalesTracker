@@ -3,7 +3,7 @@ import SubmitButton from "./SubmitButton"
 import Api from "../../utils/API-calling-functions/Api"
 import { useDispatch, useSelector } from "react-redux"
 import { initializeCampaigns } from "../../../store/features/campaignSlice"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { setErrorTickets, updateErrorFlag } from "../../../store/features/errorTicketsSlice"
 import errorMessages from "../../utils/errorMessages"
 
@@ -15,6 +15,9 @@ function SaleForm() {
     const [isLoading, setIsLoading] = useState(false)
     const {campaigns} = useSelector((state)=> state.campaigns)
     const {isLoggedIn, user} = useSelector((state) => state.employee)
+    const {sales} = useSelector((state) => state.sales)
+    const {id} = useParams()
+    const delay = 900
     const [data, setData] = useState({
         name: '',
         campaign: '',
@@ -23,7 +26,8 @@ function SaleForm() {
         discount: '',
         price: '',
         commission: '',
-        commissionRate: ''
+        commissionRate: '',
+        campaignId: '',
     })
 
     const handleChange = (e) => {
@@ -107,7 +111,35 @@ function SaleForm() {
         }
 
     }
+    const handleEdit = async (e) => {
+        e.preventDefault()
+        setIsLoading(true)
+        try {
+            const response = await api.editSale(data, id)
+            if (response.status === 200) {
+                dispatch(setErrorTickets([errorMessages.editSuccessFul]))
+                dispatch(updateErrorFlag(false))
+                setTimeout(()=> {
+                    setIsLoading(false)
+                
+                    navigate('/layout/mysales')
 
+                }, delay)
+            }
+            else{
+                dispatch(setErrorTickets([errorMessages.failedEdit]))
+                dispatch(updateErrorFlag(true))
+            }
+
+            setIsLoading(false)  
+        // eslint-disable-next-line no-unused-vars
+        } catch (error) {
+            dispatch(setErrorTickets([errorMessages.failedEdit]))
+            dispatch(updateErrorFlag(true))
+            setIsLoading(false)
+        }
+
+    }
     useEffect(() => {
         if (!isLoggedIn) {
             navigate('/layout/dashboard')
@@ -129,6 +161,26 @@ function SaleForm() {
             }
         }
         fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    useEffect(() => {
+        if (id && id > 0) {
+            const sl = sales.find((s) => s.id == id)
+            console.log(sl)
+            setData({
+                name: sl.sale_name,
+                campaign: sl.name,
+                customerNumber: sl.customer_number,
+                tax: sl.tax,
+                discount: sl.discount,
+                price: parseFloat(sl.price.slice(1)),
+                commission: sl.commission,
+                commissionRate: sl.tax,
+                campaignId: sl.campaign_id,
+                entryDate: sl.entry_date
+            })
+        } 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -158,7 +210,7 @@ function SaleForm() {
                     className="px-2 w-full h-4/5  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
                     onChange={handleSelect}
                     >
-                    <option value='' className="">Choose a campaign</option>
+                    <option value={id? data.campaignId : ''} className="">{id? data.campaign :"Choose a campaign"}</option>
                     {
                         campaigns.map((campaign) => {
                             return <option key={campaign.campaign_id} value={campaign.campaign_id} className="">{campaign.campaign_name}</option>
@@ -234,7 +286,7 @@ function SaleForm() {
 
             </label>
 
-            <SubmitButton isLoading={isLoading} handleSubmit={handleSubmit} name={'Submit'} />
+            {id? <SubmitButton name={'Save'} isLoading={isLoading} handleSubmit={handleEdit} /> : <SubmitButton isLoading={isLoading} handleSubmit={handleSubmit} name={'Submit'} />}
 
         </form>
     </>

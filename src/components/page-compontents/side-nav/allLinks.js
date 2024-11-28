@@ -14,6 +14,19 @@ const allLinks = [
         ]
     },
     {
+        name: 'Goals',
+        children: [
+            {
+                name: 'Add Goal',
+                url: 'addgoal',
+            },
+            {
+                name: 'All Goals',
+                url: 'allgoals',
+            },
+        ]
+    },
+    {
         name: 'Campaigns',
         children: [
             {
@@ -25,19 +38,6 @@ const allLinks = [
                 url: 'allcampaigns',
             },
             
-        ]
-    },
-    {
-        name: 'Goals',
-        children: [
-            {
-                name: 'Add Goal',
-                url: 'addgoal',
-            },
-            {
-                name: 'All Goals',
-                url: 'allgoals',
-            },
         ]
     },
     {
@@ -57,7 +57,20 @@ const allLinks = [
             },
             
         ]
-    }
+    },
+    {
+        name: 'Job Aids',
+        children: [
+            {
+                name: 'Add Aid',
+                url: 'addjobaid',
+            },
+            {
+                name: 'Job Aids',
+                url: 'alljobaids',
+            },
+        ]
+    },
 ]
 
 export default allLinks

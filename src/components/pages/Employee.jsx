@@ -7,6 +7,7 @@ import Loading from "../utils/Loading"
 import BarChart from "../page-compontents/dashboard-body/BarChart"
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
+import RestrictedAccess from "../page-compontents/RestrictedAccess"
 Chart.register(CategoryScale);
 
 
@@ -123,7 +124,7 @@ function StatsGraph({id}) {
 function Employee() {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
-  const {isLoggedIn} = useSelector((state) => state.employee)
+  const {isLoggedIn, user } = useSelector((state) => state.employee)
   const {id} = useParams()
   const [employee, setemployee] = useState(null)
   const api = new Api()
@@ -154,7 +155,8 @@ function Employee() {
   }, [])
   return (
     <>
-      <main className="flex flex-col justify-start items-center gap-5 w-full h-full bg-fadedGrayBg overflow-y-scroll">
+      { user.role === 'manager' ?
+        <main className="flex flex-col justify-start items-center gap-5 w-full h-full bg-fadedGrayBg overflow-y-scroll">
         <div className="grid w-full h-[35rem] grid-cols-12 grid-rows-6">
 
           <div className="row-start-2 row-span-6 col-start-3 col-span-8">
@@ -175,7 +177,10 @@ function Employee() {
           </div>
         </div>
         {id? <StatsGraph id={id} /> : <p>No Graph Data to be displayed</p>}
-      </main>
+        </main>
+        :
+        <RestrictedAccess />
+        }
       
     </>
   )

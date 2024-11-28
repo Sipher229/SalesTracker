@@ -52,6 +52,8 @@ function WeeklyBillBoard() {
   const dispatch = useDispatch()
   const {logs} = useSelector((state) => state.logs)
   const api = new Api()
+  const updateDelay = 1000 * 60 * 10
+  const delay = 800
   useEffect(() => {
     const fetchData = async () => {
       
@@ -69,8 +71,12 @@ function WeeklyBillBoard() {
         setIsLoding(false)
       }
     }
-    const id = setTimeout(() => fetchData(), 1000)
-    return () => clearTimeout(id)
+    const id = setTimeout(() => fetchData(), delay)
+    const intervalId = setInterval(fetchData, updateDelay )
+    return () => {
+      clearTimeout(id)
+      clearInterval(intervalId)
+    }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

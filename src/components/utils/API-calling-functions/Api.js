@@ -81,7 +81,7 @@ function Api() {
         return response
     }
     this.getSalesForEmployee = async () => {
-        const response = await axiosInstance.get('/sales/getsales/all')
+        const response = await axiosInstance.get(`/sales/getsales/all`)
         return response
     }
     this.getSubordinates = async (id) => {
@@ -114,6 +114,27 @@ function Api() {
     }
     this.getEmployeeById = async (id) => {
         const response = await axiosInstance.get(`/employees/getemployee/${id}`)
+        return response
+    }
+    this.deleteSale = async (id, body) => {
+        const response = await axiosInstance.delete(`/sales/delete/${id}`, body)
+        return response
+    }
+    this.addJobAid = async (body) => {
+        const response = await axiosInstance.post(`/jobaids/addjobaid`, body)
+        return response
+    }
+    this.editJobAid = async (body, id) => {
+        const response = await axiosInstance.patch(`/jobaids/edit/${id}`, body)
+        return response
+    }
+    this.deleteJobAid = async (id) => {
+        const response = await axiosInstance.delete(`/jobaids/delete/${id}`)
+        return response
+    }
+    
+    this.getJobAids = async () => {
+        const response = await axiosInstance.get(`/jobaids/getjobaids`)
         return response
     }
 }

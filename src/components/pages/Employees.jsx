@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux"
 import Loading from "../utils/Loading"
 import { Link, useNavigate } from "react-router-dom"
 import { initializeEmployees } from "../../store/features/employeesSlice"
+import RestrictedAccess from "../page-compontents/RestrictedAccess"
 
 function RowComponent({name='N/A', rowNumber=0,  role='N/A', campaign='N/A', employeeNumber='N/A', goal='N/A', id=1}) {
   return (
@@ -88,7 +89,9 @@ function Employees() {
   }, [])
   return (
     <>
-      <main className="grid w-full h-full grid-cols-12 grid-rows-12 gap-3 bg-fadedGrayBg">
+
+      { user.role === 'manager' ?
+        <main className="grid w-full h-full grid-cols-12 grid-rows-12 gap-3 bg-fadedGrayBg">
         <div className="w-full h-full mt-3 flex justify-between items-center col-start-2 col-span-10 row-start-1 row-span-1">
           <h1 className="roboto-bold text-2xl p-1 text-left">All Employees</h1>
           <form className="w-80 h-full flex justify-center">
@@ -112,7 +115,10 @@ function Employees() {
           <Loading /> :  
           <EmployeesComponent employees={employees} query={query.toLowerCase()} />}
         </div>
-      </main>
+        </main>
+        :
+        <RestrictedAccess />
+        }
     </>
   )
 }

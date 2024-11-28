@@ -5,6 +5,7 @@ import { useEffect, useState } from "react"
 import {useSelector, useDispatch} from 'react-redux'
 import {initializeGoals} from '../../store/features/goalSlice'
 import Loading from "../utils/Loading"
+import RestrictedAccess from "../page-compontents/RestrictedAccess"
 
 
 function RowComponent({name="N/A", id=-1, rowNumber=0, salesHourly='N/A', decisionsHourly='N/A'}) {
@@ -60,7 +61,7 @@ function GoalsComponent({goals, query}) {
 function Goals() {
   const [isLoading, setIsLoading] = useState(false)
   const [query, setQuery] = useState('')
-  const {isLoggedIn} = useSelector((state) => state.employee)
+  const {isLoggedIn, user} = useSelector((state) => state.employee)
   const {goals} = useSelector((state) => state.goals)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -90,7 +91,8 @@ function Goals() {
   }, [])
   return (
     <>
-      <main className="grid w-full h-full grid-cols-12 grid-rows-12 gap-3 bg-fadedGrayBg">
+      { user.role === 'manager' ?
+        <main className="grid w-full h-full grid-cols-12 grid-rows-12 gap-3 bg-fadedGrayBg">
       <div className="w-full h-full mt-3 flex justify-between items-center col-start-2 col-span-10 row-start-1 row-span-1">
           <h1 className="roboto-bold text-2xl p-1 text-left">All Goals</h1>
           <form className="w-80 h-full flex justify-center">
@@ -112,7 +114,9 @@ function Goals() {
           {isLoading? <Loading />: <GoalsComponent goals={goals} query={query}/>}
 
         </div>
-      </main>
+        </main>:
+        <RestrictedAccess />
+      }
     </>
   )
 }

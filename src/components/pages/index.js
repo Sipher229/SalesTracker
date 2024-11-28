@@ -18,6 +18,9 @@ import AddCampaign from './FormPages/AddCampaign.jsx'
 import VerifyOtp from './VerifyOtp.jsx'
 import MyTeam from './MyTeam.jsx'
 import MyProfile from './MyProfile.jsx'
+import AddJobAid from './FormPages/AddJobAid.jsx'
+import JobAids from './JobAids.jsx'
+
 
 
 export {
@@ -41,5 +44,7 @@ export {
     VerifyOtp,
     MyTeam,
     MyProfile,
+    AddJobAid,
+    JobAids,
 
 }

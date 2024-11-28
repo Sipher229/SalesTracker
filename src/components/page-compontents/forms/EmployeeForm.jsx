@@ -91,6 +91,7 @@ function EmployeeForm() {
                 setErrorTickets([errorMessages.editSuccessFul])
                 updateErrorFlag(false)
                 setTimeout(() => {
+                    setIsLoading(false)
                     navigate('/layout/allemployees')
                 }, delay)
             }

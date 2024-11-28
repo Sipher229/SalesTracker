@@ -2,7 +2,9 @@
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { Link, useNavigate, useParams } from "react-router-dom"
+
 function GoalComponent({name = 'N/A', hourlySales = 'N/A', hourlyDecisions = 'N/A', entryDate = 'N/A', id=-1}) {
+  
   
   return (
     <>
@@ -12,9 +14,7 @@ function GoalComponent({name = 'N/A', hourlySales = 'N/A', hourlyDecisions = 'N/
                 <h1 id="cardtitle" className="roboto-bold text-xl px-3 text-center">Goal</h1>
                 <div className="w-1/4 h-auto flex justify-end items-center gap-2">
                   <Link className={`text-mygreen-500 underline underline-offset-2 decoration-inherit active:underline-none roboto-medium`} to={`/layout/allgoals/goal/edit/${id}`}>Edit</Link>
-                  <button className={`text-mygreen-500 underline underline-offset-2 decoration-inherit active:underline-none roboto-medium`}>Delete</button>
                 </div>
-
             </div>
             <table className=" w-full ">
                 <tbody className="">
@@ -60,13 +60,12 @@ function Goal() {
     
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
   return (
     <>
-      <main className="grid w-full h-full grid-cols-12 grid-rows-12 gap-3 bg-fadedGrayBg">
-
+      
+      <main className={`grid w-full h-full grid-cols-12 grid-rows-12 gap-3 bg-fadedGrayBg`}>
         <div className="row-start-2 row-span-5 col-start-3 col-end-11">
-          {goal ? <GoalComponent name={goal.name} entryDate={goal.entry_date.split('T')[0]} hourlyDecisions={goal.hourly_decisions} hourlySales={goal.hourly_sales} id={id} /> : <GoalComponent />}
+          {goal ? <GoalComponent name={goal.name} entryDate={goal.entry_date?.split('T')[0]} hourlyDecisions={goal.hourly_decisions} hourlySales={goal.hourly_sales} id={id} /> : <GoalComponent />}
 
         </div>
       </main>

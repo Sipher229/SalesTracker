@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { Link, useNavigate, useParams } from "react-router-dom"
+import RestrictedAccess from "../page-compontents/RestrictedAccess"
 
 
 function CampaignComponent({name='N/A', commission='N/A', tax='N/A', hourlySales='N/A', hourlyDecisions ='N/A', entryDate='N/A', id=-1}){
@@ -55,7 +56,7 @@ function Campaign() {
   const {campaigns} = useSelector((state) => state.campaigns)
   const [campaign, setCampaign] = useState(null)
   const {id} = useParams()
-  const {isLoggedIn} = useSelector((state) => state.employee)
+  const {isLoggedIn, user} = useSelector((state) => state.employee)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -70,13 +71,17 @@ function Campaign() {
   }, [])
   return (
     <>
-      <main className="grid w-full h-full grid-cols-12 grid-rows-12 gap-3 bg-fadedGrayBg">
+      { user.role === 'manager'?
+        <main className="grid w-full h-full grid-cols-12 grid-rows-12 gap-3 bg-fadedGrayBg">
 
         <div className="row-start-2 row-span-6 col-start-3 col-end-11">
          { campaign? <CampaignComponent name={campaign.campaign_name} hourlySales={campaign.hourly_sales} hourlyDecisions={campaign.hourly_decisions} entryDate={campaign.entry_date.split('T')[0]} tax={campaign.tax} commission={campaign.commission} id={id} /> : <CampaignComponent /> }
 
         </div>
-      </main>
+        </main>
+        :
+        <RestrictedAccess />
+      }
     </>
   )
 }

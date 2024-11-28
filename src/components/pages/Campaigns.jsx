@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom"
 import Api from "../utils/API-calling-functions/Api"
 import { initializeCampaigns } from "../../store/features/campaignSlice"
 import Loading from "../utils/Loading"
+import RestrictedAccess from "../page-compontents/RestrictedAccess"
 
 function RowComponent({name='N/A', rowNumber=0,  hourlyGoal='N/A', commission='N/A', tax='N/A', hourlyDecisions='N/A', id=-1}) {
   return (
@@ -23,20 +24,24 @@ function RowComponent({name='N/A', rowNumber=0,  hourlyGoal='N/A', commission='N
 function CampaignComponent({campaigns, query}) {
   return (
     <>
-      <div className="w-full h-full bg-white box-border  rounded-md shadow-xl hover:outline-offset-2 outline-mygreen-500 overflow-y-scroll">
+      <div className="w-full h-full bg-white box-border  rounded-md shadow-xl hover:outline-offset-2 outline-mygreen-500 overflow-y-scroll relative">
             
-            <table className=" w-full ">
-                <tbody className="">
-                  <tr className="w-full h-9 bg-fadedGrayBg">
+            <table className=" w-full relative">
+                <thead className="relative">
+                  <tr className="w-full h-9 sticky">
 
-                    <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">No</td> 
-                    <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">Name</td> 
-                    <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">Commission</td>
-                    <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">Tax</td>
-                    <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">Hourly Goal</td>
-                    <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">Hourly Decisions</td>
-                    
+                    <th className="w-24 h-8 text-left px-3 roboto-medium text-sm">No</th> 
+                    <th className="w-24 h-8 text-left px-3 roboto-medium text-sm">Name</th> 
+                    <th className="w-24 h-8 text-left px-3 roboto-medium text-sm">Commission</th>
+                    <th className="w-24 h-8 text-left px-3 roboto-medium text-sm">Tax</th>
+                    <th className="w-24 h-8 text-left px-3 roboto-medium text-sm">Hourly Goal</th>
+                    <th className="w-24 h-8 text-left px-3 roboto-medium text-sm">Hourly Decisions</th>
+
                   </tr>
+
+                </thead>
+                <tbody className="relative">
+                  
                   {
                     campaigns.length === 0 ?
                     <RowComponent />
@@ -62,7 +67,7 @@ function Campaigns() {
   const {campaigns} = useSelector((state) => state.campaigns)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const {isLoggedIn} = useSelector((state) => state.employee)
+  const {isLoggedIn, user} = useSelector((state) => state.employee)
   const api = new Api()
   useEffect(() => {
     if (!isLoggedIn) {
@@ -88,6 +93,7 @@ function Campaigns() {
   }, [])
   return (
     <>
+    { user.role === 'manager' ?
       <main className="grid w-full h-full grid-cols-12 grid-rows-12 gap-3 bg-fadedGrayBg">
         <div className="w-full h-full mt-3 flex justify-between items-center col-start-2 col-span-10 row-start-1 row-span-1">
           <h1 className="roboto-bold text-2xl p-1 text-left">All Campaigns</h1>
@@ -103,8 +109,7 @@ function Campaigns() {
               autoComplete="off"
               />
             </label>
-            
-            
+              
           </form>
         </div>
         <div className="row-start-3 row-span-9 col-start-2 col-span-10">
@@ -112,6 +117,9 @@ function Campaigns() {
 
         </div>
       </main>
+      : 
+      <RestrictedAccess />
+    }
       
     </>
   )

@@ -8,6 +8,7 @@ import Api from "../utils/API-calling-functions/Api.js"
 
 
 
+
 function Dashboard() {
   const delay = 1000 * 60 * 15
   const dispatch = useDispatch()
@@ -20,7 +21,6 @@ function Dashboard() {
         if(response.data.success){
           dispatch(updateSalesPerHour(response.data.salesPerHour))
         }
-        console.log(response.data)
       // eslint-disable-next-line no-unused-vars
       } catch (error) { 
         return  
@@ -57,16 +57,18 @@ function Dashboard() {
   }, [])
 
   return (
-    <article className="w-full h-full flex flex-col">
+    <article className="w-full relative h-full flex flex-col">
+      
       <div className="w-full h-16">
         <Header />
-
+        
       </div>
-      <div className="w-full h-full flex overflow-hidden">
+      <div className={`w-full h-full flex overflow-hidden`}>
         <div className="w-72 h-full ">
           <SideNav />
         </div>
-        <div className='w-full h-full'>
+        <div className={`w-full h-full`}>
+          
           <Outlet />
         </div>
       </div>

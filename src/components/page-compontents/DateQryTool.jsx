@@ -3,7 +3,7 @@ import AuthSubmitBtn from "./Authpages-components/AuthSubmitBtn"
 import Api from "../utils/API-calling-functions/Api"
 import { initializeSales } from "../../store/features/salesSlice"
 import { useDispatch } from "react-redux"
-import { setErrorTickets } from "../../store/features/errorTicketsSlice"
+import { setErrorTickets, updateErrorFlag } from "../../store/features/errorTicketsSlice"
 import errorMessages from "../utils/errorMessages"
 
 
@@ -26,14 +26,17 @@ function DateQryTool({isLoading, setIsLoading}) {
             else
             {
                 dispatch(setErrorTickets([errorMessages.failedFetch]))
+                dispatch(updateErrorFlag(true))
             }
             setIsLoading(false)
 
         }
+        // eslint-disable-next-line no-unused-vars
         catch(err){
             dispatch(setErrorTickets([errorMessages.failedFetch]))
+            dispatch(updateErrorFlag(true))
             setIsLoading(false)
-            console.log(err)
+    
         }
     }
   return (
@@ -41,7 +44,7 @@ function DateQryTool({isLoading, setIsLoading}) {
         <form className="w-80 h-full flex justify-center gap-4">
             
             <input 
-            className="w-44 h-full outline-mylightgreen-300 border rounded-md border-mygreen-300 outline-offset-2"
+            className="w-44 h-full outline-mylightgreen-300 border rounded-md border-mygreen-300 outline-offset-2 p-2 text-center roboto-medium"
             value={dt}
             onChange={(e) => setDt(e.target.value)}
             type='date'

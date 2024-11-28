@@ -24,14 +24,26 @@ function RowComponent({name='N/A', rowNumber=0, campaign='N/A', customerNumber='
   )
 }
 
-function SalesComponent({sales=[]}) {
+function SalesComponent({sales=[], setTotalCommission}) {
+
+  useEffect(() => {
+
+    const calculateTotalCom = () => {  
+      const commissionArray = Array.from(sales, (sale) => parseFloat(sale.commission))
+      
+      const total = commissionArray.reduce((accumulator, current)=> accumulator + current, 0) 
+      setTotalCommission(total)
+    }
+    calculateTotalCom()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   return (
     <>
       <div className="w-full h-full overflow-y-scroll bg-white box-border  rounded-md shadow-lg hover:outline-offset-2 outline-mygreen-500">
             
             <table className=" w-full full">
                 <tbody className="w-full h-full">
-                  <tr className="w-full h-9 border-b border-gray-400">
+                  <tr className="w-full h-9 bg-fadedGrayBg">
                     <td className="w-10 h-8 text-left px-3 roboto-medium text-sm" >No</td>
                     <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">Name</td> 
                     <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">Campaign</td>
@@ -71,6 +83,7 @@ function Sales() {
       setIsLoading(true)
       try {
         const response = await api.getSalesForEmployee()
+        console.log(response.data.requestedData)
         
         if( response.status === 200) {
           dispatch(initializeSales(response.data.requestedData))
@@ -86,19 +99,16 @@ function Sales() {
     return () => dispatch(setErrorTickets([]))
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
-  useEffect(() => {
-    const commissionArray = Array.from(sales, (sale) => parseFloat(sale.commission))
-    console.log(sales)
-    const total = commissionArray.reduce((accumulator, current)=> accumulator + current, 0) 
-    setTotalCommission(total)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) 
+  // useEffect(() => {
+  
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []) 
   return (
     <>
       <main className="grid pl-8 w-full h-full grid-cols-12 grid-rows-12 gap-3 bg-fadedGrayBg">
         <div className="w-full h-full mt-3 flex justify-between items-center col-start-1 col-span-11 row-start-1 row-span-1"><h1 className=" w-1/2 h-full roboto-bold text-2xl p-1 text-left">My Sales</h1> <DateQryTool isLoading={isLoading} setIsLoading={setIsLoading} /> </div> 
-        <div className="row-start-2  row-span-9 col-start-1 col-span-11 w-full h-full">
-          {isLoading? <Loading /> : <SalesComponent sales={sales} isLoading={isLoading} />}
+        <div className="row-start-3  row-span-8 col-start-1 col-span-11 w-full h-full">
+          {isLoading? <Loading /> : <SalesComponent sales={sales} isLoading={isLoading} setTotalCommission={setTotalCommission} />}
 
         </div>
         <h1 className="roboto-bold text-xl p-1 text-left col-start-1 col-span-10 row-start-12 row-span-1">Total Commission: {totalCommmission.toFixed(2) || 'N/A'} </h1>
