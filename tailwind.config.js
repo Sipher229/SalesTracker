@@ -29,9 +29,6 @@ export default {
         fadedGrayBg: '#F5F7F8',
         myyellow: '#FCDE70',
       },
-      backgroundImage: {
-        'green-landscape-hd': "url('./src/green-landscape-hd.jpg')",
-      }
     },
   },
   plugins: [

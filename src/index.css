@@ -76,4 +76,6 @@
     font-weight: 900;
     font-style: italic;
   }
-  
+.bg-green-landscape-hd {
+  background-image: url('./green-landscape-hd.jpg');
+}
