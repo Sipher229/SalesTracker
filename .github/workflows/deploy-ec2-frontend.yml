@@ -24,5 +24,5 @@ jobs:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_KEY }}
-        source: ./build/*
-        target: /var/www/html/
+        source: ./dist/*
+        target: /home/ubuntu/apps/sales-tracker/frontend/
