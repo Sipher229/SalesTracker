@@ -110,6 +110,7 @@ function App() {
       emptyTickets()
       dispatch(setErrorTickets([errorMessages.failedLogin]))
       dispatch(updateErrorFlag(true))
+      console.log(error)
     }
     
   }
