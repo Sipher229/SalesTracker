@@ -76,7 +76,7 @@ function ReportCard({salesPerHour = 0, loginTime = 'N/A', shiftDuration = 'N/A'}
                 <tbody className="">
                     <tr className="w-full h-9 odd:bg-fadedGrayBg even:bg-white">
                     <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm">Current Sales per hour</td>
-                        <td className="w-[30rem] h-full text-left px-3 roboto-bold">{ parseFloat(salesPerHour).toFixed(2) || 'N/A'}</td>
+                        <td className="w-[30rem] h-full text-left px-3 roboto-bold">{ parseFloat(salesPerHour)?.toFixed(2) ? parseFloat(salesPerHour)?.toFixed(2) : 'N/A'}</td>
                       </tr>
                     <tr className="w-full h-9 odd:bg-fadedGrayBg even:bg-white">
                       <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm">Shift Start</td>

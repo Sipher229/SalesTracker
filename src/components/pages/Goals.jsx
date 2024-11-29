@@ -105,6 +105,7 @@ function Goals() {
               onChange={(e) => setQuery(e.target.value)}
               type='text'
               autoComplete="off"
+              placeholder="Type to search"
               />
             </label>
              
