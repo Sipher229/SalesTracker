@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = 'http://localhost:3000/api'
+const baseURL = import.meta.PROD ? '/api' : 'http://localhost:3000/api'
 console.log(baseURL)
 
 const axiosInstance = axios.create({
