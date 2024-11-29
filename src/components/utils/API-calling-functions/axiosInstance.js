@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const baseURL = import.meta.PROD ? '/api' : 'http://localhost:3000/api'
-console.log(baseURL)
+const baseURL = import.meta.env.PROD ? '/api' : 'http://localhost:3000/api'
 
 const axiosInstance = axios.create({
     baseURL,
