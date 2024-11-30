@@ -137,6 +137,14 @@ function Api() {
         const response = await axiosInstance.get(`/jobaids/getjobaids`)
         return response
     }
+    this.getCampaignsPerGoal = async (id) => {
+        const response = await axiosInstance.get(`/goals/getcampaigns/${id}`)
+        return response
+    }
+    this.getEmployeesPerCampaign = async (id) => {
+        const response = await axiosInstance.get(`/campaigns/getemployees/${id}`)
+        return response
+    }
     
 }
 

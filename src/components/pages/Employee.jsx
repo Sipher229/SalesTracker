@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import Api from "../utils/API-calling-functions/Api"
 import Loading from "../utils/Loading"
@@ -8,6 +8,7 @@ import BarChart from "../page-compontents/dashboard-body/BarChart"
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
 import RestrictedAccess from "../page-compontents/RestrictedAccess"
+import { initializeEmployees } from "../../store/features/employeesSlice"
 Chart.register(CategoryScale);
 
 
@@ -125,22 +126,45 @@ function Employee() {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const {isLoggedIn, user } = useSelector((state) => state.employee)
+  const [loginTime, setloginTime] = useState(null)
+  const [salesPerhour, setsalesPerHour] = useState(null)
   const {id} = useParams()
   const [employee, setemployee] = useState(null)
+  const {employees} = useSelector((state) => state.employees)
+  const dispatch = useDispatch()
   const api = new Api()
+  useEffect(() => {
+    if(employees.length === 0){
+      const fetchData = async () => {
+        try {
+          const response = await api.getAllEmployees()
+          if(response.status === 200){
+            dispatch(initializeEmployees(response.data.requestedData))
+          }
+        } catch (error) {
+          console.log(error.message)
+        }
+      }
+      fetchData()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  
   useEffect(() => {
     if(!isLoggedIn) {
       navigate('/layout/dashboard')
     }
     if(id && id> 0) {
+      const emp = employees.find((em) => em.id == id)
+      setemployee(emp)
       
       const fetchData = async () => {
         setIsLoading(true)
         try{
           const response = await api.getEmployeeById(id)
           if (response.status === 200) {
-            setemployee(response.data.requestedData[0])
-            console.log(response.data.requestedData[0])
+            response.data.requestedData === 0 && setloginTime(response.data.requestedData[0].login_time)
+            response.data.requestedData === 0 && setsalesPerHour(response.data.requestedData[0].sales_per_hour)
           }
           setIsLoading(false)
         }
@@ -153,6 +177,8 @@ function Employee() {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+
   return (
     <>
       { user.role === 'manager' ?
@@ -165,11 +191,11 @@ function Employee() {
             firstName={employee?.first_name}
             lastName={employee?.last_name}
             id={id} 
-            campaign={employee?.campaignname}
+            campaign={employee?.campaign_name}
             employeeNumber={employee?.employee_number}
             employeeRole={employee?.employee_role}
-            loginTime={employee?.login_time?.split('T')[0] + " " + employee?.login_time?.split('T')[1]}
-            salesPerHour={employee?.sales_per_hour}
+            loginTime={loginTime ? loginTime?.split('T')[0] + " " + loginTime?.split('T')[1] : 'N/A'}
+            salesPerHour={salesPerhour ? salesPerhour : 'N/A'}
             />
             :
             isLoading && <EmployeeComponent /> || <Loading /> }

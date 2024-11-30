@@ -2,6 +2,56 @@
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { Link, useNavigate, useParams } from "react-router-dom"
+import Api from "../utils/API-calling-functions/Api"
+import Loading from "../utils/Loading"
+
+function RowComponent({name='N/A', rowNumber=0, commission='N/A', tax='N/A', id=-1}) {
+  return (
+    <tr className="w-full h-9 odd:bg-fadedGrayBg even:bg-white">
+      <td className="w-24 h-8 text-left px-3 roboto-bold">{rowNumber + 1}</td>
+      <td className="w-24 h-8 text-left px-3 roboto-light text-sm underline text-mygreen-500 underline-offset-2 decoration-inherit"> <Link to={`/layout/allcampaigns/campaign/${id}`}>{name} </Link> </td>
+      <td className="w-24 h-8 text-left px-3 roboto-bold">{commission}</td>
+      <td className="w-24 h-8 text-left px-3 roboto-bold">{tax}</td>
+                    
+    </tr>
+  )
+}
+
+function CampaignComponent({campaigns}) {
+  return (
+    <>
+      <div className="w-full h-full bg-white box-border  rounded-md shadow-xl hover:outline-offset-2 outline-mygreen-500 overflow-y-scroll relative">
+            
+            <table className=" w-full relative">
+                <thead className="relative">
+                  <tr className="w-full h-9 sticky">
+
+                    <th className="w-24 h-8 text-left px-3 roboto-medium text-sm">No</th> 
+                    <th className="w-24 h-8 text-left px-3 roboto-medium text-sm">Name</th> 
+                    <th className="w-24 h-8 text-left px-3 roboto-medium text-sm">Commission</th>
+                    <th className="w-24 h-8 text-left px-3 roboto-medium text-sm">Tax</th>
+
+                  </tr>
+
+                </thead>
+                <tbody className="relative">
+                  
+                  {
+                    campaigns.length === 0 ?
+                    <RowComponent />
+                    :
+                    campaigns.map((campaign, index) => {
+                      return <RowComponent key={index} id={campaign.id} rowNumber={index} name={campaign.name} commission={campaign.commission} tax={campaign.tax} />
+                    })
+                  }
+        
+                </tbody>
+            </table>
+      </div>
+    </>
+  )
+}
+
 
 function GoalComponent({name = 'N/A', hourlySales = 'N/A', hourlyDecisions = 'N/A', entryDate = 'N/A', id=-1}) {
   
@@ -48,6 +98,9 @@ function Goal() {
   const {goals} = useSelector((state) => state.goals)
   const [goal, setGoal] = useState(null)
   const {isLoggedIn} = useSelector((state) => state.employee)
+  const [campaigns, setcampaigns] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const api = new Api()
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -57,16 +110,36 @@ function Goal() {
       const gl = goals.find((goal) => goal.id == id)
       setGoal(gl)
     }
+    const fetchData = async () => {
+      setIsLoading(true)
+      try {
+        const response = await api.getCampaignsPerGoal(id)
+        if(response.status ===200) {
+          setcampaigns(response.data.requestedData)
+        }
+        setIsLoading(false)
+      // eslint-disable-next-line no-unused-vars
+      } catch (error) {
+        setIsLoading(false)
+      }
+    }
+    fetchData()
     
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <>
       
-      <main className={`grid w-full h-full grid-cols-12 grid-rows-12 gap-3 bg-fadedGrayBg`}>
-        <div className="row-start-2 row-span-5 col-start-3 col-end-11">
+      <main className={`flex flex-col w-full h-full justify-start items-center p-6 gap-3 bg-fadedGrayBg`}>
+        <div className="w-4/6 h-[14rem]">
           {goal ? <GoalComponent name={goal.name} entryDate={goal.entry_date?.split('T')[0]} hourlyDecisions={goal.hourly_decisions} hourlySales={goal.hourly_sales} id={id} /> : <GoalComponent />}
 
+          
+
+        </div>
+        <h1 className="roboto-bold text-xl w-full text-left pl-20">Associated Campaigns</h1>
+        <div className="w-5/6 h-[12rem]">
+          {isLoading ? <Loading /> :<CampaignComponent campaigns={campaigns} />}
         </div>
       </main>
     </>
