@@ -344,7 +344,7 @@ function EmployeeForm() {
             </label>
             
             
-            {id ? "" : <button onClick={(e) => {e.preventDefault(); generateRandomPassword()}} className="bg-mygreen-700 active:scale-95 text-white rounded-md w-full h-3/5 row-start-11 row-span-2 col-start-9 col-span-2">Auto</button>}
+            {id ? "" : <button onClick={(e) => {e.preventDefault(); generateRandomPassword()}} className="bg-mygreen-700 active:scale-95 text-white rounded-md w-full h-10 outline-white row-start-11 row-span-2 col-start-9 col-span-2">Auto</button>}
 
             {id? <SubmitButton name={"Save"} handleSubmit={handleEdit} isLoading={isLoading} /> :<SubmitButton handleSubmit={handleSubmit} isLoading={isLoading} />}
 

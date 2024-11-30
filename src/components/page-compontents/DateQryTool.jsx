@@ -41,7 +41,7 @@ function DateQryTool({isLoading, setIsLoading}) {
     }
   return (
     <>
-        <form className="w-80 h-full flex justify-center gap-4">
+        <form className="w-80 h-full flex justify-center items-center gap-4">
             
             <input 
             className="w-44 h-10 outline-mylightgreen-300 border rounded-md border-mygreen-300 outline-offset-2 p-2 text-center roboto-medium"

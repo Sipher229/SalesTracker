@@ -43,9 +43,9 @@ function UserProfile({name='User\'s full name'}){
   return (
     <>
       <button
-      onClick={() => setShowing((prev)=> !prev)}
+      onFocus={() => setShowing((prev)=> !prev)}
       onBlur={() => setShowing((prev)=> !prev)}
-      className="min-w-52 h-12 rounded-xl flex justify-center items-center gap-4 ">
+      className="min-w-52 h-12 rounded-xl flex justify-center items-center gap-4 outline-white  ">
         <span className="text-white roboto-medium">Hello, {name}</span>
         {  showing? <ChevronUp /> : <ChevronDown />}
         <ul className={`w-28 h-16 bg-white absolute ${showing? '' : 'hidden'} active:bg-white right-5 top-12 shadow-xl rounded-sm overflow-hidden logout-popup-animation`}>

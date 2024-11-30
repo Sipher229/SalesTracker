@@ -45,7 +45,8 @@ function MainBody() {
   return (
     <>
         <div className="w-full h-full flex flex-col justify-start items-start p-10  bg-fadedGrayBg gap-4 overflow-y-scroll">
-            <div className="w-full h-44 flex gap-5">
+
+            <div className="w-full xl:w-11/12 h-44 flex gap-5">
                 <div className="w-1/2 h-44">
                     <GoalCard hourlyDecisions={user.hourlyDecisions} hourlySales={user.hourlySales} campaignName={user.campaignName}/>
                 </div>
@@ -55,10 +56,10 @@ function MainBody() {
 
             </div>
 
-            <div className="w-full h-auto mb-3">
+            <div className="w-full xl:w-11/12 h-auto mb-3">
                 <WeeklyBillBoard />
             </div>
-            <div className="w-full h-72 mb-20">
+            <div className="w-full xl:w-11/12 h-72 mb-20">
                 <StatsGraph />
             </div>
 
