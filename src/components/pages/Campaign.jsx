@@ -121,7 +121,7 @@ function Campaign() {
           console.log(error.message)
         }
       }
-      fetchData( )
+      fetchData()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -149,7 +149,7 @@ function Campaign() {
     }
     fetchData()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [campaigns])
 
   return (
     <>

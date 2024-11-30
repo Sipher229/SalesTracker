@@ -176,8 +176,7 @@ function Employee() {
       fetchData()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
+  }, [employees])
 
   return (
     <>
