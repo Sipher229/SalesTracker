@@ -137,9 +137,11 @@ function Goal() {
           
 
         </div>
-        <h1 className="roboto-bold text-xl w-full text-left pl-20">Associated Campaigns</h1>
-        <div className="w-5/6 h-[12rem]">
-          {isLoading ? <Loading /> :<CampaignComponent campaigns={campaigns} />}
+        <div className="w-full h-auto pl-20 mb-5">
+          <h1 className="roboto-bold text-xl w-full text-left">Associated Campaigns</h1>
+          <div className="w-11/12 h-[17rem]">
+            {isLoading ? <Loading /> :<CampaignComponent campaigns={campaigns} />}
+          </div>
         </div>
       </main>
     </>

@@ -154,16 +154,19 @@ function Campaign() {
   return (
     <>
       { user.role === 'manager'?
-        <main className="flex flex-col w-full h-full justify-start items-center gap-3 p-6 bg-fadedGrayBg">
+        <main className="flex flex-col w-full h-full justify-start items-center gap-3 p-6 bg-fadedGrayBg overflow-y-scroll">
 
         <div className="w-4/6 h-[17rem]">
          { campaign? <CampaignComponent name={campaign.campaign_name} hourlySales={campaign.hourly_sales} hourlyDecisions={campaign.hourly_decisions} entryDate={campaign.entry_date.split('T')[0]} tax={campaign.tax} commission={campaign.commission} id={id} /> : <CampaignComponent /> }
 
         </div>
-        <h1 className="roboto-bold text-xl text-left w-full pl-20 mt-3">Associated Employees</h1>
-        <div className="w-5/6 h-[12rem] ">
-          {isLoading ? <Loading /> : <EmployeesComponent employees={employees} />}
+        <div className="w-full h-auto pl-20 mb-5">
 
+          <h1 className="roboto-bold text-xl text-left w-full my-3">Associated Employees</h1>
+          <div className="w-11/12 h-[16rem]">
+            {isLoading ? <Loading /> : <EmployeesComponent employees={employees} />}
+
+          </div>
         </div>
         </main>
         :
