@@ -44,7 +44,7 @@ function DateQryTool({isLoading, setIsLoading}) {
         <form className="w-80 h-full flex justify-center gap-4">
             
             <input 
-            className="w-44 h-full outline-mylightgreen-300 border rounded-md border-mygreen-300 outline-offset-2 p-2 text-center roboto-medium"
+            className="w-44 h-10 outline-mylightgreen-300 border rounded-md border-mygreen-300 outline-offset-2 p-2 text-center roboto-medium"
             value={dt}
             onChange={(e) => setDt(e.target.value)}
             type='date'

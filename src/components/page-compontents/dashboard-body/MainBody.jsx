@@ -55,10 +55,10 @@ function MainBody() {
 
             </div>
 
-            <div className="w-full h-60">
+            <div className="w-full h-auto mb-3">
                 <WeeklyBillBoard />
             </div>
-            <div className="w-full h-72">
+            <div className="w-full h-72 mb-20">
                 <StatsGraph />
             </div>
 

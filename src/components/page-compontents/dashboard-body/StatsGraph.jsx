@@ -55,7 +55,7 @@ function StatsGraph() {
   // }
   return (
     <>
-        <div id="statsGraph" className="w-full h-82 mb-10 bg-white shadow-xl rounded-md p-2">
+        <div id="statsGraph" className="w-full h-96 bg-white shadow-xl rounded-md p-2">
             <h1 className="roboto-bold text-xl px-3 text-center w-full h-7">Weekly Stats</h1>
             <div className="h-80 w-full flex flex-col items-center">
 

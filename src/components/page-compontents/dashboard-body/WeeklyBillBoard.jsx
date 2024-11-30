@@ -6,14 +6,14 @@ import { initializeLogs } from "../../../store/features/dailyLogSlice"
 import Loading from "../../utils/Loading"
 
 
-function RowComponent({name="N/A", campaignName='N/A', salesPerHour=3}) {
+function RowComponent({name="N/A", campaignName='N/A', salesPerHour=-1}) {
     return (
       <>
         <tr className="w-full h-9 odd:bg-white even:bg-fadedGrayBg">
   
           <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm roboto-medium text-mygreen-300">{name || 'N/A'}</td>
           <td className="w-[30rem] h-full text-left px-3 roboto-bold text-sm">{campaignName || 'N/A'}</td>
-          <td className="w-[30rem] h-full text-left px-3 roboto-bold text-sm">{salesPerHour?.toFixed(2) || 'N/A'}</td>
+          <td className="w-[30rem] h-full text-left px-3 roboto-bold text-sm">{salesPerHour < 0 ? 'N/A' : salesPerHour?.toFixed(2) }</td>
                         
         </tr>
       </>
@@ -25,7 +25,7 @@ function RowComponent({name="N/A", campaignName='N/A', salesPerHour=3}) {
   function BodyComponent({employees=[]}) {
     return (
       <>
-        <div className="w-full h-full bg-white box-border overflow-y-scroll flex flex-col justify-start items-center">
+        <div className="w-full h-full box-border overflow-y-scroll flex flex-col justify-start items-center">
               <h1 className="roboto-bold text-xl text-left px-3 w-full">Daily Billboard</h1>
               <table className=" w-full   ">
                   <tbody className="w-full">
@@ -36,9 +36,11 @@ function RowComponent({name="N/A", campaignName='N/A', salesPerHour=3}) {
                       <td className="w-[30rem] h-full text-left px-3 roboto-medium">Sales Per Hour</td>
                     </tr>
                     {
+                        employees.length !== 0 ?
                         employees.map((employee, index) => {
                             return <RowComponent key={index} name={employee.first_name + " " + employee.last_name} campaignName={employee.campaign_name}  salesPerHour={employee.sales_per_hour}/>
                         })
+                        : <RowComponent />
                     }
                   </tbody>
               </table>
@@ -82,14 +84,14 @@ function WeeklyBillBoard() {
   }, [])
   return (
     <>
-      <main className="grid w-full h-full grid-cols-12 rounded-md overflow-hidden grid-rows-12 gap-3 bg-white shadow-xl">
+      <main className="grid w-full h-[20rem] grid-cols-12 rounded-md overflow-hidden grid-rows-6 gap-3 bg-white shadow-xl">
       
-        <div className="w-[56rem] h-[14rem] flex justify-start items-start">
+        <div className="col-start-1 row-start-1 col-span-12 row-span-6 flex justify-start items-start">
         {
           isLoading ?
           <div className='w-full h-full flex justify-center items-center'><Loading /></div>
           :
-          <BodyComponent employees={logs} /> || "No data to display."
+          <BodyComponent employees={logs} />
         }
 
         </div>

@@ -232,7 +232,7 @@ function EmployeeForm() {
                 name="firstName" 
                 value={credentials.firstName}
                 onChange={handleChange}
-                className="px-2 w-full h-4/5  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
+                className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
                 placeholder="first name"
                 required
                 />
@@ -245,7 +245,7 @@ function EmployeeForm() {
                 name="lastName" 
                 value={credentials.lastName}
                 onChange={handleChange}
-                className="px-2 w-full h-4/5  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
+                className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
                 placeholder="last name"
                 required
                 />
@@ -257,7 +257,7 @@ function EmployeeForm() {
                 <select 
                     id="campaign"
                     name="campaign" 
-                    className="px-2 w-full h-4/5  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
+                    className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
                     onChange={handleSelect}
                     >
                     <option value={id? credentials.campaignId : ''} className="">{id? credentials.campaign : "Choose a campaign"}</option>
@@ -278,7 +278,7 @@ function EmployeeForm() {
                 name="employeeNumber" 
                 value={credentials.employeeNumber}
                 onChange={handleChange}
-                className="px-2 w-full h-4/5  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
+                className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
                 placeholder="S388"
                 required
                 />
@@ -290,7 +290,7 @@ function EmployeeForm() {
                 id="employeeRole" 
                 name='employeeRole'
                 onChange={handleChange}
-                className="px-2 w-full h-4/5  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
+                className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
                 placeholder="product+campaign. eg: FAESgrubUpselling"
                 >
                     <option value={id? credentials.employeeRole: ''}>{id? credentials.employeeRole : "Choose a role"}</option>
@@ -313,7 +313,7 @@ function EmployeeForm() {
                 onChange={handleChange}
                 autoComplete="new-password"
                 placeholder='Temporary Password'
-                className="px-2 w-full h-4/5 bg-white  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
+                className="px-2 w-full h-10 bg-white  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
                 required
                 />
 
@@ -336,7 +336,7 @@ function EmployeeForm() {
                 value={credentials.username}
                 autoComplete="off"
                 onChange={handleChange}
-                className="px-2 w-full h-4/5  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
+                className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
                 placeholder="example@gmail.com"
                 required
                 />

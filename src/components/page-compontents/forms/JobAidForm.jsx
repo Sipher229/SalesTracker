@@ -103,7 +103,7 @@ function JobAidForm() {
                 autoComplete="off"
                 value={data.name}
                 onChange={handleChange}
-                className="px-2 w-full h-4/5  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
+                className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
                 placeholder="descriptive name. eg: 3'sAnd7's"
                 required
                 />
@@ -118,7 +118,7 @@ function JobAidForm() {
                 autoComplete="off"
                 value={data.url}
                 onChange={handleChange}
-                className="px-2 w-full h-4/5  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
+                className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
                 placeholder="number eg: 3"
                 required
                 />

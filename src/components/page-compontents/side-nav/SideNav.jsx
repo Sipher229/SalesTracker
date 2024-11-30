@@ -5,7 +5,7 @@ import allLinks from './allLinks.js'
 function SideNav() {
   return (
     <>
-      <aside className='flex flex-col justify-start pt-8 items-start w-72 gap-8 overflow-y-scroll side-nav-height bg-gradient-to-br from-mygreen-750 via-mygreen-500 to-mygreen-300'>
+      <aside className='flex flex-col justify-start py-10 items-start w-72 gap-8 overflow-y-scroll side-nav-height bg-gradient-to-br from-mygreen-750 via-mygreen-500 to-mygreen-300 h-full'>
         <div className='flex justify-center w-full h-2 my-5 '>  
           <Link to={'/layout/newsale'}><button className=' shadow-md rounded-md w-36 h-10 bg-mylightgreen-300 text-white active:scale-95'>New Sale</button></Link>    
         </div>

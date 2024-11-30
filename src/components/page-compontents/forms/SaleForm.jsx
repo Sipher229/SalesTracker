@@ -193,7 +193,7 @@ function SaleForm() {
                 type="text" 
                 name="saleName"
                 value={data.name}
-                className="px-2 w-full h-4/5  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
+                className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
                 placeholder="product+campaign. eg: grup sale for 116.8"
                 required
                 autoComplete="off"
@@ -207,7 +207,7 @@ function SaleForm() {
                     id="campaign"
                     name="campaign" 
                     required
-                    className="px-2 w-full h-4/5  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
+                    className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
                     onChange={handleSelect}
                     >
                     <option value={id? data.campaignId : ''} className="">{id? data.campaign :"Choose a campaign"}</option>
@@ -226,7 +226,7 @@ function SaleForm() {
                 <input 
                 type="text" 
                 name="customerNumber" 
-                className="px-2 w-full h-4/5  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
+                className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
                 placeholder="MONT-000000"
                 required
                 autoComplete="off"
@@ -241,7 +241,7 @@ function SaleForm() {
                 type="Number" 
                 name="price"
                 value={data.price}
-                className="px-2 w-full h-4/5  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
+                className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
                 placeholder="340.99"
                 required
                 onChange={handleChange}
@@ -254,7 +254,7 @@ function SaleForm() {
                 type="number" 
                 name="discount" 
                 value={data.discount}
-                className="px-2 w-full h-4/5  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
+                className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
                 placeholder="eg: 10"
                 required
                 onChange={handleChange}
@@ -267,7 +267,7 @@ function SaleForm() {
                 <input 
                 type="number" 
                 name="tax"
-                className="px-2 w-full h-4/5 outline-none border border-mygreen-300 rounded-md"
+                className="px-2 w-full h-10 outline-none border border-mygreen-300 rounded-md"
                 readOnly
                 value={data.tax}
                 />
@@ -279,7 +279,7 @@ function SaleForm() {
                 ref={commissionRef}
                 type="number" 
                 name="commission"
-                className="px-2 w-full h-4/5 outline-none border border-mygreen-300 rounded-md"
+                className="px-2 w-full h-10 outline-none border border-mygreen-300 rounded-md"
                 readOnly
                 value={((data.price - (data.price * data.tax/100) - (data.price * data.discount/100)) * data.commissionRate/100).toFixed(2) || 0}
                 />
