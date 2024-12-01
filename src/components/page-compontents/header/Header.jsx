@@ -43,8 +43,8 @@ function UserProfile({name='User\'s full name'}){
   return (
     <>
       <button
-      onFocus={() => setShowing((prev)=> !prev)}
-      onBlur={() => setShowing((prev)=> !prev)}
+      onFocus={() => setShowing(true)}
+      onBlur={() => setShowing(false)}
       className="min-w-52 h-12 rounded-xl flex justify-center items-center gap-4 outline-white  ">
         <span className="text-white roboto-medium">Hello, {name}</span>
         {  showing? <ChevronUp /> : <ChevronDown />}
