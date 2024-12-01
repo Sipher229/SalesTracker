@@ -17,6 +17,7 @@ function FoldingLinkWrapper({name='', subLinks=[]}) {
                 <button 
                 className="w-full text-start flex justify-between items-center h-4 pr-20 hover:underline hover:decoration-mygreen-100 hover:underline-offset-2 my-2 outline-white"
                 onFocus={()=> setIsFolded((prev) => !prev)}
+                onClick={() =>setIsFolded((prev) => !prev)}
                 >
                     <span className="text-mygreen-100 w-full roboto-light outline-white">{name}</span>
                     {isFolded? <ChevronUp /> : <ChevronDown />}
