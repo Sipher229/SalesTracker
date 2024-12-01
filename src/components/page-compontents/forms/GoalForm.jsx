@@ -64,10 +64,9 @@ function GoalForm() {
                 
             }
             setIsLoading(false)
-        // eslint-disable-next-line no-unused-vars
         } catch (error) {
-            dispatch(setErrorTickets([errorMessages.failedAddition]))
-            dispatch(updateErrorFlag(false))
+            dispatch(setErrorTickets([errorMessages.failedAddition, error.message]))
+            dispatch(updateErrorFlag(true))
             setIsLoading(false)
         }
 
