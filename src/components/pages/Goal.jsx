@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import Api from "../utils/API-calling-functions/Api"
 import Loading from "../utils/Loading"
+import { setErrorTickets, updateErrorFlag } from "../../store/features/errorTicketsSlice"
 
 function RowComponent({name='N/A', rowNumber=0, commission='N/A', tax='N/A', id=-1}) {
   return (
@@ -53,7 +54,7 @@ function CampaignComponent({campaigns}) {
 }
 
 
-function GoalComponent({name = 'N/A', hourlySales = 'N/A', hourlyDecisions = 'N/A', entryDate = 'N/A', id=-1}) {
+function GoalComponent({name = 'N/A', hourlySales = 'N/A', hourlyDecisions = 'N/A', entryDate = 'N/A', id=-1, handleDelete}) {
   
   
   return (
@@ -64,6 +65,7 @@ function GoalComponent({name = 'N/A', hourlySales = 'N/A', hourlyDecisions = 'N/
                 <h1 id="cardtitle" className="roboto-bold text-xl px-3 text-center">Goal</h1>
                 <div className="w-1/4 h-auto flex justify-end items-center gap-2">
                   <Link className={`text-mygreen-500 underline underline-offset-2 decoration-inherit active:underline-none roboto-medium`} to={`/layout/allgoals/goal/edit/${id}`}>Edit</Link>
+                  <button onClick={() => handleDelete()} className={`text-mygreen-500 underline underline-offset-2 decoration-inherit roboto-medium`}>Delete</button>
                 </div>
             </div>
             <table className=" w-full ">
@@ -100,8 +102,41 @@ function Goal() {
   const {isLoggedIn} = useSelector((state) => state.employee)
   const [campaigns, setcampaigns] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const dispatch = useDispatch()
   const api = new Api()
+  const delay = 800
+  const handleDelete = async () =>{
+    if(campaigns.length !== 0) {
+      dispatch(setErrorTickets(['Can not delete a goal with associated campaigns']))
+      dispatch(updateErrorFlag(true))
+      return
+    }
+    // delete
+    try{
+      const response = await api.deleteGoal(id)
+      if (response.status === 200) {
+        dispatch(setErrorTickets([response.data.message]))
+        dispatch(updateErrorFlag(false))
+        setIsLoading(false)
+        setTimeout(() => {
+          
+          navigate('/layout/allgoals')
+        }, delay)
+      }
+      else{
+        dispatch(setErrorTickets(['Could Not delete Goal']))
+        dispatch(updateErrorFlag(true))
+        setIsLoading(false)
+      }
 
+      
+    }
+    catch (err) {
+      dispatch(setErrorTickets([err.message]))
+      dispatch(updateErrorFlag(true))
+      setIsLoading(false)
+    }
+  }
   useEffect(() => {
     if (!isLoggedIn) {
       navigate('/layout/dashboard')
@@ -132,7 +167,7 @@ function Goal() {
       
       <main className={`flex flex-col w-full h-full justify-start items-center p-6 gap-3 bg-fadedGrayBg`}>
         <div className="w-4/6 h-[14rem]">
-          {goal ? <GoalComponent name={goal.name} entryDate={goal.entry_date?.split('T')[0]} hourlyDecisions={goal.hourly_decisions} hourlySales={goal.hourly_sales} id={id} /> : <GoalComponent />}
+          {goal ? <GoalComponent handleDelete={handleDelete} name={goal.name} entryDate={goal.entry_date?.split('T')[0]} hourlyDecisions={goal.hourly_decisions} hourlySales={goal.hourly_sales} id={id} /> : <GoalComponent />}
 
           
 

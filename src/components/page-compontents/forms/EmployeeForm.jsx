@@ -84,35 +84,44 @@ function EmployeeForm() {
     const handleEdit = async (e) => {
         e.preventDefault()
         setIsLoading(true)
+        if(credentials.campaignId === '' || credentials.employeeRole === '') {
+            dispatch(setErrorTickets(['Employee\'s role and/or campaign can not be empty']))
+            dispatch(updateErrorFlag(true))
+            return
+        }
         try{
             const response = await api.editEmployee(credentials, id)
 
             if (response.status === 200){
-                setErrorTickets([errorMessages.editSuccessFul])
-                updateErrorFlag(false)
+                dispatch(setErrorTickets([errorMessages.editSuccessFul]))
+                dispatch(updateErrorFlag(false))
                 setTimeout(() => {
                     setIsLoading(false)
                     navigate('/layout/allemployees')
                 }, delay)
             }
             else{
-                setErrorTickets([errorMessages.failedEdit])
-                updateErrorFlag(true)
+                dispatch(setErrorTickets([errorMessages.failedEdit]))
+                dispatch(updateErrorFlag(true))
             }
             setIsLoading(false)
         }
         // eslint-disable-next-line no-unused-vars
         catch (err){
-            setErrorTickets([errorMessages.failedEdit])
-            updateErrorFlag(true)
+            dispatch(setErrorTickets([errorMessages.failedEdit]))
+            dispatch(updateErrorFlag(true))
             setIsLoading(false)
         }
     }
 
-
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsLoading(true)
+        if(credentials.campaignId === '' || credentials.employeeRole === '') {
+            dispatch(setErrorTickets(['Employee\'s role and/or campaign can not be empty']))
+            dispatch(updateErrorFlag(true))
+            return
+        }
         try{
             const response = await api.addEmployee(credentials)
             if(response.status === 200){
@@ -138,14 +147,14 @@ function EmployeeForm() {
             }
             setIsLoading(false)
         }
-        // eslint-disable-next-line no-unused-vars
         catch (err) {
-            dispatch(setErrorTickets([errorMessages.failedAddition]))
+            dispatch(setErrorTickets([errorMessages.failedAddition, err.message, 'Make sure you filled all fields']))
             dispatch(updateErrorFlag(true))
             setIsLoading(false)
         }
 
     }
+
     const handleSelect = (e) => {
         const {value} = e.target
         const campaign = campaigns.find((campaign) => campaign.campaign_id == value)
@@ -155,6 +164,7 @@ function EmployeeForm() {
             return {...prev, campaign: value, campaignId: campaign.campaign_id}
         })
     }
+
     const handleShowPassword = () => {
         setChecked(prev => !prev)
         if ( !checked ) {
@@ -167,6 +177,7 @@ function EmployeeForm() {
     
 
     }
+    
     useEffect(() => {
         if (!isLoggedIn) {
             navigate('/layout/dashboard')

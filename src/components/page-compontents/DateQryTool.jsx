@@ -15,7 +15,7 @@ function DateQryTool({isLoading, setIsLoading}) {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setIsLoading(true)
-        console.log(dt)
+        if (dt === '') return
         try{
 
             const response = await api.getSalesByDate(dt)
@@ -39,12 +39,13 @@ function DateQryTool({isLoading, setIsLoading}) {
     
         }
     }
+
   return (
     <>
         <form className="w-80 h-full flex justify-center items-center gap-4">
             
             <input 
-            className="w-44 h-10 outline-mylightgreen-300 border rounded-md border-mygreen-300 outline-offset-2 p-2 text-center roboto-medium"
+            className="w-44 h-9 outline-mylightgreen-300 border rounded-md border-mygreen-300 outline-offset-2 p-2 text-center roboto-medium"
             value={dt}
             onChange={(e) => setDt(e.target.value)}
             type='date'

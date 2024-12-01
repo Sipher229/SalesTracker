@@ -104,13 +104,11 @@ function App() {
         return
       }
       
-    // eslint-disable-next-line no-unused-vars
     } catch (error) {
       setIsLoading(false)
       emptyTickets()
-      dispatch(setErrorTickets([errorMessages.failedLogin]))
+      dispatch(setErrorTickets([errorMessages.failedLogin, error.message]))
       dispatch(updateErrorFlag(true))
-      console.log(error)
     }
     
   }

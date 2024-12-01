@@ -4,6 +4,9 @@ import Api from "../../utils/API-calling-functions/Api"
 import { useDispatch, useSelector } from "react-redux"
 import { initializeLogs } from "../../../store/features/dailyLogSlice"
 import Loading from "../../utils/Loading"
+import { setErrorTickets, updateErrorFlag } from "../../../store/features/errorTicketsSlice"
+import errorMessages from "../../utils/errorMessages"
+import AuthSubmitBtn from "../Authpages-components/AuthSubmitBtn"
 
 
 function RowComponent({name="N/A", campaignName='N/A', salesPerHour=-1}) {
@@ -18,36 +21,84 @@ function RowComponent({name="N/A", campaignName='N/A', salesPerHour=-1}) {
         </tr>
       </>
     )
+}
+  
+function DateQryTool({isLoading, setIsLoading, updateLogs}) {
+  const [dt, setDt] = useState('')
+  const dispatch = useDispatch()
+  const api = new Api()
+  const handleSubmit = async (e) => {
+      e.preventDefault()
+      setIsLoading(true)
+      if (dt === '') return
+      try{
+
+          const response = await api.getLogsByDate(dt)
+          if( response.status === 200){
+            updateLogs(response.data.requestedData)
+          }
+          else
+          {
+              dispatch(setErrorTickets([errorMessages.failedFetch]))
+              dispatch(updateErrorFlag(true))
+          }
+          setIsLoading(false)
+
+      }
+      catch(err){
+          dispatch(setErrorTickets([err.message,errorMessages.failedFetch]))
+          dispatch(updateErrorFlag(true))
+          setIsLoading(false)
+  
+      }
   }
+
+  return (
+    <>
+        <form className="w-80 h-full flex justify-center items-center gap-4">
+            
+            <input 
+            className="w-44 h-9 outline-mylightgreen-300 border rounded-md border-mygreen-300 outline-offset-2 p-2 text-center roboto-medium"
+            value={dt}
+            onChange={(e) => setDt(e.target.value)}
+            type='date'
+            autoComplete="off"
+            />
+            
+            <AuthSubmitBtn name="Query"  handleSubmit={handleSubmit} isLoading={isLoading} />
+        </form>
+    </>
+  )
+} 
   
-  
-  
-  function BodyComponent({employees=[]}) {
-    return (
-      <>
-        <div className="w-full h-full box-border overflow-y-scroll flex flex-col justify-start items-center">
-              <h1 className="roboto-bold text-xl text-left px-3 w-full">Daily Billboard</h1>
-              <table className=" w-full   ">
-                  <tbody className="w-full">
-                    <tr className="w-full h-9">
-  
-                      <td className="w-[30rem] h-full text-left px-3 roboto-medium text-sm">Name</td> 
-                      <td className="w-[30rem] h-full text-left px-3 roboto-medium">Campaign</td>
-                      <td className="w-[30rem] h-full text-left px-3 roboto-medium">Sales Per Hour</td>
-                    </tr>
-                    {
-                        employees.length !== 0 ?
-                        employees.map((employee, index) => {
-                            return <RowComponent key={index} name={employee.first_name + " " + employee.last_name} campaignName={employee.campaign_name}  salesPerHour={employee.sales_per_hour}/>
-                        })
-                        : <RowComponent />
-                    }
-                  </tbody>
-              </table>
-        </div>
-      </>
-    )
-  }
+function BodyComponent({employees=[], isLoading=false, setIsLoading}) {
+  const dispatch =useDispatch()
+  const updateLogs= data => dispatch(initializeLogs(data))
+  return (
+    <>
+      <div className="w-full h-full box-border overflow-y-scroll flex flex-col justify-start items-center">
+            <div className="w-full h-14 mt-3 flex justify-between items-center pr-3"><h1 className="roboto-bold text-xl text-left px-3 w-full">Daily Billboard</h1> <DateQryTool isLoading={isLoading} setIsLoading={setIsLoading} updateLogs={updateLogs}  /> </div> 
+            <table className=" w-full">
+                <tbody className="w-full">
+                  <tr className="w-full h-9">
+
+                    <td className="w-[30rem] h-full text-left px-3 roboto-medium text-sm">Name</td> 
+                    <td className="w-[30rem] h-full text-left px-3 roboto-medium">Campaign</td>
+                    <td className="w-[30rem] h-full text-left px-3 roboto-medium">Sales Per Hour</td>
+                  </tr>
+                  {
+                      employees.length !== 0 ?
+                      employees.map((employee, index) => {
+                          return <RowComponent key={index} name={employee.first_name + " " + employee.last_name} campaignName={employee.campaign_name}  salesPerHour={employee.sales_per_hour}/>
+                      })
+                      : <RowComponent />
+                  }
+                </tbody>
+            </table>
+      </div>
+    </>
+  )
+}
   
 function WeeklyBillBoard() {
   const [isLoading, setIsLoding] = useState(true)
@@ -91,7 +142,7 @@ function WeeklyBillBoard() {
           isLoading ?
           <div className='w-full h-full flex justify-center items-center'><Loading /></div>
           :
-          <BodyComponent employees={logs} />
+          <BodyComponent employees={logs} isLoading={isLoading} setIsLoading={setIsLoding} />
         }
 
         </div>

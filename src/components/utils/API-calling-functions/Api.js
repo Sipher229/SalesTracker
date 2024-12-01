@@ -145,6 +145,23 @@ function Api() {
         const response = await axiosInstance.get(`/campaigns/getemployees/${id}`)
         return response
     }
+    this.deleteEmployee = async (id) => {
+        const response  = await axiosInstance.delete(`/employees/delete/${id}`)
+        return response
+    }
+    this.deleteCampaign = async (id) => {
+        const response  = await axiosInstance.delete(`/campaigns/delete/${id}`)
+        return response
+    }
+    this.deleteGoal = async (id) => {
+        const response  = await axiosInstance.delete(`/goals/delete/${id}`)
+        return response
+    }
+    this.getLogsByDate = async (date) => {
+        const response  = await axiosInstance.get(`/logs/getlogs/${date}`)
+        return response
+    }
+    
     
 }
 

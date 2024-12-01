@@ -63,12 +63,12 @@ function GoalForm() {
                 dispatch(updateErrorFlag(true))
                 
             }
-            setIsLoading(true)
+            setIsLoading(false)
         // eslint-disable-next-line no-unused-vars
         } catch (error) {
             dispatch(setErrorTickets([errorMessages.failedAddition]))
             dispatch(updateErrorFlag(false))
-            setIsLoading(true)
+            setIsLoading(false)
         }
 
     }
@@ -79,23 +79,23 @@ function GoalForm() {
         try {
             const response = await api.editGoal(data, id)
             if (response.status === 200) {
-                setErrorTickets([errorMessages.editSuccessFul])
-                updateErrorFlag(false)
+                dispatch(setErrorTickets([errorMessages.editSuccessFul]))
+                dispatch(updateErrorFlag(false))
                 setTimeout(() => {
                     setIsLoading(false)
                     navigate('/layout/allgoals')
                 }, delay)
             }
             else{
-                setErrorTickets([errorMessages.failedEdit])
-                updateErrorFlag(true)
+                dispatch(setErrorTickets([errorMessages.failedEdit]))
+                dispatch(updateErrorFlag(true))
             }
             setIsLoading(false)
 
         // eslint-disable-next-line no-unused-vars
         } catch (error) {
-            setErrorTickets([errorMessages.failedEdit])
-            updateErrorFlag(true)
+            dispatch(setErrorTickets([errorMessages.failedEdit]))
+            dispatch(updateErrorFlag(true))
             setIsLoading(false)
         }
     }
@@ -113,9 +113,6 @@ function GoalForm() {
             })
             console.log(gl)
         }
-        
-        
-        return () => dispatch(setErrorTickets([]))
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])

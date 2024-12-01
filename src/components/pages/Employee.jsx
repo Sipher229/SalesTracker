@@ -9,10 +9,11 @@ import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
 import RestrictedAccess from "../page-compontents/RestrictedAccess"
 import { initializeEmployees } from "../../store/features/employeesSlice"
+import { setErrorTickets, updateErrorFlag } from "../../store/features/errorTicketsSlice"
 Chart.register(CategoryScale);
 
 
-function EmployeeComponent({loginTime='N/A',firstName='N/A', lastName ='N/A', employeeNumber='N/A', employeeRole='N/A', campaign='N/A', id=-1, salesPerHour ='N/A'}){
+function EmployeeComponent({loginTime='N/A',firstName='N/A', lastName ='N/A', employeeNumber='N/A', employeeRole='N/A', campaign='N/A', id=-1, salesPerHour ='N/A', handleDelete}){
   return (
     <>
       <div className="w-full h-full bg-white box-border py-2 rounded-md shadow-xl outline-mygreen-500 overflow-hidden">
@@ -21,7 +22,7 @@ function EmployeeComponent({loginTime='N/A',firstName='N/A', lastName ='N/A', em
                 <h1 id="cardtitle" className="roboto-bold text-xl px-3 text-center">Employee</h1>
                 <div className="w-1/4 h-auto flex justify-end items-center gap-2">
                   <Link className={`text-mygreen-500 underline underline-offset-2 decoration-inherit roboto-medium`} to={`/layout/allemployees/employee/edit/${id}`}>Edit</Link>
-                  <button className={`text-mygreen-500 underline underline-offset-2 decoration-inherit roboto-medium`}>Delete</button>
+                  <button onClick={() => handleDelete()} className={`text-mygreen-500 underline underline-offset-2 decoration-inherit roboto-medium`}>Delete</button>
                 </div>
 
             </div>
@@ -132,7 +133,35 @@ function Employee() {
   const [employee, setemployee] = useState(null)
   const {employees} = useSelector((state) => state.employees)
   const dispatch = useDispatch()
+  const delay = 800
   const api = new Api()
+  const handleDelete = async () =>{
+    // delete
+    try{
+      const response = await api.deleteEmployee(id)
+      if (response.status === 200) {
+        dispatch(setErrorTickets([response.data.message]))
+        dispatch(updateErrorFlag(false))
+        setIsLoading(false)
+        setTimeout(() => {
+          
+          navigate('/layout/allemployees')
+        }, delay)
+      }
+      else{
+        dispatch(setErrorTickets(['Could Not delete employee']))
+        dispatch(updateErrorFlag(true))
+        setIsLoading(false)
+      }
+
+      
+    }
+    catch (err) {
+      dispatch(setErrorTickets([err.message]))
+      dispatch(updateErrorFlag(true))
+      setIsLoading(false)
+    }
+  }
   useEffect(() => {
     if(employees.length === 0){
       const fetchData = async () => {
@@ -195,6 +224,7 @@ function Employee() {
             employeeRole={employee?.employee_role}
             loginTime={loginTime ? loginTime?.split('T')[0] + " " + loginTime?.split('T')[1] : 'N/A'}
             salesPerHour={salesPerhour ? salesPerhour : 'N/A'}
+            handleDelete={handleDelete}
             />
             :
             isLoading && <EmployeeComponent /> || <Loading /> }

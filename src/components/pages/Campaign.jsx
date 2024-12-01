@@ -6,8 +6,9 @@ import RestrictedAccess from "../page-compontents/RestrictedAccess"
 import Api from "../utils/API-calling-functions/Api"
 import Loading from "../utils/Loading"
 import { initializeCampaigns } from "../../store/features/campaignSlice"
+import { setErrorTickets, updateErrorFlag } from "../../store/features/errorTicketsSlice"
 
-function RowComponent({name='N/A', rowNumber=0,  role='N/A', employeeNumber='N/A', id=1}) {
+function RowComponent({name='N/A', rowNumber=0,  role='N/A', employeeNumber='N/A', id=-1}) {
   return (
     <tr className="w-full h-9 odd:bg-fadedGrayBg even:bg-white">
       <td className="w-10 h-8 text-left px-3 roboto-medium text-sm">{rowNumber + 1}</td>
@@ -51,7 +52,7 @@ function EmployeesComponent({employees}) {
 }
 
 
-function CampaignComponent({name='N/A', commission='N/A', tax='N/A', hourlySales='N/A', hourlyDecisions ='N/A', entryDate='N/A', id=-1}){
+function CampaignComponent({name='N/A', commission='N/A', tax='N/A', hourlySales='N/A', hourlyDecisions ='N/A', entryDate='N/A', id=-1, handleDelete}){
   return (
     <>
       <div className="w-full h-full bg-white box-border py-2 rounded-md shadow-xl outline-mygreen-500 overflow-hidden">
@@ -60,7 +61,7 @@ function CampaignComponent({name='N/A', commission='N/A', tax='N/A', hourlySales
                 <h1 id="cardtitle" className="roboto-bold text-xl px-3 text-center">Campaign</h1>
                 <div className="w-1/4 h-auto flex justify-end items-center gap-2">
                   <Link className={`text-mygreen-500 underline underline-offset-2 decoration-inherit roboto-medium`} to={`/layout/allcampaigns/campaign/edit/${id}`}>Edit</Link>
-                  <button className={`text-mygreen-500 underline underline-offset-2 decoration-inherit roboto-medium`}>Delete</button>
+                  <button onClick={() => handleDelete()} className={`text-mygreen-500 underline underline-offset-2 decoration-inherit roboto-medium`}>Delete</button>
                 </div>
 
             </div>
@@ -107,8 +108,40 @@ function Campaign() {
   const [employees, setemployees] = useState([])
   const [isLoading, setIsLoading] = useState([])
   const dispatch = useDispatch()
+  const delay = 800
   const api = new Api()
+  const handleDelete = async () =>{
+    if(employees.length !== 0) {
+      dispatch(setErrorTickets(['Can not delete a campaign with associated employees']))
+      dispatch(updateErrorFlag(true))
+      return
+    }
+    // delete
+    try{
+      const response = await api.deleteCampaign(id)
+      if (response.status === 200) {
+        dispatch(setErrorTickets([response.data.message]))
+        dispatch(updateErrorFlag(false))
+        setIsLoading(false)
+        setTimeout(() => {
+          
+          navigate('/layout/allcampaigns')
+        }, delay)
+      }
+      else{
+        dispatch(setErrorTickets(['Could Not delete Campaign']))
+        dispatch(updateErrorFlag(true))
+        setIsLoading(false)
+      }
 
+      
+    }
+    catch (err) {
+      dispatch(setErrorTickets([err.message]))
+      dispatch(updateErrorFlag(true))
+      setIsLoading(false)
+    }
+  }
   useEffect(() => {
     if (campaigns.length === 0){
       const fetchData = async () => {
@@ -157,7 +190,19 @@ function Campaign() {
         <main className="flex flex-col w-full h-full justify-start items-center gap-3 p-6 bg-fadedGrayBg overflow-y-scroll">
 
         <div className="w-4/6 h-[17rem]">
-         { campaign? <CampaignComponent name={campaign.campaign_name} hourlySales={campaign.hourly_sales} hourlyDecisions={campaign.hourly_decisions} entryDate={campaign.entry_date.split('T')[0]} tax={campaign.tax} commission={campaign.commission} id={id} /> : <CampaignComponent /> }
+         { campaign? 
+         <CampaignComponent 
+         name={campaign.campaign_name} 
+         hourlySales={campaign.hourly_sales} 
+         hourlyDecisions={campaign.hourly_decisions} 
+         entryDate={campaign.entry_date.split('T')[0]} 
+         tax={campaign.tax} 
+         commission={campaign.commission} id={id} 
+         handleDelete={handleDelete}
+         />
+
+         :
+        <CampaignComponent /> }
 
         </div>
         <div className="w-full h-auto pl-20 mb-5">

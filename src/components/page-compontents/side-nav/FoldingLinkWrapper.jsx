@@ -2,11 +2,22 @@
 import { NavLink } from "react-router-dom"
 import ChevronUp from "../../utils/icons/ChevronUp.jsx"
 import ChevronDown from "../../utils/icons/ChevronDown.jsx"
-import { useState, } from "react"
+import { useEffect, useState, } from "react"
 import './css-files/FoldingLinkWrapper.css'
 function FoldingLinkWrapper({name='', subLinks=[]}) {
 
     const [isFolded, setIsFolded] = useState(true)
+
+    useEffect(() => {
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') setIsFolded(false)
+        })
+        return () => {
+            removeEventListener('keydown', (e) => {
+                if (e.key === 'Tab') setIsFolded(false)
+            })
+        }
+    }, [])
     
 
     return (
@@ -16,8 +27,7 @@ function FoldingLinkWrapper({name='', subLinks=[]}) {
                 
                 <button 
                 className="w-full text-start flex justify-between items-center h-4 pr-20 hover:underline hover:decoration-mygreen-100 hover:underline-offset-2 my-2 outline-white"
-                onFocus={() => setIsFolded(false)}
-                onBlur={() => setIsFolded(true)}
+                onClick={() => setIsFolded(!isFolded)}
                 >
                     <span className="text-mygreen-100 w-full roboto-light outline-white">{name}</span>
                     {isFolded? <ChevronUp /> : <ChevronDown />}
