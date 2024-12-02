@@ -10,7 +10,7 @@ function LeftSubContainer(){
           <ul className='list-disc row-start-4 row-span-12 col-start-3 col-span-6'>
             <li className='roboto-medium mb-4'>Track your sales and commision </li>
             <li className='roboto-medium mb-4'>Track your progress with a detailed report</li>
-            <li className='roboto-medium mb-4'>Make winning a habbit</li>
+            <li className='roboto-medium mb-4'>Activate your winning mode</li>
           </ul>
         </div>
       </>

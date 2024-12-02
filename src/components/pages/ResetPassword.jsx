@@ -173,7 +173,7 @@ function ResetPassword() {
                     type='password'
                     id='confirmPassword'
                     name= 'confirmPassword' 
-                    className='h-10 w-72 roboto-light outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md px-2' 
+                    className='h-10 w-72 outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md px-2' 
                     autoComplete='on' 
                     required
                     value={credentials.confirmPassword}
