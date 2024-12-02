@@ -10,10 +10,11 @@ import { CategoryScale } from "chart.js";
 import RestrictedAccess from "../page-compontents/RestrictedAccess"
 import { initializeEmployees } from "../../store/features/employeesSlice"
 import { setErrorTickets, updateErrorFlag } from "../../store/features/errorTicketsSlice"
+import PopupWindow from "../page-compontents/PopupWindow"
 Chart.register(CategoryScale);
 
 
-function EmployeeComponent({loginTime='N/A',firstName='N/A', lastName ='N/A', employeeNumber='N/A', employeeRole='N/A', campaign='N/A', id=-1, salesPerHour ='N/A', handleDelete}){
+function EmployeeComponent({loginTime='N/A',firstName='N/A', lastName ='N/A', employeeNumber='N/A', employeeRole='N/A', campaign='N/A', id=-1, salesPerHour ='N/A', handleShowing}){
   return (
     <>
       <div className="w-full h-full bg-white box-border py-2 rounded-md shadow-xl outline-mygreen-500 overflow-hidden">
@@ -22,7 +23,7 @@ function EmployeeComponent({loginTime='N/A',firstName='N/A', lastName ='N/A', em
                 <h1 id="cardtitle" className="roboto-bold text-xl px-3 text-center">Employee</h1>
                 <div className="w-1/4 h-auto flex justify-end items-center gap-2">
                   <Link className={`text-mygreen-500 underline underline-offset-2 decoration-inherit roboto-medium`} to={`/layout/allemployees/employee/edit/${id}`}>Edit</Link>
-                  <button onClick={() => handleDelete()} className={`text-mygreen-500 underline underline-offset-2 decoration-inherit roboto-medium`}>Delete</button>
+                  <button onClick={() => handleShowing(true)} className={`text-mygreen-500 underline active:no-underline underline-offset-2 decoration-inherit roboto-medium`}>Delete</button>
                 </div>
 
             </div>
@@ -129,12 +130,18 @@ function Employee() {
   const {isLoggedIn, user } = useSelector((state) => state.employee)
   const [loginTime, setloginTime] = useState(null)
   const [salesPerhour, setsalesPerHour] = useState(null)
+  const [showing, setShowing] = useState(false)
   const {id} = useParams()
   const [employee, setemployee] = useState(null)
   const {employees} = useSelector((state) => state.employees)
   const dispatch = useDispatch()
   const delay = 800
   const api = new Api()
+  const message = {
+    messageTitle: 'Are you sure?',
+    messageBody: 'This action is irreversible.',
+    actionName: 'Delete'
+  }
   const handleDelete = async () =>{
     // delete
     try{
@@ -143,6 +150,7 @@ function Employee() {
         dispatch(setErrorTickets([response.data.message]))
         dispatch(updateErrorFlag(false))
         setIsLoading(false)
+        setShowing(false)
         setTimeout(() => {
           
           navigate('/layout/allemployees')
@@ -152,6 +160,7 @@ function Employee() {
         dispatch(setErrorTickets(['Could Not delete employee']))
         dispatch(updateErrorFlag(true))
         setIsLoading(false)
+        setShowing(false)
       }
 
       
@@ -160,6 +169,7 @@ function Employee() {
       dispatch(setErrorTickets([err.message]))
       dispatch(updateErrorFlag(true))
       setIsLoading(false)
+      setShowing(false)
     }
   }
   useEffect(() => {
@@ -192,8 +202,8 @@ function Employee() {
         try{
           const response = await api.getEmployeeById(id)
           if (response.status === 200) {
-            response.data.requestedData === 0 && setloginTime(response.data.requestedData[0].login_time)
-            response.data.requestedData === 0 && setsalesPerHour(response.data.requestedData[0].sales_per_hour)
+            setloginTime(response.data.requestedData[0].login_time)
+            setsalesPerHour(response.data.requestedData[0].sales_per_hour)
           }
           setIsLoading(false)
         }
@@ -210,31 +220,35 @@ function Employee() {
   return (
     <>
       { user.role === 'manager' ?
-        <main className="flex flex-col justify-start items-center gap-5 w-full h-full bg-fadedGrayBg overflow-y-scroll">
-        <div className="grid w-full h-[35rem] grid-cols-12 grid-rows-6">
+        <>
+          <PopupWindow handleConfirmed={handleDelete} handleShowing={setShowing} showing={showing} isLoading={isLoading} messageBody={message.messageBody} messageTitle={message.messageTitle} actionName={message.actionName} />
+          <main className={`flex flex-col justify-start items-center gap-5 w-full h-full bg-fadedGrayBg overflow-y-scroll ${showing? 'filter brightness-90': ''}`}>
+            <div className="grid w-full h-[35rem] grid-cols-12 grid-rows-6">
 
-          <div className="row-start-2 row-span-6 col-start-3 col-span-8">
-            {id && !isLoading? 
-            <EmployeeComponent 
-            firstName={employee?.first_name}
-            lastName={employee?.last_name}
-            id={id} 
-            campaign={employee?.campaign_name}
-            employeeNumber={employee?.employee_number}
-            employeeRole={employee?.employee_role}
-            loginTime={loginTime ? loginTime?.split('T')[0] + " " + loginTime?.split('T')[1] : 'N/A'}
-            salesPerHour={salesPerhour ? salesPerhour : 'N/A'}
-            handleDelete={handleDelete}
-            />
+              <div className="row-start-2 row-span-6 col-start-3 col-span-8">
+                {id && !isLoading? 
+                <EmployeeComponent 
+                firstName={employee?.first_name}
+                lastName={employee?.last_name}
+                id={id} 
+                campaign={employee?.campaign_name}
+                employeeNumber={employee?.employee_number}
+                employeeRole={employee?.employee_role}
+                loginTime={loginTime ? loginTime?.split('T')[0] + " " + loginTime?.split('T')[1].split('.')[0] : 'N/A'}
+                salesPerHour={salesPerhour ? salesPerhour : 'N/A'}
+                handleShowing={setShowing}
+                />
+                :
+                isLoading && <EmployeeComponent /> || <Loading /> }
+
+              </div>
+            </div>
+            {id? <StatsGraph id={id} /> : <p>No Graph Data to be displayed</p>}
+          </main>
+        </>
             :
-            isLoading && <EmployeeComponent /> || <Loading /> }
-
-          </div>
-        </div>
-        {id? <StatsGraph id={id} /> : <p>No Graph Data to be displayed</p>}
-        </main>
-        :
         <RestrictedAccess />
+        
         }
       
     </>
