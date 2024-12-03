@@ -26,7 +26,7 @@ const employeeSlice = createSlice({
     reducers: {
         initializeEmployee: (state, action) => {
             if ( action.payload === null) return
-            const {first_name, last_name, employee_number, employee_role, id, email, campaignname, login_time, manger_id, hourlysales, hourlydecisions, sales_per_hour, shift_duration} = action.payload
+            const {first_name, last_name, employee_number, employee_role, id, email, campaignname, login_time, manger_id, hourlysales, hourlydecisions, sales_per_hour, shift_duration, emp_campaign_id} = action.payload
 
             state.user = {
                 firstName: first_name,
@@ -40,6 +40,7 @@ const employeeSlice = createSlice({
                 managerId: manger_id,
                 hourlyDecisions: hourlydecisions,
                 hourlySales: hourlysales,
+                empCampaignId: emp_campaign_id,
                 
             }
             state.salesPerHour =sales_per_hour

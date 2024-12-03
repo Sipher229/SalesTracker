@@ -222,7 +222,7 @@ function Employee() {
       { user.role === 'manager' ?
         <>
           <PopupWindow handleConfirmed={handleDelete} handleShowing={setShowing} showing={showing} isLoading={isLoading} messageBody={message.messageBody} messageTitle={message.messageTitle} actionName={message.actionName} />
-          <main className={`flex flex-col justify-start items-center gap-5 w-full h-full bg-fadedGrayBg overflow-y-scroll ${showing? 'filter brightness-90': ''}`}>
+          <main className={`flex flex-col justify-start items-center gap-5 w-full h-full bg-fadedGrayBg overflow-y-scroll ${showing? 'filter brightness-75': ''}`}>
             <div className="grid w-full h-[35rem] grid-cols-12 grid-rows-6">
 
               <div className="row-start-2 row-span-6 col-start-3 col-span-8">

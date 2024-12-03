@@ -121,7 +121,7 @@ function Sale() {
   return (
     <>
       <PopupWindow handleConfirmed={handleDelete} handleShowing={setShowing} showing={showing} isLoading={isLoading} messageBody={message.messageBody} messageTitle={message.messageTitle} actionName={message.actionName}/>
-      <main className={`grid w-full h-full grid-cols-12 grid-rows-12 gap-3 bg-fadedGrayBg ${showing? 'filter brightness-90': ''}`}>
+      <main className={`grid w-full h-full grid-cols-12 grid-rows-12 gap-3 bg-fadedGrayBg ${showing? 'filter brightness-75': ''}`}>
 
         <div className="row-start-2 row-span-6 col-start-3 col-end-11">
           {id? 

@@ -10,7 +10,7 @@ import Api from "../utils/API-calling-functions/Api.js"
 
 
 function Dashboard() {
-  const delay = 1000 * 60 * 15
+  const delay = 1000 * 60 * 10
   const dispatch = useDispatch()
   const api = new Api()
   useEffect(() => {
@@ -21,6 +21,7 @@ function Dashboard() {
         if(response.data.success){
           dispatch(updateSalesPerHour(response.data.salesPerHour))
         }
+        return
       // eslint-disable-next-line no-unused-vars
       } catch (error) { 
         return  
@@ -38,8 +39,9 @@ function Dashboard() {
         const response = await api.updateSales()
         if(response.data.success){
           dispatch(updateSalesPerHour(response.data.salesPerHour))
+
         }
-        console.log(response.data)
+        return
       // eslint-disable-next-line no-unused-vars
       } catch (error) { 
         return  

@@ -64,7 +64,7 @@ function SaleForm() {
         const {value} = e.target
         const campaign = campaigns.find((campaign) => campaign.campaign_id == value)
         setData((prev) => {
-            return {...prev, tax:campaign.tax, commissionRate: campaign.commission, campaign: value}
+            return {...prev, tax:campaign.tax, commissionRate: campaign.commission, campaignId: value, campaign: campaign.campaign_name}
         })
     }
 
@@ -96,7 +96,8 @@ function SaleForm() {
                     discount: '',
                     price: '',
                     commission: '',
-                    commissionRate: data.commissionRate
+                    commissionRate: data.commissionRate,
+                    campaignId: data.campaignId
                 })
             }
             setIsLoading(false)
@@ -178,9 +179,17 @@ function SaleForm() {
                 campaignId: sl.campaign_id,
                 entryDate: sl.entry_date
             })
-        } 
+        }
+        else{
+
+            const cm = campaigns.find((c) => c.campaign_id == user.empCampaignId)
+            console.log(cm)
+            setData((prev) => {
+                return {...prev, campaignId: cm ? user.empCampaignId: '', campaign: cm ? cm.campaign_name: 'Choose a campaign', commissionRate: cm ? cm.commission : 0, tax: cm ? cm.tax : ''}
+            })
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [campaigns])
 
   return (
     <>
@@ -208,7 +217,7 @@ function SaleForm() {
                     className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
                     onChange={handleSelect}
                     >
-                    <option value={id? data.campaignId : ''} className="">{id? data.campaign :"Choose a campaign"}</option>
+                    <option value={id? data.campaignId : ''} className="">{ data.campaign}</option>
                     {
                         campaigns.map((campaign) => {
                             return <option key={campaign.campaign_id} value={campaign.campaign_id} className="">{campaign.campaign_name}</option>
