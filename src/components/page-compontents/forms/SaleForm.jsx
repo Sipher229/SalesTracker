@@ -63,8 +63,6 @@ function SaleForm() {
     const handleSelect = (e) => {
         const {value} = e.target
         const campaign = campaigns.find((campaign) => campaign.campaign_id == value)
-        console.log(campaigns)
-        console.log(value)
         setData((prev) => {
             return {...prev, tax:campaign.tax, commissionRate: campaign.commission, campaign: value}
         })
@@ -92,13 +90,13 @@ function SaleForm() {
                 dispatch(updateErrorFlag(false))
                 setData({
                     name: '',
-                    campaign: '',
+                    campaign: data.campaign,
                     customerNumber: '',
-                    tax: '',
+                    tax: data.tax,
                     discount: '',
                     price: '',
                     commission: '',
-                    commissionRate: ''
+                    commissionRate: data.commissionRate
                 })
             }
             setIsLoading(false)
