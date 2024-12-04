@@ -15,10 +15,11 @@ import Api from './components/utils/API-calling-functions/Api'
 
 
 function App() {
-
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
   const [credentials, setCredentials] = useState({
     username: '',
     password: '',
+    tz: tz
   })
   const api = new Api()
 

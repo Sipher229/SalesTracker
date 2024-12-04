@@ -15,7 +15,6 @@ function MainBody() {
     const navigate = useNavigate()
     const {user, shiftDuration, salesPerHour} = useSelector((state) => state.employee )
     
-    
 
     useEffect( () => {
       const fetchData =  async () => {
