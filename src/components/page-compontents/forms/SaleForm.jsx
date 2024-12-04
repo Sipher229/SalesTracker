@@ -75,7 +75,7 @@ function SaleForm() {
         try {
             const body = {
                 customerNumber: data.customerNumber, 
-                campaignId: data.campaign,
+                campaignId: data.campaignId,
                 name: data.name,
                 price: data.price,
                 discount: data.discount,
@@ -103,7 +103,7 @@ function SaleForm() {
             setIsLoading(false)
         // eslint-disable-next-line no-unused-vars
         } catch (error) {
-            dispatch(setErrorTickets([errorMessages.failedAddition]))
+            dispatch(setErrorTickets(['Make sure all input fields are complete', errorMessages.failedAddition]))
             dispatch(updateErrorFlag(true))
             setIsLoading(false)
             
