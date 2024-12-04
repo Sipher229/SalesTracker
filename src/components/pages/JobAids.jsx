@@ -33,12 +33,17 @@ function JobAids() {
     const [isLoading, setIsLoading] = useState(false)
     const {jobAids} = useSelector((state) => state.jobAids)
     const navigate = useNavigate()
-    const {isLoggedIn} = useSelector((state) => state.employee)
+    const {isLoggedIn, user} = useSelector((state) => state.employee)
     const api = new Api()
     const dispatch = useDispatch()
 
     const handleDelete = async (id) =>{
         // delete
+        if (user.role !== 'manager') {
+            dispatch(setErrorTickets(['Only supervisors can delete job aids']))
+            dispatch(updateErrorFlag(true))
+            return
+        }
         try{
           const response = await api.deleteJobAid(id)
           if (response.status === 200) {
