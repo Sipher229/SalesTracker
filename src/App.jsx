@@ -16,6 +16,7 @@ import Api from './components/utils/API-calling-functions/Api'
 
 function App() {
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
+  console.log(tz)
   const [credentials, setCredentials] = useState({
     username: '',
     password: '',
