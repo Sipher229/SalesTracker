@@ -11,6 +11,8 @@ import errorMessages from "../../utils/errorMessages.jsx"
 import { updateIsLoggedIn } from "../../../store/features/employeeSlice.js"
 import Api from "../../utils/API-calling-functions/Api.js"
 import './Header.css'
+import MenuIcon from "../../utils/icons/MenuIcon.jsx"
+import CloseMenu from "../../utils/icons/CloseMenu.jsx"
 
 function UserProfile({name='User\'s full name'}){
   const [showing, setShowing] = useState(false)
@@ -57,10 +59,11 @@ function UserProfile({name='User\'s full name'}){
   )
 }
 
-function Header() {
+function Header({menuIsOpen=false, handleMenuIsOpen}) {
   const {errorTickets} = useSelector((state) => state.errorTickets)
   const {user} = useSelector((state) => state.employee)
   const dispacth = useDispatch()
+
 
   const emptyTickets = () => {
     dispacth(setErrorTickets([]))
@@ -69,7 +72,11 @@ function Header() {
     <header className="w-screen h-16 bg-gradient-to-tr from-mygreen-750 via-mygreen-500 to-mygreen-300">
       <ErrorDiplayer errorTickets={errorTickets} emptyTickets={emptyTickets} positionForHeader={true} />
       <nav className="w-full h-full flex justify-between items-center pl-7 pr-2">
-        <Logo />
+        <button onClick={()=> handleMenuIsOpen()} className="w-auto lg:hover:cursor-default h-auto flex justify-start items-center gap-3">
+          {!menuIsOpen ? <CloseMenu /> : <MenuIcon /> }
+          <Logo />
+
+        </button>
         <UserProfile name={user.firstName}/>
       </nav>
     </header>

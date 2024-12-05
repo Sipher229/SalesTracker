@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useRef, useState } from "react"
 import Header from "../page-compontents/header/Header.jsx"
 import SideNav from "../page-compontents/side-nav/SideNav.jsx"
 import { Outlet } from "react-router-dom"
@@ -13,6 +13,8 @@ function Dashboard() {
   const delay = 1000 * 60 * 10
   const dispatch = useDispatch()
   const api = new Api()
+  const [menuIsOpen, setmenuIsOpen] = useState(true)
+  const sideBar = useRef(null)
   useEffect(() => {
     const updateSales = async () => {
   
@@ -57,19 +59,22 @@ function Dashboard() {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  const handleMenuIsOpen = () => {
+    setmenuIsOpen(!menuIsOpen)
+  }
 
   return (
     <article className="w-full relative h-full flex flex-col">
       
       <div className="w-full h-16">
-        <Header />
+        <Header menuIsOpen={menuIsOpen} handleMenuIsOpen={handleMenuIsOpen} />
         
       </div>
       <div className={`w-full h-full flex overflow-hidden`}>
-        <div className="w-72 h-full ">
+        <div ref={sideBar} className={`basis-72 h-full sm:fixed lg:relative lg:transform-none ${!menuIsOpen ? 'sm:scale-x-100 sm:duration-100 sm:origin-left': 'sm:scale-x-0 sm:duration-100 sm:origin-left'}`}>
           <SideNav />
         </div>
-        <div className={`w-full h-full`}>
+        <div className={`basis-full shrink grow h-full`}>
           
           <Outlet />
         </div>

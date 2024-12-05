@@ -83,7 +83,6 @@ function App() {
     e.preventDefault()
     setIsLoading(true)
     validateEmailField()
-    
 
     if (errorTickets.length !== 0) {
       return
