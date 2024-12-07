@@ -1,3 +1,4 @@
+
 import axiosInstance from "./axiosInstance";
 
 function Api() {
@@ -159,6 +160,19 @@ function Api() {
     }
     this.getLogsByDate = async (date) => {
         const response  = await axiosInstance.get(`/logs/getlogs/${date}`)
+        return response
+    }
+    this.getLogsById = async (id) => {
+        const response  = await axiosInstance.get(`/logs/getlogs/${id}`)
+        return response
+    }
+    this.getLogsByIdAndDate = async (id, date) => {
+        if (!date || !id) {
+            console.log('missing parameters')
+            return
+        }
+
+        const response  = await axiosInstance.get(`/logs/getlogsbyid&date?id=${id}&date=${date}}`)
         return response
     }
     

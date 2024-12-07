@@ -51,7 +51,12 @@ function EmployeeComponent({loginTime='N/A',firstName='N/A', lastName ='N/A', em
                     </tr>
                     <tr className="w-full h-9 odd:bg-fadedGrayBg even:bg-white">
                       <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm"> Logged in at</td>
-                      <td className="w-[30rem] h-full text-left px-3 roboto-medium text-sm">{loginTime}</td>
+                      <td className="w-[30rem] h-full text-left px-3 roboto-medium text-sm">
+                        <div className="flex justify-between w-full h-full items-center">
+                          {loginTime}
+                          <Link to={`/layout/allemployees/employee/report/${id}`} className="text-mygreen-500 underline underline-offset-2 decoration-inherit roboto-medium" >Report</Link>
+                        </div>
+                      </td>
                     </tr>
                     
                 </tbody>

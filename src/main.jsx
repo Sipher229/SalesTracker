@@ -5,7 +5,7 @@ import './index.css'
 import store from './store/store.js'
 import {Provider} from 'react-redux'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-import { Sales, AddEmployee, VerifyOtp, Dashboard, PageNotFound, AddSale, Campaigns, AddCampaign, AddGoal, Goals, Campaign, Sale, Goal, ConfirmEmail, ResetPassword, Employees, Employee, MyTeam, MyProfile, AddJobAid, JobAids} from './components/pages/index.js'
+import { Sales, AddEmployee, VerifyOtp, Dashboard, PageNotFound, AddSale, Campaigns, AddCampaign, AddGoal, Goals, Campaign, Sale, Goal, ConfirmEmail, ResetPassword, Employees, Employee, MyTeam, MyProfile, AddJobAid, JobAids, Report} from './components/pages/index.js'
 import MainBody from './components/page-compontents/dashboard-body/MainBody.jsx'
 
 
@@ -118,6 +118,11 @@ const router = createBrowserRouter([
       {
         path: '/layout/allemployees/employee/edit/:id',
         element: <AddEmployee />,
+        errorElement: <PageNotFound />
+      },
+      {
+        path: '/layout/allemployees/employee/report/:id',
+        element: <Report />,
         errorElement: <PageNotFound />
       },
       {
