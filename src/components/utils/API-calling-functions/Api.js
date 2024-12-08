@@ -159,7 +159,7 @@ function Api() {
         return response
     }
     this.getLogsByDate = async (date) => {
-        const response  = await axiosInstance.get(`/logs/getlogs/${date}`)
+        const response  = await axiosInstance.get(`/logs/getlogsdaily/${date}`)
         return response
     }
     this.getLogsById = async (id) => {

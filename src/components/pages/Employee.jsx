@@ -240,7 +240,7 @@ function Employee() {
                 employeeNumber={employee?.employee_number}
                 employeeRole={employee?.employee_role}
                 loginTime={loginTime ? loginTime?.split('T')[0] + " " + loginTime?.split('T')[1].split('.')[0] : 'N/A'}
-                salesPerHour={salesPerhour ? salesPerhour : 'N/A'}
+                salesPerHour={salesPerhour ? salesPerhour.toFixed(2) : 'N/A'}
                 handleShowing={setShowing}
                 />
                 :
