@@ -12,13 +12,13 @@ import DateQryTool from "../page-compontents/DateQryTool"
 function RowComponent({name='N/A', rowNumber=0, campaign='N/A', customerNumber='N/A', price='N/A', discount='N/A', commission='N/A', id=-1}) {
   return (
     <tr className="w-full h-9 odd:bg-fadedGrayBg even:bg-white">
-      <td className="w-10 h-full text-left px-3 roboto-bold text-sm">{rowNumber + 1}</td>
+      <td className="w-10 h-full text-left px-3 roboto-medium text-sm">{rowNumber + 1}</td>
       <td className="w-24 h-full text-left px-3 roboto-light text-sm underline text-mygreen-500 underline-offset-2 decoration-inherit"><Link to={`/layout/mysales/sale/${id}`}>{name}</Link></td> 
-      <td className="w-24 h-8 text-left px-3 roboto-bold text-sm">{campaign}</td>
-      <td className="w-28 h-8 text-left px-3 roboto-bold text-sm">{customerNumber}</td>
-      <td className="w-24 h-8 text-left px-3 roboto-bold text-sm">{price}</td>
-      <td className="w-24 h-8 text-left px-3 roboto-bold text-sm">{discount}</td>
-      <td className="w-24 h-8 text-left px-3 roboto-bold text-sm">{commission}</td>
+      <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">{campaign}</td>
+      <td className="w-28 h-8 text-left px-3 roboto-medium text-sm">{customerNumber}</td>
+      <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">{price}</td>
+      <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">{discount}</td>
+      <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">{commission}</td>
                     
     </tr>
   )

@@ -12,10 +12,10 @@ function RowComponent({name="N/A", id=-1, rowNumber=0, salesHourly='N/A', decisi
   return (
     <>
       <tr className="w-full h-9 odd:bg-fadedGrayBg even:bg-white">
-        <td className="w-24 h-8 text-left px-3 roboto-bold text-sm">{rowNumber + 1}</td>
+        <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">{rowNumber + 1}</td>
         <td className="w-24 h-8 text-left px-3 roboto-light text-sm underline text-mygreen-500 underline-offset-2 decoration-inherit">  <Link to={`/layout/allgoals/goal/${id}`}>{name}</Link></td>
-        <td className="w-24 h-8 text-left px-3 roboto-bold text-sm">{salesHourly}</td>
-        <td className="w-24 h-8 text-left px-3 roboto-bold text-sm">{decisionsHourly}</td>
+        <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">{salesHourly}</td>
+        <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">{decisionsHourly}</td>
                       
       </tr>
     </>
@@ -100,7 +100,7 @@ function Goals() {
               Search:
               <input 
               id="query"
-              className="w-44 h-10 px-3 outline-mylightgreen-300 border rounded-md border-mygreen-300 outline-offset-2"
+              className="w-44 h-10 px-3 outline-mymediumgreen-300 border rounded-md border-mygreen-300 outline-offset-2"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               type='text'

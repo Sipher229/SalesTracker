@@ -62,12 +62,12 @@ function DateQryTool({isLoading, setIsLoading, updateLogs, id=-1}) {
 function RowComponent({entryDate='N/A', rowNumber=0,  salesPerHour='N/A', shiftDuration='N/A', commission='N/A', loginTime='N/A'}) {
   return (
     <tr className="w-full h-9 odd:bg-fadedGrayBg even:bg-white">
-      <td className="w-10 h-8 text-left px-3 roboto-medium text-sm">{rowNumber + 1}</td>
-      <td className="w-24 h-8 text-left px-3 roboto-light text-sm underline text-mygreen-500 underline-offset-2 decoration-inherit">{entryDate}</td>
-      <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">{loginTime}</td>
-      <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">{shiftDuration}</td>
-      <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">{commission || 'N/A'}</td>
-      <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">{salesPerHour}</td>
+      <td className="w-10 h-8 text-left px-3 roboto-light text-sm">{rowNumber + 1}</td>
+      <td className="w-24 h-8 text-left px-3 roboto-light text-sm text-mygreen-500 decoration-inherit">{entryDate}</td>
+      <td className="w-24 h-8 text-left px-3 roboto-light text-sm">{loginTime}</td>
+      <td className="w-24 h-8 text-left px-3 roboto-light text-sm">{shiftDuration}</td>
+      <td className="w-24 h-8 text-left px-3 roboto-light text-sm">{commission || 'N/A'}</td>
+      <td className="w-24 h-8 text-left px-3 roboto-light text-sm">{salesPerHour}</td>
                     
     </tr>
   )
@@ -95,7 +95,7 @@ function EmployeesComponent({logs}) {
                     <RowComponent />
                     :
                     logs.map((log, index) => {
-                      return <RowComponent key={index} id={log.id} rowNumber={index} entryDate={log.login_date?.split('T')[0]} salesPerHour={log.sales_per_hour.toFixed(2)} loginTime={log.login_time?.split('T')[1]?.split('.')[0]} commission={log.commission} shiftDuration={log.shift_duration} />
+                      return <RowComponent key={index} id={log.id} rowNumber={index} entryDate={log.login_date?.split('T')[0]} salesPerHour={log.sales_per_hour?.toFixed(2)} loginTime={log.login_time?.split('T')[1]?.split('.')[0]} commission={log.commission} shiftDuration={log.shift_duration} />
                     })
                   }
         
