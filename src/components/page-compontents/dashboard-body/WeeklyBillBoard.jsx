@@ -71,13 +71,12 @@ function DateQryTool({isLoading, setIsLoading, updateLogs}) {
   )
 } 
   
-function BodyComponent({employees=[], isLoading=false, setIsLoading}) {
-  const dispatch =useDispatch()
-  const updateLogs= data => dispatch(initializeLogs(data))
+function BodyComponent({employees=[]}) {
+  
   return (
     <>
       <div className="w-full h-full box-border overflow-y-scroll flex flex-col justify-start items-center">
-            <div className="w-full h-14 mt-3 flex justify-between items-center pr-3"><h1 className="roboto-bold text-xl text-left px-3 w-full">Daily Billboard</h1> <DateQryTool isLoading={isLoading} setIsLoading={setIsLoading} updateLogs={updateLogs}  /> </div> 
+            
             <table className=" w-full">
                 <tbody className="w-full">
                   <tr className="w-full h-9">
@@ -101,12 +100,13 @@ function BodyComponent({employees=[], isLoading=false, setIsLoading}) {
 }
   
 function WeeklyBillBoard() {
-  const [isLoading, setIsLoding] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
   const dispatch = useDispatch()
   const {logs} = useSelector((state) => state.logs)
   const api = new Api()
   const updateDelay = 1000 * 60 * 10
   const delay = 800
+  const updateLogs= data => dispatch(initializeLogs(data))
   useEffect(() => {
     const fetchData = async () => {
       
@@ -116,12 +116,12 @@ function WeeklyBillBoard() {
           dispatch(initializeLogs(response.data.requestedData))
           
         }
-        setIsLoding(false)
+        setIsLoading(false)
         
       }
       // eslint-disable-next-line no-unused-vars
       catch(error) {
-        setIsLoding(false)
+        setIsLoading(false)
       }
     }
     const id = setTimeout(() => fetchData(), delay)
@@ -136,13 +136,13 @@ function WeeklyBillBoard() {
   return (
     <>
       <main className="grid w-full h-[20rem] grid-cols-12 rounded-md overflow-hidden grid-rows-6 gap-3 bg-white shadow-xl">
-      
-        <div className="col-start-1 row-start-1 col-span-12 row-span-6 flex justify-start items-start">
+      <div className="col-start-1 col-span-12 row-start-1 row-span-1 h-12 mt-3 flex justify-between items-center pr-3"><h1 className="roboto-bold text-xl text-left px-3 w-full">Daily Billboard</h1> <DateQryTool isLoading={isLoading} setIsLoading={setIsLoading} updateLogs={updateLogs}  /> </div> 
+        <div className="col-start-1 row-start-2 col-span-12 row-span-6 flex justify-start items-start">
         {
           isLoading ?
           <div className='w-full h-full flex justify-center items-center'><Loading /></div>
           :
-          <BodyComponent employees={logs} isLoading={isLoading} setIsLoading={setIsLoding} />
+          <BodyComponent employees={logs} isLoading={isLoading} setIsLoading={setIsLoading} />
         }
 
         </div>

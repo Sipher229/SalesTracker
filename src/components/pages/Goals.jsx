@@ -100,7 +100,7 @@ function Goals() {
               Search:
               <input 
               id="query"
-              className="w-44 h-10 px-3 outline-mymediumgreen-300 border rounded-md border-mygreen-300 outline-offset-2"
+              className="w-44 h-10 px-3 outline-mylightgreen-300 border rounded-md border-mygreen-300 outline-offset-2"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               type='text'

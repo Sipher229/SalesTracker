@@ -7,10 +7,11 @@ import { setErrorTickets, updateErrorFlag } from "../../store/features/errorTick
 import errorMessages from "../utils/errorMessages"
 import Loading from "../utils/Loading"
 import { initializejobAids } from "../../store/features/jobaidsSlice"
+import PopupWindow from "../page-compontents/PopupWindow"
 
 
 /* eslint-disable react/prop-types */
-function JobAid({name ='N/A', url='#', id=-1, handleDelete}) {
+function JobAid({name ='N/A', url='#', id=-1, handleShowing, showing=false}) {
 
     
     
@@ -20,7 +21,7 @@ function JobAid({name ='N/A', url='#', id=-1, handleDelete}) {
                 <h1 className="w-full h-4 text-lg roboto-medium">{name}</h1>
                 <div className="w-1/4 h-auto flex justify-end items-center gap-2">
                     <Link className={`text-mygreen-500 underline underline-offset-2 active:no-underline decoration-inherit roboto-medium`} to={`/layout/alljobaids/edit/${id}`}>Edit</Link>
-                    <button onClick={() => handleDelete(id)} className={`text-mygreen-500 underline active:no-underline underline-offset-2 decoration-inherit roboto-medium`}>Delete</button>
+                    <button onClick={() => handleShowing(id)} disabled={showing} className={`text-mygreen-500 underline disabled:cursor-not-allowed active:no-underline underline-offset-2 decoration-inherit roboto-medium`}>Delete</button>
                 </div>
             </div>
             <a href={url} target="blank" className="text-mylightgreen-300 underline active:no-underline roboto-medium flex items-center">View <ArrowOnSquareRight /></a>
@@ -32,38 +33,55 @@ function JobAids() {
     const [query, setQuery] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const {jobAids} = useSelector((state) => state.jobAids)
+    const [toBeDeleted, settoBeDeleted] = useState(-1)
+    const [showing, setShowing ] = useState(false)
     const navigate = useNavigate()
     const {isLoggedIn, user} = useSelector((state) => state.employee)
     const api = new Api()
     const dispatch = useDispatch()
+    const message = {
+        messageTitle: 'Are you sure?',
+        messageBody: 'This action is irreversible.',
+        actionName: 'Delete'
+    }
+    const handleShowing = (id) => {
+        setShowing(true)
+        settoBeDeleted(id)
+    }
 
-    const handleDelete = async (id) =>{
+    const handleDelete = async () =>{
         // delete
         if (user.role !== 'manager') {
             dispatch(setErrorTickets(['Only supervisors can delete job aids']))
             dispatch(updateErrorFlag(true))
             return
         }
+        if (toBeDeleted < 0) return
+
         try{
-          const response = await api.deleteJobAid(id)
+          const response = await api.deleteJobAid(toBeDeleted)
           if (response.status === 200) {
             dispatch(setErrorTickets([response.data.message]))
             dispatch(updateErrorFlag(false))
             const res = await api.getJobAids()
             dispatch(initializejobAids(res.data.requestedData))
+            settoBeDeleted(-1)
+            
           }
           else{
             dispatch(setErrorTickets(['Could not delete aid']))
             dispatch(updateErrorFlag(true))
           }
+          setShowing(false)
           setIsLoading(false)
           
         }
         // eslint-disable-next-line no-unused-vars
         catch (err) {
-          dispatch(setErrorTickets(['failed to delete sale']))
+          dispatch(setErrorTickets(['failed to delete aid']))
           dispatch(updateErrorFlag(true))
           setIsLoading(false)
+          setShowing(false)
         }
     }
 
@@ -94,7 +112,8 @@ function JobAids() {
     }, [])
   return (
     <>
-        <main className="h-full w-full flex flex-col justfy-start p-5  items-center bg-fadedGrayBg">
+        <PopupWindow handleConfirmed={handleDelete} handleShowing={setShowing} showing={showing} isLoading={isLoading} messageBody={message.messageBody} messageTitle={message.messageTitle} actionName={message.actionName}/>
+        <main className={`h-full w-full flex flex-col justfy-start p-5  items-center bg-fadedGrayBg ${showing? 'filter brightness-75': ''}`}>
             <div className="flex justify-around items-start w-full h-20">
             <h1 className="roboto-bold text-2xl p-1 text-left">Job Aids</h1>
             <form className="w-80 h-full flex justify-center">
@@ -120,7 +139,7 @@ function JobAids() {
                         if(query === "") return true
                         return aid.name.toLowerCase().includes(query.toLowerCase())
                     }).map((aid) => {
-                        return <JobAid handleDelete={handleDelete} key={aid.id} name={aid.name} url={aid.doc_url} id={aid.id} />
+                        return <JobAid handleShowing={handleShowing} key={aid.id} name={aid.name} url={aid.doc_url} id={aid.id} showing={showing} />
                     })
                 }
             </div>
