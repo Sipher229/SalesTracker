@@ -47,7 +47,7 @@ function ShiftUpdate({handleShowing}) {
   return (
     <form className={` w-full  h-full flex justify-center items-center gap-16`}>
       <input
-      className=" bg-white outline-mylightgreen-300 roboto-medium rounded-sm px-2 outline-offset-2 w-16 h-6 border-mygreen-200"
+      className=" bg-white outline-mylightgreen-300 roboto-medium rounded-md px-2 outline-offset-2 w-20 h-8 border border-mygreen-300"
       value={value}
       onChange={handleChange}
       type='text'
@@ -88,12 +88,12 @@ function ReportCard({salesPerHour = 0, loginTime = 'N/A', shiftDuration = 'N/A'}
                     <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm">Shift Duration</td>
                     <td className="w-[30rem] h-full text-left px-3 roboto-medium text-sm">
                       {
-                      showing? <ShiftUpdate handleShowing={setShowing} />:
+                        showing? <ShiftUpdate handleShowing={setShowing} />:
 
-                      <div className="flex justify-between roboto-bold h-auto">
-                        <span className="text-inherit roboto-bold text-lg">{shiftDuration} {shiftDuration > 1 ? 'hrs': 'hr'} </span>
-                        <button className={`text-mygreen-500 underline active:no-underline underline-offset-2 decoration-inherit roboto-medium`} onClick={() => setShowing(true)}>Edit</button>
-                      </div>
+                        <div className="flex justify-between roboto-bold h-auto">
+                          <span className="text-inherit roboto-bold text-lg">{shiftDuration} {shiftDuration > 1 ? 'hrs': 'hr'} </span>
+                          <button className={`text-mygreen-500 underline active:no-underline underline-offset-2 decoration-inherit roboto-medium`} onClick={() => setShowing(true)}>Edit</button>
+                        </div>
                       }
                     </td>
                     </tr>

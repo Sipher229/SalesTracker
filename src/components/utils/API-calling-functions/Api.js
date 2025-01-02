@@ -167,12 +167,13 @@ function Api() {
         return response
     }
     this.getLogsByIdAndDate = async (id, date) => {
-        if (!date || !id) {
-            console.log('missing parameters')
-            return
-        }
 
         const response  = await axiosInstance.get(`/logs/getlogsbyid&date?id=${id}&date=${date}}`)
+        return response
+    }
+
+    this.editShiftDurationByDate = async (body) => {
+        const response = await axiosInstance.patch(`/employees/edit/shiftDuration/manager`, body)
         return response
     }
     

@@ -8,7 +8,71 @@ import RestrictedAccess from "../page-compontents/RestrictedAccess"
 import { setErrorTickets, updateErrorFlag } from "../../store/features/errorTicketsSlice"
 import AuthSubmitBtn from "../page-compontents/Authpages-components/AuthSubmitBtn"
 import errorMessages from "../utils/errorMessages"
+import Spiner from "../utils/Spiner"
 
+function ShiftUpdate({handleShowing, loginDate, id}) {
+  const [value, setValue] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+  const api = new Api
+  const handleChange = (e) => {
+    if(/^[0-9]$/.test(e.target.value) && value.length === 0){
+
+      setValue(e.target.value)
+    }
+  }
+  const handleBackSpace = (e) => {
+    if (e.target.length !== 0){
+      setValue('')
+    }
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setIsLoading(true)
+    
+    try{
+
+      const response = await api.editShiftDurationByDate({shiftDuration: value, employeeId: id, loginDate})
+      if (response.status === 200 ){
+        handleShowing(response.data.newDuration, response.data.salesPerHour)
+      }
+      setIsLoading(false)
+    }
+    catch(err){
+      setIsLoading(false)
+      handleShowing()
+      console.log(err.message)
+    }
+
+  }
+
+
+  return (
+    
+      <>
+        {
+          isLoading ? <Spiner /> :
+
+          <form className={` w-full  h-full flex justify-center items-center gap-16`}>
+            <input
+            className=" bg-white outline-mylightgreen-300 roboto-light rounded-md px-2 outline-offset-2 w-20 h-8 border border-mygreen-300"
+            value={value}
+            onChange={handleChange}
+            type='text'
+            required
+            placeholder='Eg: 8'
+            onKeyDown={(e) => e.key == 'Backspace' && handleBackSpace(e)}
+            />
+            <AuthSubmitBtn isLoading={isLoading} handleSubmit={handleSubmit} name={'Save'}/>
+            
+            
+          </form>
+        }
+      </>
+
+  )
+
+}
 
 function DateQryTool({isLoading, setIsLoading, updateLogs, id=-1}) {
   const [dt, setDt] = useState('')
@@ -59,21 +123,46 @@ function DateQryTool({isLoading, setIsLoading, updateLogs, id=-1}) {
 } 
 
 
-function RowComponent({entryDate='N/A', rowNumber=0,  salesPerHour='N/A', shiftDuration='N/A', commission='N/A', loginTime='N/A'}) {
+function RowComponent({entryDate='N/A', rowNumber=0,  salesPerHour=0, shiftDuration=0, commission='N/A', loginTime='N/A', employeeId = -1}) {
+  const [showing, setShowing] = useState(false)
+  const [myShiftDuration, setmyShiftDuration] = useState(shiftDuration)
+  const [mySalesPerHour, setmySalesPerHour] = useState(salesPerHour)
+
+  const handleShowing = (newDuration=-1, sph=-1) => {
+    if (newDuration < 0 || salesPerHour < 0) {
+      setShowing(false)
+      return
+    }
+    setmyShiftDuration(newDuration)
+    // setmySalesPerHour(sph)
+    setmySalesPerHour(sph.toFixed(2))
+    setShowing(false)
+  }
+
+
   return (
     <tr className="w-full h-9 odd:bg-fadedGrayBg even:bg-white">
       <td className="w-10 h-8 text-left px-3 roboto-light text-sm">{rowNumber + 1}</td>
       <td className="w-24 h-8 text-left px-3 roboto-light text-sm text-mygreen-500 decoration-inherit">{entryDate}</td>
       <td className="w-24 h-8 text-left px-3 roboto-light text-sm">{loginTime}</td>
-      <td className="w-24 h-8 text-left px-3 roboto-light text-sm">{shiftDuration}</td>
+      <td className="w-24 h-8 text-left px-3 roboto-light text-sm">
+      {
+        showing? <ShiftUpdate handleShowing={handleShowing} loginDate={entryDate} id={employeeId} />:
+
+        <div className="flex justify-between roboto-bold h-auto">
+          <span className="roboto-light">{myShiftDuration} {myShiftDuration > 1 ? 'hrs': 'hr'} </span>
+          <button className={`text-mygreen-500 underline active:no-underline underline-offset-2 decoration-inherit roboto-medium`} onClick={() => setShowing(true)}>Edit</button>
+        </div>
+      }
+      </td>
       <td className="w-24 h-8 text-left px-3 roboto-light text-sm">{commission || 'N/A'}</td>
-      <td className="w-24 h-8 text-left px-3 roboto-light text-sm">{salesPerHour}</td>
+      <td className="w-24 h-8 text-left px-3 roboto-light text-sm">{mySalesPerHour}</td>
                     
     </tr>
   )
 }
 
-function EmployeesComponent({logs}) {
+function LogsComponent({logs, id}) {
   return (
     <>
       <div className="w-full h-full bg-white box-border  rounded-md shadow-xl hover:outline-offset-2 outline-mygreen-500 overflow-y-scroll">
@@ -95,7 +184,7 @@ function EmployeesComponent({logs}) {
                     <RowComponent />
                     :
                     logs.map((log, index) => {
-                      return <RowComponent key={index} id={log.id} rowNumber={index} entryDate={log.login_date?.split('T')[0]} salesPerHour={log.sales_per_hour?.toFixed(2)} loginTime={log.login_time?.split('T')[1]?.split('.')[0]} commission={log.commission} shiftDuration={log.shift_duration} />
+                      return <RowComponent key={index} id={log.id} employeeId={id} rowNumber={index} entryDate={log.login_date?.split('T')[0]} salesPerHour={log.sales_per_hour?.toFixed(2)} loginTime={log.login_time?.split('T')[1]?.split('.')[0]} commission={log.commission} shiftDuration={log.shift_duration} />
                     })
                   }
         
@@ -146,14 +235,14 @@ function Report() {
       { user.role === 'manager' ?
         <main className="grid w-full h-full grid-cols-12 grid-rows-12 gap-3 bg-fadedGrayBg">
         <div className="w-full h-full mt-3 flex justify-between items-center col-start-2 col-span-10 row-start-1 row-span-1">
-          <h1 className="roboto-bold text-2xl p-1 text-left">My Team</h1>
+          <h1 className="roboto-bold text-2xl p-1 text-left">Employee</h1>
           <DateQryTool id={id}  updateLogs={updateLogs} isLoading={isLoading} setIsLoading={setIsLoading}/>
         </div>
         <div className="row-start-3 row-span-9 col-start-2 col-span-10">
           
           {isLoading? 
           <Loading /> :  
-          <EmployeesComponent logs={logs} />}
+          <LogsComponent logs={logs}  id={id}/>}
         </div>
         </main>
         :
