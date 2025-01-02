@@ -199,6 +199,7 @@ function Report() {
   const api = new Api()
   const [isLoading, setIsLoading] = useState(false)
   const [logs, setlogs] = useState([])
+  const [employeeName, setemployeeName] = useState('Employee')
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const {user, isLoggedIn} = useSelector((state) => state.employee)
@@ -216,6 +217,9 @@ function Report() {
         const response = await api.getLogsById(id)
         if (response.status === 200) {
           setlogs(response.data.requestedData)
+          if (response.data.requestedData.length > 0) {
+            setemployeeName(response.data.requestedData[0].first_name + " " + response.data.requestedData[0].last_name)
+          }
         }
         setIsLoading(false)
       } catch (err) {
@@ -235,7 +239,7 @@ function Report() {
       { user.role === 'manager' ?
         <main className="grid w-full h-full grid-cols-12 grid-rows-12 gap-3 bg-fadedGrayBg">
         <div className="w-full h-full mt-3 flex justify-between items-center col-start-2 col-span-10 row-start-1 row-span-1">
-          <h1 className="roboto-bold text-2xl p-1 text-left">Employee</h1>
+          <h1 className="roboto-bold text-2xl p-1 text-left">{employeeName}</h1>
           <DateQryTool id={id}  updateLogs={updateLogs} isLoading={isLoading} setIsLoading={setIsLoading}/>
         </div>
         <div className="row-start-3 row-span-9 col-start-2 col-span-10">
