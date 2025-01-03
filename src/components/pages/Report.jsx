@@ -218,7 +218,9 @@ function Report() {
         if (response.status === 200) {
           setlogs(response.data.requestedData)
           if (response.data.requestedData.length > 0) {
-            setemployeeName(response.data.requestedData[0].first_name + " " + response.data.requestedData[0].last_name)
+            const fName = response.data.requestedData[0].first_name
+            const lName = response.data.requestedData[0].last_name
+            fName ? setemployeeName(fName+ " " + lName) : ""
           }
         }
         setIsLoading(false)
