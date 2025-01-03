@@ -52,6 +52,7 @@ function ShiftUpdate({handleShowing}) {
       onChange={handleChange}
       type='text'
       required
+      autoFocus
       placeholder='Eg: 8'
       onKeyDown={(e) => e.key == 'Backspace' && handleBackSpace(e)}
       />
