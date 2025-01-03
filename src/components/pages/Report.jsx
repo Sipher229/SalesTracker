@@ -41,7 +41,8 @@ function ShiftUpdate({handleShowing, loginDate, id}) {
     catch(err){
       setIsLoading(false)
       handleShowing()
-      console.log(err.message)
+      updateErrorFlag(true)
+      setErrorTickets(err.message)
     }
 
   }
