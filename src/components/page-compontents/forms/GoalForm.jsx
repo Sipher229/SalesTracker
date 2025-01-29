@@ -10,7 +10,7 @@ import errorMessages from "../../utils/errorMessages"
 function GoalForm() {
     const [isLoading, setIsLoading] = useState(false)
     const dispatch = useDispatch()
-    const {isLoggedIn} = useSelector((state) => state.employee)
+    const {isLoggedIn, subscriptionIsActive} = useSelector((state) => state.employee)
     const {goals} = useSelector((state) => state.goals)
     const navigate = useNavigate()
     const {id} = useParams()
@@ -100,7 +100,9 @@ function GoalForm() {
     }
 
     useEffect(() => {
-        if (!isLoggedIn) navigate('/layout/dashboard')
+        if (!isLoggedIn) navigate('/layout/dashboard');
+        
+        if (!subscriptionIsActive) navigate("/layout/subscription-not-active");
 
         if(id && id > 0) {
             
@@ -127,7 +129,7 @@ function GoalForm() {
                 value={data.name}
                 onChange={handleChange}
                 className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
-                placeholder="descriptive name. eg: 3'sAnd7's"
+                placeholder="descriptive name. eg: Call-center-reps/outgoing 3PSUs/week"
                 required
                 />
 
@@ -142,7 +144,7 @@ function GoalForm() {
                 value={data.hourlySales}
                 onChange={handleChange}
                 className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
-                placeholder="number eg: 3"
+                placeholder="sales/psu hourly eg: 3"
                 required
                 />
 
@@ -156,7 +158,7 @@ function GoalForm() {
                 autoComplete="off"
                 name="hourlyDecisions" 
                 className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
-                placeholder="number eg: 7"
+                placeholder=" eg: 7 or 0 if N/A"
                 required
                 />
 

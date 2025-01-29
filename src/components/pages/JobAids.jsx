@@ -36,7 +36,7 @@ function JobAids() {
     const [toBeDeleted, settoBeDeleted] = useState(-1)
     const [showing, setShowing ] = useState(false)
     const navigate = useNavigate()
-    const {isLoggedIn, user} = useSelector((state) => state.employee)
+    const {isLoggedIn, user, subscriptionIsActive} = useSelector((state) => state.employee)
     const api = new Api()
     const dispatch = useDispatch()
     const message = {
@@ -90,6 +90,8 @@ function JobAids() {
         if(!isLoggedIn) {
             navigate('/layout/dashboard')
         }
+        
+        if (!subscriptionIsActive) navigate('/layout/subscription-not-active');
         const fetchData = async () => {
             setIsLoading(true)
             try {

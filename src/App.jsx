@@ -13,9 +13,10 @@ import { updateIsLoggedIn } from './store/features/employeeSlice'
 import AuthSubmitBtn from './components/page-compontents/Authpages-components/AuthSubmitBtn'
 import Api from './components/utils/API-calling-functions/Api'
 
+const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
 
 function App() {
-  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
+
   const [credentials, setCredentials] = useState({
     username: '',
     password: '',
@@ -118,7 +119,7 @@ function App() {
 
         <ErrorDiplayer emptyTickets={emptyTickets} />
 
-        <div id='loginWrapper' className={`w-[50rem] h-[26rem] overflow-x-hidden flex scrollbar-hide`}>
+        <div id='loginWrapper' className={`max-w-[50rem] max-h-[26rem] overflow-x-hidden flex flex-grow flex-shrink scrollbar-hide`}>
 
           <div id='oldUserLogin' className='flex bg-fadedGrayBg h-full min-w-full overflow-hidden rounded-md '>
             <LeftSubContainer />

@@ -19,7 +19,7 @@ function CampaignForm() {
         
     })
     const [isLoading, setIsLoading] = useState(false)
-    const {isLoggedIn} = useSelector((state) => state.employee)
+    const {isLoggedIn, subscriptionIsActive} = useSelector((state) => state.employee)
     const {goals} = useSelector((state) => state.goals)
     const {campaigns} = useSelector((state) => state.campaigns)
     const navigate = useNavigate()
@@ -123,7 +123,8 @@ function CampaignForm() {
     }
 
     useEffect(() => {
-        if(!isLoggedIn) navigate('/layout/dashboard')
+        if(!isLoggedIn) navigate('/layout/dashboard');
+        if(!subscriptionIsActive) navigate('/layout/subscription-not-active');
 
         const fetchData = async () => {
             try {
@@ -172,7 +173,7 @@ function CampaignForm() {
                 onChange={handleChange}
                 value={data.name}
                 className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
-                placeholder="eg: grup upselling"
+                placeholder="A desciptive name. eg: Red Zones (up selling)"
                 required
                 />
 
@@ -185,7 +186,6 @@ function CampaignForm() {
                 onChange={handleSelect}
                 value={data.goalId}
                 className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
-                placeholder="eg: grup upselling"
                 required
                 >
                     <option value={id? data.goalId : ''}>{ id ? data.goalName : "Select a goal"}</option>

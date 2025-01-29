@@ -20,6 +20,14 @@ import MyTeam from './MyTeam.jsx'
 import MyProfile from './MyProfile.jsx'
 import AddJobAid from './FormPages/AddJobAid.jsx'
 import JobAids from './JobAids.jsx'
+import Home from './Home.jsx'
+import Registration from './Registration.jsx'
+import ContactUs from './ContactUs.jsx'
+import Pricing from './Pricing.jsx'
+import Checkout from './Checkout.jsx'
+import CompanyPage from './CompanyPage.jsx'
+import UpdateSubscription from './UpdateSubscription.jsx'
+import SubscriptionNotActive from './SubscriptionNotActive.jsx'
 
 
 
@@ -46,4 +54,12 @@ export {
     MyProfile,
     AddJobAid,
     JobAids,
+    Home,
+    Registration,
+    ContactUs,
+    Pricing,
+    Checkout,
+    CompanyPage,
+    SubscriptionNotActive,
+    UpdateSubscription,
 }

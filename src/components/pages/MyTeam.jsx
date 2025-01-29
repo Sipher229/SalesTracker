@@ -66,10 +66,12 @@ function MyTeam() {
   const {employees} = useSelector((state) => state.employees)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const {user, isLoggedIn} = useSelector((state) => state.employee)
+  const {user, isLoggedIn, subscriptionIsActive} = useSelector((state) => state.employee)
   const api = new Api()
   useEffect(() => {
-    if(!isLoggedIn) navigate('/layout/dashboard')
+    if(!isLoggedIn) navigate('/layout/dashboard');
+    
+    if (!subscriptionIsActive) navigate('/layout/subscription-not-active');
     const fetchData = async () => {
       setIsLoading(true)
       try{
@@ -80,6 +82,7 @@ function MyTeam() {
         }
         setIsLoading(false)
       }
+      // eslint-disable-next-line no-unused-vars
       catch (error) {
         setIsLoading(false)
       }

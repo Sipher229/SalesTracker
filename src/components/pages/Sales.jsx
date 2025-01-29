@@ -70,7 +70,7 @@ function SalesComponent({sales=[], setTotalCommission}) {
 }
 
 function Sales() {
-  const {isLoggedIn } = useSelector((state) => state.employee)
+  const {isLoggedIn, subscriptionIsActive } = useSelector((state) => state.employee)
   const [isLoading, setIsLoading ] = useState(false)
   const [totalCommmission, setTotalCommission] = useState(0)
   const {sales} = useSelector((state) => state.sales)
@@ -78,7 +78,9 @@ function Sales() {
   const dispatch = useDispatch()
   const api = new Api()
   useEffect(() => {
-    if (!isLoggedIn) navigate('/layout/dashboard')
+    if (!isLoggedIn) navigate('/layout/dashboard');
+    
+    if (!subscriptionIsActive) navigate('/layout/subscription-not-active');
     const fetchData = async () => {
       setIsLoading(true)
       try {

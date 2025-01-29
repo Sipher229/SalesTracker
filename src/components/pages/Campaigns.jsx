@@ -67,12 +67,14 @@ function Campaigns() {
   const {campaigns} = useSelector((state) => state.campaigns)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const {isLoggedIn, user} = useSelector((state) => state.employee)
+  const {isLoggedIn, user, subscriptionIsActive} = useSelector((state) => state.employee)
   const api = new Api()
   useEffect(() => {
     if (!isLoggedIn) {
       navigate('/layout/dashboard')
     }
+    
+    if (!subscriptionIsActive) navigate('/layout/subscription-not-active');
     const fetchData = async () => {
       setIsLoading(true)
       try {

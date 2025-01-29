@@ -138,7 +138,7 @@ function ResetPassword() {
       <main className='h-screen w-screen bg-green-landscape-hd bg-no-repeat bg-cover flex flex-col justify-center items-center gap-4'>
         <ErrorDiplayer emptyTickets={emptyTickets} />
 
-        <div id='loginWrapper' className={`w-[${WIDTH}rem] h-[${HEIGHT}rem] overflow-x-hidden flex scroll-smooth scrollbar-hide`}>
+        <div id='loginWrapper' className={`max-w-[${WIDTH}rem] max-h-[${HEIGHT}rem] flex-grow flex-shrink overflow-x-hidden flex scroll-smooth scrollbar-hide`}>
 
           <div id='oldUserLogin' className='flex bg-fadedGrayBg h-full min-w-full overflow-hidden rounded-md '>
             <LeftSubContainer />
@@ -182,7 +182,7 @@ function ResetPassword() {
                   </label>
                   <ShowPasswordCheckBox handleShowPassword={handleShowPassword} checked={checked}/>
                 </div>
-                <span>Login instead?  <span className='text-mygreen-700 hover:underline underline-offset-2'><Link to={'/'} >Login</Link></span></span>
+                <span>Login instead?  <span className='text-mygreen-700 hover:underline underline-offset-2'><Link to={'/login'} >Login</Link></span></span>
 
                 <AuthSubmitBtn handleSubmit={handleSubmit} name='Reset' isLoading={isLoading} />
 

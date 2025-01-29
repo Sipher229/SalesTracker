@@ -111,7 +111,7 @@ function VerifyOtp() {
         <main className='h-screen w-screen bg-green-landscape-hd bg-no-repeat bg-cover flex flex-col justify-center items-center gap-4'>
         <ErrorDiplayer emptyTickets={emptyTickets} />
 
-        <div id='loginWrapper' className={`w-[${WIDTH}rem] h-[${HEIGHT}rem] overflow-x-hidden flex scrollbar-hide`}>
+        <div id='loginWrapper' className={`max-w-[${WIDTH}rem] max-h-[${HEIGHT}rem] flex-grow flex-shrink overflow-x-hidden flex scrollbar-hide`}>
 
           <div id='loginSection' className='flex bg-fadedGrayBg h-full min-w-full overflow-hidden rounded-md '>
             <LeftSubContainer />
@@ -147,7 +147,7 @@ function VerifyOtp() {
 
                 <button onClick={handleResendOtp} disabled={isLoading} className='text-mygreen-500 roboto-medium active:underline-none underline underline-offset-2 decoration-inherit '> Resend Code </button>
 
-                <span>Login instead?  <span className='text-mygreen-700'><Link to={'/'} >Login</Link></span></span>
+                <span>Login instead?  <span className='text-mygreen-700'><Link to={'/login'} >Login</Link></span></span>
 
                 <AuthSubmitBtn handleSubmit={handleSubmit} isLoading={isLoading} name='Verify'/>
 

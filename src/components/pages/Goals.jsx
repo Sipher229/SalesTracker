@@ -61,7 +61,7 @@ function GoalsComponent({goals, query}) {
 function Goals() {
   const [isLoading, setIsLoading] = useState(false)
   const [query, setQuery] = useState('')
-  const {isLoggedIn, user} = useSelector((state) => state.employee)
+  const {isLoggedIn, user, subscriptionIsActive} = useSelector((state) => state.employee)
   const {goals} = useSelector((state) => state.goals)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -72,6 +72,7 @@ function Goals() {
       navigate('/layout/dashboard')
     }
     
+    if (!subscriptionIsActive) navigate('/layout/subscription-not-active');
     setIsLoading(true)
     const fetchData = async () => {
       try {

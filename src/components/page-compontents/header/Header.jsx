@@ -26,11 +26,11 @@ function UserProfile({name='User\'s full name'}){
       const response = await api.logUserOut()
       if( response.status === 200 ) {
         dispacth(updateIsLoggedIn(false))
-        navigate('/')
+        navigate('/login')
         navigate(0)
       }
       else{
-        dispacth(setErrorTickets([errorMessages.internalServerError]))
+        dispacth(setErrorTickets([errorMessages.internalServerError , "Please refresh the page"]))
         dispacth(updateErrorFlag(true))
         
       }
@@ -45,14 +45,15 @@ function UserProfile({name='User\'s full name'}){
   return (
     <>
       <button
-      onFocus={() => setShowing(true)}
+      onClick={() => setShowing(!showing)}
       onBlur={() => setShowing(false)}
       className="min-w-52 h-12 rounded-xl flex justify-center items-center gap-4 outline-white  ">
         <span className="text-white roboto-medium">Hello, {name}</span>
         {  showing? <ChevronUp /> : <ChevronDown />}
-        <ul className={`w-28 h-16 bg-white absolute ${showing? '' : 'hidden'} active:bg-white right-5 top-12 shadow-xl rounded-sm overflow-hidden logout-popup-animation`}>
-          <li className="hover:bg-gray-200 roboto-medium h-1/2 w-full text-left pl-2 " onClick={handleLogOut}>Log Out</li>
-          <li className="hover:bg-gray-200 roboto-medium h-1/2 w-full text-left pl-2 border-t" onClick={() => navigate('/layout/myprofile')}>View Profile</li>
+        <ul className={`w-28 h-auto bg-white absolute ${showing? '' : 'hidden'} active:bg-white right-5 top-12 shadow-xl rounded-sm overflow-hidden logout-popup-animation`}>
+          <li className="hover:bg-gray-200 roboto-regular h-8 w-full text-left pl-2 border-t" onClick={() => navigate('/layout/myprofile')}>View Profile</li>
+          <li className="hover:bg-gray-200 roboto-regular h-8 w-full text-left pl-2 border-t" onClick={() => navigate('/layout/company-profile')}>Company</li>
+          <li className="hover:bg-gray-200 roboto-regular h-8 w-full text-left pl-2 " onClick={handleLogOut}>Log Out</li>
         </ul>
       </button>
     </>
@@ -69,7 +70,7 @@ function Header({menuIsOpen=false, handleMenuIsOpen}) {
     dispacth(setErrorTickets([]))
   }
   return (
-    <header className="w-screen h-16 bg-gradient-to-tr from-mygreen-750 via-mygreen-500 to-mygreen-300">
+    <header className="w-screen h-16 bg-gradient-to-tl from-mygreen-700 to-mygreen-500">
       <ErrorDiplayer errorTickets={errorTickets} emptyTickets={emptyTickets} positionForHeader={true} />
       <nav className="w-full h-full flex justify-between items-center pl-7 pr-2">
         <button onClick={()=> handleMenuIsOpen()} className="w-auto lg:hover:cursor-default h-auto flex justify-start items-center gap-3">

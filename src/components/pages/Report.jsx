@@ -204,14 +204,15 @@ function Report() {
   const [employeeName, setemployeeName] = useState('Employee')
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const {user, isLoggedIn} = useSelector((state) => state.employee)
+  const {user, isLoggedIn, subscriptionIsActive} = useSelector((state) => state.employee)
   const {id} = useParams()
   const updateLogs = (logData) => {
     setlogs(logData)
   }
   useEffect(() => {
-    if(!isLoggedIn) navigate('/layout/dashboard')
-
+    if(!isLoggedIn) navigate('/layout/dashboard');
+    
+    if (!subscriptionIsActive) navigate('/layout/subscription-not-active');
 
     const fetchData = async () => {
       setIsLoading(true)

@@ -103,7 +103,7 @@ function Campaign() {
   const {campaigns} = useSelector((state) => state.campaigns)
   const [campaign, setCampaign] = useState(null)
   const {id} = useParams()
-  const {isLoggedIn, user} = useSelector((state) => state.employee)
+  const {isLoggedIn, user, subscriptionIsActive} = useSelector((state) => state.employee)
   const navigate = useNavigate()
   const [employees, setemployees] = useState([])
   const [isLoading, setIsLoading] = useState([])
@@ -160,7 +160,9 @@ function Campaign() {
   }, [])
 
   useEffect(() => {
-    if(!isLoggedIn) navigate('/layout/dashboard')
+    if(!isLoggedIn) navigate('/layout/dashboard');
+    
+    if (!subscriptionIsActive) navigate('/layout/subscription-not-active');
     if(id && id > 0){
       const cmpn = campaigns.find((c) => c.campaign_id == id)
       setCampaign(cmpn)   

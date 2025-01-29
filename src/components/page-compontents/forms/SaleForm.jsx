@@ -14,7 +14,7 @@ function SaleForm() {
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(false)
     const {campaigns} = useSelector((state)=> state.campaigns)
-    const {isLoggedIn, user} = useSelector((state) => state.employee)
+    const {isLoggedIn, user, subscriptionIsActive} = useSelector((state) => state.employee)
     const {sales} = useSelector((state) => state.sales)
     const {id} = useParams()
     const delay = 900
@@ -143,6 +143,8 @@ function SaleForm() {
         if (!isLoggedIn) {
             navigate('/layout/dashboard')
         }
+        
+        if (!subscriptionIsActive) navigate("/layout/subscription-not-active");
         const fetchData = async () => {
 
             try{

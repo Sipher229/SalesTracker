@@ -132,7 +132,7 @@ function StatsGraph({id}) {
 function Employee() {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
-  const {isLoggedIn, user } = useSelector((state) => state.employee)
+  const {isLoggedIn, user, subscriptionIsActive } = useSelector((state) => state.employee)
   const [loginTime, setloginTime] = useState(null)
   const [salesPerhour, setsalesPerHour] = useState(null)
   const [showing, setShowing] = useState(false)
@@ -198,6 +198,8 @@ function Employee() {
     if(!isLoggedIn) {
       navigate('/layout/dashboard')
     }
+    
+    if (!subscriptionIsActive) navigate("/layout/subscription-not-active");
     if(id && id> 0) {
       const emp = employees.find((em) => em.id == id)
       setemployee(emp)

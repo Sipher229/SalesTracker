@@ -176,9 +176,67 @@ function Api() {
         const response = await axiosInstance.patch(`/employees/edit/shiftDuration/manager`, body)
         return response
     }
-    
-    
+    this.getPublishableKey = async () => {
+        const response = await axiosInstance.get("/registration/config")
+        return response
+    }
+    this.createPaymentIntent = async (body) => {
+        const response = await axiosInstance.post("/registration/create-setup-intent ", body)
+        return response
+    }
+
+    this.registerCompany = async (body) => {
+        const response = await axiosInstance.post("/registration/register-company", body)
+        return response
+    }
+    this.saveSubscription = async (body) => {
+        const response = await axiosInstance.post("/registration/save-subscription", body);
+        return response;
+    }
+
+    this.loginAfterRegistration = async (body) => {
+        const response = await axiosInstance.post("/registration/login-after-registration", body)
+        return response
+    }
+
+    this.submitInquiry = async (body) => {
+        const response = await axiosInstance.post("/contact-us", body)
+        return response
+    }
+
+    this.getEmployeeCount = async () => {
+        const response = await axiosInstance.get("/companies/employee-count");
+        return response;
+    }
+
+    this.getCompany = async () => {
+        const response = await axiosInstance.get("/companies/get-company");
+        return response
+    }
+    this.createResubscriptionIntent = async (body) => {
+        const response = await axiosInstance.post("/companies/create-setup-intent", body);
+        return response;
+    }
+
+    this.saveUpdatedSubscription = async (body) => {
+        const response = await axiosInstance.post("/companies/save-subscription", body);
+        return response;
+    }
+    this.getSubscriptionStatus = async (id) => {
+        const response = await axiosInstance.get(`/companies/get-subscription-status/${id}`);
+        return response;
+    }
+    this.cancelSubscription = async () => {
+        const response = await axiosInstance.delete("/companies/cancel-subscription");
+        return response;
+    }
 }
 
+const apiObject = new Api()
+export {apiObject}
 export default Api
+
+// should have created an api object here and exported that instead 
+// (better practice to avoid memory leakage.) Probably too late, 
+// but I will be adding the additional export just to feel good about my self
 

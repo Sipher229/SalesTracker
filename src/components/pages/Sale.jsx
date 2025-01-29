@@ -59,7 +59,7 @@ function SaleComponent({name='N/A', customerNumber='N/A', price='N/A', discount=
 
 function Sale() {
   const navigate = useNavigate()
-  const {isLoggedIn} = useSelector((state) => state.employee)
+  const {isLoggedIn, subscriptionIsActive} = useSelector((state) => state.employee)
   const [isLoading, setIsLoading] = useState(false)
   const [showing, setShowing] = useState(false)
   const {sales} = useSelector((state) => state.sales)
@@ -109,6 +109,8 @@ function Sale() {
     if(!isLoggedIn) {
       navigate('/layout/dashboard')
     }
+    
+    if (!subscriptionIsActive) navigate('/layout/subscription-not-active');
     if(id && id> 0) {
     
       const sl = sales.find((s) => s.id == id)

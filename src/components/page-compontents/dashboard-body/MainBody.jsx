@@ -4,7 +4,7 @@ import StatsGraph from "./StatsGraph"
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import Api from "../../utils/API-calling-functions/Api"
-import { initializeEmployee, updateIsLoggedIn } from "../../../store/features/employeeSlice"
+import { initializeEmployee, updateIsLoggedIn, updateSubscriptionStatus } from "../../../store/features/employeeSlice"
 import { useEffect } from "react"
 import WeeklyBillBoard from "./WeeklyBillBoard"
 
@@ -22,16 +22,21 @@ function MainBody() {
                 const response = await api.getEmployee()
                 if (response.status === 200){
                     dispatch(initializeEmployee(response.data.requestedData.pop()))
-                    dispatch(updateIsLoggedIn(true))
+                    dispatch(updateIsLoggedIn(true));
+                    dispatch(updateSubscriptionStatus(response.data.subscriptionIsActive));
+
+                    if(!response.data.subscriptionIsActive){
+                        navigate("/layout/subscription-not-active");
+                    }
                 }
                 else{
-                    navigate('/')
+                    navigate('/login')
                     navigate(0)
                 }
             }
             // eslint-disable-next-line no-unused-vars
             catch( error ){
-                navigate('/')
+                navigate('/login')
                 navigate(0)
             }
         }

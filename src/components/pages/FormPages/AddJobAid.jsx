@@ -7,10 +7,12 @@ import RestrictedAccess from "../../page-compontents/RestrictedAccess"
 
 
 function AddJobAid() {
-    const {isLoggedIn, user} = useSelector((state) => state.employee)
+    const {isLoggedIn, user, subscriptionIsActive} = useSelector((state) => state.employee)
     const navigate = useNavigate()
     useEffect(() => {
-        if (!isLoggedIn) navigate('/layout/dashboard')
+        if (!isLoggedIn) navigate('/layout/dashboard');
+        
+        if (!subscriptionIsActive) navigate("/layout/subscription-not-active");
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

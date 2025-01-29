@@ -99,7 +99,7 @@ function Goal() {
   const {id} = useParams()
   const {goals} = useSelector((state) => state.goals)
   const [goal, setGoal] = useState(null)
-  const {isLoggedIn} = useSelector((state) => state.employee)
+  const {isLoggedIn, subscriptionIsActive} = useSelector((state) => state.employee)
   const [campaigns, setcampaigns] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch()
@@ -141,6 +141,8 @@ function Goal() {
     if (!isLoggedIn) {
       navigate('/layout/dashboard')
     }
+    
+    if (!subscriptionIsActive) navigate('/layout/subscription-not-active');
     if (id) {
       const gl = goals.find((goal) => goal.id == id)
       setGoal(gl)

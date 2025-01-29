@@ -8,6 +8,7 @@ import errorTicketsReducer from './features/errorTicketsSlice.js'
 import otpCredintialsReducer from './features/otpCredentialsSlice.js'
 import employeesReducer from './features/employeesSlice.js'
 import jobAidsReducer from './features/jobaidsSlice.js'
+import registrationDataReducer from './features/registrationDataSlice.js'
 
 const store = configureStore({
     reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
         otpCredentials: otpCredintialsReducer,
         employees: employeesReducer,
         jobAids: jobAidsReducer,
+        registrationData: registrationDataReducer,
         
     }
 })

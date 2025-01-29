@@ -5,13 +5,14 @@ import './index.css'
 import store from './store/store.js'
 import {Provider} from 'react-redux'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-import { Sales, AddEmployee, VerifyOtp, Dashboard, PageNotFound, AddSale, Campaigns, AddCampaign, AddGoal, Goals, Campaign, Sale, Goal, ConfirmEmail, ResetPassword, Employees, Employee, MyTeam, MyProfile, AddJobAid, JobAids, Report} from './components/pages/index.js'
+import { Sales, AddEmployee, VerifyOtp, Dashboard, PageNotFound, AddSale, Campaigns, AddCampaign, AddGoal, Goals, Campaign, Sale, Goal, ConfirmEmail, ResetPassword, Employees, Employee, MyTeam, MyProfile, AddJobAid, JobAids, Report, Home, Registration, ContactUs, Pricing, Checkout, CompanyPage, SubscriptionNotActive, UpdateSubscription} from './components/pages/index.js'
 import MainBody from './components/page-compontents/dashboard-body/MainBody.jsx'
+
 
 
 const router = createBrowserRouter([
   {
-    element: <App />,
+    element: <Home />,
     errorElement: <PageNotFound />,
     path: '/',
   },
@@ -140,6 +141,16 @@ const router = createBrowserRouter([
         element: <AddJobAid />,
         errorElement: <PageNotFound />
       },
+      {
+        path: '/layout/company-profile',
+        element: <CompanyPage />,
+        errorElement: <PageNotFound />
+      },
+      {
+        path: '/layout/subscription-not-active',
+        element: <SubscriptionNotActive />,
+        errorElement: <PageNotFound />
+      },
 
     ]
   },
@@ -157,7 +168,37 @@ const router = createBrowserRouter([
     path: '/verifyotp',
     element: <VerifyOtp />,
     errorElement: <PageNotFound />
-  }
+  },
+  {
+    path: '/register',
+    element: <Registration />,
+    errorElement: <PageNotFound />
+  },
+  {
+    path: '/login',
+    element: <App />,
+    errorElement: <PageNotFound />
+  },
+  {
+    path: '/contact',
+    element: <ContactUs />,
+    errorElement: <PageNotFound />
+  },
+  {
+    path: '/pricing',
+    element: <Pricing />,
+    errorElement: <PageNotFound />
+  },
+  {
+    path: '/subscription',
+    element: <Checkout />,
+    errorElement: <PageNotFound />
+  },
+  {
+    path: '/update-subscription/:id',
+    element: <UpdateSubscription />,
+    errorElement: <PageNotFound />
+  },
 ])
 
 createRoot(document.getElementById('root')).render(

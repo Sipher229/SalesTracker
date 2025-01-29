@@ -87,7 +87,7 @@ function ConfirmEmail() {
 
         <ErrorDiplayer emptyTickets={emptyTickets} />
 
-        <div id='loginWrapper' className={`w-[${WIDTH}rem] h-[${HEIGHT}rem] overflow-x-hidden flex scrollbar-hide`}>
+        <div id='loginWrapper' className={`max-w-[${WIDTH}rem] max-h-[${HEIGHT}rem] overflow-x-hidden flex flex-grow flex-shrink scrollbar-hide`}>
 
           <div id='loginSection' className='flex bg-fadedGrayBg h-full min-w-full overflow-hidden rounded-md '>
             <LeftSubContainer />
@@ -115,7 +115,7 @@ function ConfirmEmail() {
                   />
                 </label>
 
-                <span>Login instead?  <span className='text-mygreen-700'><Link to={'/'} >Login</Link></span></span>
+                <span>Login instead?  <span className='text-mygreen-700'><Link to={'/login'} >Login</Link></span></span>
 
                 <AuthSubmitBtn handleSubmit={handleSubmit} name="Send" isLoading={isLoading}/>
 

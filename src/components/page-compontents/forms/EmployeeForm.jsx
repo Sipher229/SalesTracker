@@ -12,7 +12,7 @@ import errorMessages from "../../utils/errorMessages"
 
 function EmployeeForm() {
     const [isLoading, setIsLoading] = useState(false)
-    const {isLoggedIn} = useSelector((state) => state.employee)
+    const {isLoggedIn, subscriptionIsActive} = useSelector((state) => state.employee)
     const {campaigns} = useSelector((state) => state.campaigns)
     const {employees} = useSelector((state) => state.employees)
     const empPasswordRef = useRef(null)
@@ -182,6 +182,7 @@ function EmployeeForm() {
         if (!isLoggedIn) {
             navigate('/layout/dashboard')
         }
+        if (!subscriptionIsActive) navigate("/layout/subscription-not-active")
         const fetchData = async () => {
             if(campaigns.length !== 0 ) return
 
