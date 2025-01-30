@@ -83,12 +83,12 @@ function EmployeeForm() {
 
     const handleEdit = async (e) => {
         e.preventDefault()
-        setIsLoading(true)
         if(credentials.campaignId === '' || credentials.employeeRole === '') {
             dispatch(setErrorTickets(['Employee\'s role and/or campaign can not be empty']))
             dispatch(updateErrorFlag(true))
             return
         }
+        setIsLoading(true)
         try{
             const response = await api.editEmployee(credentials, id)
 
@@ -116,12 +116,12 @@ function EmployeeForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setIsLoading(true)
         if(credentials.campaignId === '' || credentials.employeeRole === '') {
             dispatch(setErrorTickets(['Employee\'s role and/or campaign can not be empty']))
             dispatch(updateErrorFlag(true))
             return
         }
+        setIsLoading(true)
         try{
             const response = await api.addEmployee(credentials)
             if(response.status === 200){

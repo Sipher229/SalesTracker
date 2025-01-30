@@ -44,10 +44,10 @@ function PaymentForm() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        setisLoading(true)
+
 
         if (!stripe || !elements) return;
-
+        setisLoading(true)
         try {
             const { error, setupIntent } = await stripe.confirmSetup({
                 elements,
