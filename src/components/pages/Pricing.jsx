@@ -15,7 +15,7 @@ function PricingCard( {price="price",featuresArray=["7 days free trial", "24/7 s
                         })
                     }
             </ul>
-            <button className="bg-white w-24 sm:h-8 lg:h-10 rounded-md text-black roboto-medium"> Choose </button>
+            <Link to={"/register"} className="bg-white w-24 flex justify-center items-center sm:h-8 lg:h-10 rounded-md text-black roboto-medium shadow-md active:scale-95"> Choose </Link>
 
         </div>
     )
