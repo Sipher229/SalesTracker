@@ -19,10 +19,6 @@ function Checkout() {
     const api = new Api()
 
     useEffect(() => {
-        if (companyId < 0) {
-            alert("It looks like you are not registered yet. You will be redirected to the registration page.");
-            navigate("/register");
-        }
         const fetchData = async () => {
             try{
                 const response = await api.getPublishableKey()
@@ -37,6 +33,10 @@ function Checkout() {
         fetchData()
     }, [])
     useEffect(() => {
+        if (companyId < 0) {
+            alert("It looks like you are not registered yet. You will be redirected to the registration page.");
+            navigate("/register");
+        }
         const fetchData = async () => {
             try{
                 const response = await api.createPaymentIntent({companyId: companyId, companyName: company.companyName, email: company.email})

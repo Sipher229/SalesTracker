@@ -14,8 +14,8 @@ import MenuIcon from "../utils/icons/MenuIcon";
 
 function DropDownMenu ({handleMenuIsOpen, menuIsOpen=false}) {
     return (
-        <div className={`w-64 h-auto overflow-hidden sm:${menuIsOpen ? "": "hidden"} lg:hidden bg-gradient-to-br from-mygreen-750 to-mygreen-500 sm:flex flex-col justify-start items-start absolute top-0 right-0 text-white roboto-regular sm:scale-x-100 sm:duration-100 sm:ease-in-out sm:origin-right`}>
-            <span className="w-full h-12 pt-8 bg-transparent border-y-0 border-white p-3 flex justify-end pr-8">
+        <div className={`w-52 h-auto overflow-hidden sm:${menuIsOpen ? "": "hidden"} lg:hidden bg-gradient-to-br from-mygreen-750 to-mygreen-500 sm:flex flex-col justify-start items-start absolute top-0 right-0 text-white roboto-regular sm:scale-x-100 sm:duration-100 sm:ease-in-out sm:origin-right`}>
+            <span className="w-full h-12 pt-8 bg-transparent border-y-0 border-white p-3 flex justify-end pr-2">
 
                 <button onClick={()=> handleMenuIsOpen()} className="w-auto lg:hover:cursor-default h-auto flex justify-start items-center gap-3">
                     <CloseMenu /> 
@@ -38,7 +38,7 @@ function Hero() {
     }
 
     return (
-        <section className="w-screen h-96 bg-gradient-to-br bg-green-analytics bg-no-repeat bg-cover flex flex-col">
+        <section className="w-screen min-h-96 bg-gradient-to-br bg-green-analytics bg-no-repeat bg-cover flex flex-col">
             <header className="w-full h-14 bg-transparent mb-8">
                 <nav className="w-full h-full flex justify-between items-center lg:p-8 sm:p-4 relative">
                     <h1 name="logo" className="roboto-bold sm:text-3xl lg:text-4xl text-center text-myyellow">SalesVerse</h1>
@@ -55,8 +55,8 @@ function Hero() {
                 </nav>
             </header>
             <div className="flex flex-col justify-center items-center w-full h-auto gap-4">
-                <h2 className="text-white text-center roboto-medium sm:text-2xl lg:text-3xl mb-6">Simplify Sales and Performance Tracking <br /> with SalesVerse </h2>
-                <p className="roboto-regular text-mygreen-100 w-96 text-center sm:text-lg lg:text-xl">Boost productivity and gain real-time insights into your {"workforce's"} performance.</p>
+                <h2 className="text-white text-center roboto-medium sm:text-2xl lg:text-3xl lg:mb-6">Simplify Sales and Performance Tracking with SalesVerse </h2>
+                <p className="roboto-regular text-mygreen-100 max-w-[26] text-center sm:text-lg lg:text-xl px-2">Boost productivity and gain real-time insights into your {"workforce's"} performance.</p>
                 <Link to={"/register"} className="bg-white hover:gap-2 hover:duration-100 w-32 h-11 flex justify-center items-center rounded-md gap-1 active:scale-95">
                     <span className="font-semibold">Get Started</span>
                     <span><RightFacingArrow /></span>
@@ -68,11 +68,11 @@ function Hero() {
 
 function RemoteTeams() {
     return (
-        <section className="w-full h-[32rem] flex lg:flex-row sm:flex-col-reverse justify-center bg-fadedGrayBg">
+        <section className="w-full min-h-[32rem] flex lg:flex-row sm:flex-col-reverse justify-center bg-fadedGrayBg">
             <div className="lg:w-1/2 sm:w-full sm:h-1/2 lg:h-full sm:p-4 lg:p-8">
                 <img src={remoteTeamsImg} className="w-full h-full object-cover" width={400} height={300} alt="my team and employee pages screen shoot" />
             </div>
-            <div className="lg:w-1/2 sm:w-full sm:h-1/2 lg:h-full flex flex-col justify-start items-center sm:gap-2 lg:gap-10 sm:p-4 lg:p-10">
+            <div className="lg:w-1/2 sm:w-full sm:h-1/2 lg:h-full flex flex-col sm:justify-start lg:justify-center items-center sm:gap-2 lg:gap-10 sm:p-4 lg:p-10">
                 <h1 className="roboto-bold sm:text-2xl lg:text-4xl text-center lg:mt-20">Empower Your Sales Team Anywhere</h1>
                 <p className="roboto-regular text-center lg:text-lg sm:text-base sm:p-0">
                     Gain real-time insights into your remote sales {"team's"} performance. <br /> Make informed decisions, boost productivity, and lead  with confidence—no matter where your team works.
@@ -88,8 +88,8 @@ function RemoteTeams() {
 
 function SalesAndCommission() {
     return (
-        <section className="w-full h-[32rem] flex sm:flex-col-reverse lg:flex-row justify-center bg-mygreen-100">
-            <div className="lg:w-1/2 sm:w-full lg:h-full sm:h-1/2 flex flex-col justify-start items-center sm:gap-2 lg:gap-10 lg:p-10 sm:p-4">
+        <section className="w-full min-h-[32rem] flex sm:flex-col-reverse lg:flex-row justify-center bg-mygreen-100">
+            <div className="lg:w-1/2 sm:w-full lg:h-full sm:h-1/2 flex flex-col sm:justify-start lg:justify-center items-center sm:gap-2 lg:gap-10 lg:p-10 sm:p-4">
                 <h1 className="roboto-bold text-2xl text-center lg:mt-20">Track Success, Earn Confidence</h1>
                 <p className="roboto-regular text-center lg:text-lg sm:text-base sm:p-0">
                     Empower your team to monitor their sales and commissions <br /> effortlessly.
@@ -109,7 +109,7 @@ function SalesAndCommission() {
 
 function CampaignsAndGoals() {
     return (
-        <section className="w-full h-[32rem] flex sm:flex-col-reverse lg:flex-row justify-center bg-gradient-to-bl from-mygreen-750 via-mygreen-500 to-mygreen-300">
+        <section className="w-full min-h-[32rem] flex sm:flex-col-reverse lg:flex-row justify-center bg-gradient-to-bl from-mygreen-750 via-mygreen-500 to-mygreen-300">
             <div className="lg:w-1/2 sm:w-full sm:h-1/2 lg:h-full sm:p-4 lg:p-8">
                 <img src={campaignsAndGoalsImg} className="w-full h-full object-cover" width={400} height={300} alt="my team and employee pages screen shoot" />
             </div>
@@ -131,7 +131,7 @@ function CampaignsAndGoals() {
 
 function StandOut() {
     return (
-        <section className="w-full h-[32rem] flex flex-col items-center sm:gap-1 lg:gap-3 justify-center bg-fadedGrayBg overflow-hidden">
+        <section className="w-full min-h-[32rem] flex flex-col items-center sm:gap-1 lg:gap-3 justify-center bg-fadedGrayBg overflow-hidden">
             <h1 className="roboto-bold sm:text-2xl lg:text-4xl text-center sm:mb-0 lg:mb-10">
                 Why SalesVerse Stands Out
             </h1>

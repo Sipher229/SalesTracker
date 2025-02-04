@@ -137,7 +137,7 @@ function Body() {
                             required
                             autoComplete="off"
                             onChange={handleChange}
-                            className="px-2 lg:w-64 sm:w-72 grow shrink h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
+                            className="px-2 lg:min-w-64 sm:max-w-72 grow shrink h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
                         </label>
                         <label className="w-full flex flex-col roboto-medium">
                             <span className="after:content-['*'] after:text-red-500">Last Name:</span>
@@ -148,7 +148,7 @@ function Body() {
                                 value={data.lastName}
                                 autoComplete="off"
                                 onChange={handleChange}
-                                className="px-2 lg:w-64 sm:w-72 h-10 grow shrink  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
+                                className="px-2 lg:min-w-64 sm:max-w-72 h-10 grow shrink  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
                         </label>
                     </div>
                     <div className="w-full h-auto flex lg:flex-row sm:flex-col sm:gap-1 lg:gap-3 flex-grow-0 flex-shrink-0 ">
@@ -162,7 +162,7 @@ function Body() {
                             required
                             autoComplete="off"
                             onChange={handleChange} 
-                            className="px-2 lg:w-64 sm:w-72 grow shrink h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
+                            className="px-2 lg:min-w-64 sm:max-w-72 grow shrink h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
                         </label>
                         <label className="w-full flex flex-col roboto-medium">
                             <span className="after:content-['*'] after:text-red-500">Email:</span>
@@ -175,7 +175,7 @@ function Body() {
                                 onChange={handleChange}
                                 onFocus={(e) => e.target.value !== "" && normalizeInputs(emailRef)}
                                 required 
-                                className="px-2 lg:w-64 sm:w-72 h-10 grow shrink  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
+                                className="px-2 lg:min-w-64 sm:max-w-72 h-10 grow shrink  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
                         </label>
                     </div>
                     <label className="w-full flex flex-col roboto-medium">
@@ -184,7 +184,7 @@ function Body() {
                             name="employeeCount"
                             value={data.employeeCount}
                             onChange={handleChange}
-                            className="px-2 w-64 h-10 grow shrink  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md">
+                            className="px-2 lg:min-w-64 sm:max-w-72 h-10 grow shrink  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md">
                                 <option>Choose a range</option>
                                 <option>0-20</option>
                                 <option>21-50</option>

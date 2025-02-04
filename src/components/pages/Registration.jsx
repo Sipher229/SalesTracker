@@ -186,7 +186,7 @@ function Body() {
 
                 </p>
             </div>
-            <div className="lg:w-1/2 sm:w-full lg:h-full sm:h-auto bg-fadedGrayBg flex flex-col justify-start items-center p-5 overflow-y-scroll">
+            <div className="lg:w-1/2 sm:w-full lg:h-full sm:h-auto bg-fadedGrayBg flex flex-col justify-start items-center p-5 lg:overflow-y-scroll">
                 <PublicFacingMsgComponent hideMessageBox={closeMessageBox} message={message.message} isError={message.isError} isShowing={message.showing} />
                 <form className="bg-white w-full lg:h-auto sm:h-auto shadow-lg rounded-md flex-grow-0 flex-shrink-0 flex flex-col justify-start lg:items-start sm:items-center sm:gap-2 lg:gap-4 p-4 sm:pl-14">
                     <h1 className="w-full text-center roboto-bold text-2xl sm:mb-2 lg:mb-4">Register</h1>
@@ -201,7 +201,7 @@ function Body() {
                             required
                             autoComplete="off"
                             onChange={handleChange}
-                            className="px-2 lg:w-64 sm:w-72 grow shrink h-10 outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
+                            className="px-2 lg:max-w-64 sm:max-w-96 grow shrink h-10 outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
                         </label>
                         <label className="w-full flex flex-col roboto-medium">
                             <span className="after:content-['*'] after:text-red-500">Last Name:</span>
@@ -212,7 +212,7 @@ function Body() {
                                 value={data.lastName}
                                 autoComplete="off"
                                 onChange={handleChange}
-                                className="px-2 lg:w-64 sm:w-72 h-10 grow shrink  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
+                                className="px-2 lg:max-w-64 sm:max-w-96 h-10 grow shrink  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
                         </label>
                     </div>
                     <div className="w-full h-auto flex lg:flex-row sm:flex-col sm:gap-1 lg:gap-3 flex-grow-0 flex-shrink-0">
@@ -226,7 +226,7 @@ function Body() {
                             required
                             autoComplete="off"
                             onChange={handleChange}
-                            className="px-2 lg:w-64 sm:w-72 grow shrink h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
+                            className="px-2 lg:max-w-64 sm:max-w-96 grow shrink h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
                         </label>
                         <label className="w-full flex flex-col roboto-medium">
                             <span className="after:content-['*'] after:text-red-500">Email:</span>
@@ -238,7 +238,7 @@ function Body() {
                                 autoComplete="off"
                                 onChange={handleChange}
                                 required 
-                                className="px-2 lg:w-64 sm:w-72 h-10 grow shrink  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
+                                className="px-2 lg:max-w-64 sm:max-w-96 h-10 grow shrink  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
                         </label>
                     </div>
                     <label className="w-full flex flex-col roboto-medium">
@@ -246,7 +246,7 @@ function Body() {
                             <select 
                                 name="employeeCount"
                                 onChange={handleChange}
-                                className="px-2 w-64 h-10 grow shrink  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md">
+                                className="px-2 lg:max-w-64 sm:max-w-96 h-10 grow shrink  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md">
                                 <option>Choose a range</option>
                                 <option>0-20</option>
                                 <option>21-50</option>
@@ -270,7 +270,7 @@ function Body() {
                                 autoComplete="off"
                                 onChange={handleChange}
                                 required 
-                                className="px-2 lg:w-64 sm:w-72 grow shrink h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
+                                className="px-2 lg:max-w-64 sm:max-w-96 grow shrink h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
                         </label>
                         <label className="w-full flex flex-col roboto-medium">
                             <span className="after:content-['*'] after:text-red-500">Confirm Password:</span>
@@ -282,7 +282,7 @@ function Body() {
                                 autoComplete="off"
                                 onChange={handleChange}
                                 required  
-                            className="px-2 lg:w-64 sm:w-72 h-10 grow shrink  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
+                            className="px-2 lg:max-w-64 sm:max-w-96 h-10 grow shrink  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
                         </label>
                     </div>
                     <ShowPasswordCheckBox handleShowPassword={handleShowPassword} checked={checked} />

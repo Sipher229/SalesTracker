@@ -140,14 +140,14 @@ function ResetPassword() {
 
         <div id='loginWrapper' className={`max-w-[${WIDTH}rem] max-h-[${HEIGHT}rem] flex-grow flex-shrink overflow-x-hidden flex scroll-smooth scrollbar-hide`}>
 
-          <div id='oldUserLogin' className='flex bg-fadedGrayBg h-full min-w-full overflow-hidden rounded-md '>
+          <div className='flex lg:flex-row sm:flex-col sm:overflow-y-scroll bg-fadedGrayBg sm:h-full sm:w-96 lg:w-full lg:h-full overflow-hidden rounded-md '>
             <LeftSubContainer />
 
-            <div id='rightSubContainer' className='flex flex-col justify-center items-center py-2 pl-6 gap-3'>
+            <div id='rightSubContainer' className='w-full h-full flex flex-col justify-center items-center py-2 pl-6 gap-3'>
 
-              <h1 className='text-center  roboto-bold text-2xl'>Reset Password</h1>
+              <h1 className='text-center  roboto-bold text-2xl mt-4'>Reset Password</h1>
 
-              <form className='flex flex-col justify-center items-center py-2 pl-6 gap-3'>
+              <form className='w-full h-full flex flex-col justify-center items-center sm:pl-3 lg:pl-6 pl-6 gap-3'>
           
                 <label htmlFor='newPassword' className='flex flex-col roboto-medium'>
                   <span className='after:content-["*"] after:text-red-500'>New Password</span>

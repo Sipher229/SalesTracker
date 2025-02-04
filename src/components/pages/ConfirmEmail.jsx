@@ -89,15 +89,15 @@ function ConfirmEmail() {
 
         <div id='loginWrapper' className={`max-w-[${WIDTH}rem] max-h-[${HEIGHT}rem] overflow-x-hidden flex flex-grow flex-shrink scrollbar-hide`}>
 
-          <div id='loginSection' className='flex bg-fadedGrayBg h-full min-w-full overflow-hidden rounded-md '>
+          <div className='flex  lg:flex-row sm:flex-col sm:overflow-y-scroll bg-fadedGrayBg sm:h-auto sm:w-96 lg:w-full lg:h-full overflow-hidden rounded-md '>
             <LeftSubContainer />
 
-            <div id='rightSubContainer' className='flex flex-col justify-center items-center py-2 pl-6 gap-3'>
+            <div id='rightSubContainer' className='w-full h-auto flex flex-col justify-center items-center py-2 pl-6 gap-3'>
 
               <h1 className='text-center  roboto-bold text-2xl'>Confirm your Email</h1>
               <p className="text-center roboto-light w-72"> A verification code will be sent to the email address you provide here below.</p>
 
-              <form className='flex flex-col justify-center items-center py-2 pl-6 gap-3'>
+              <form className='w-full h-auto flex flex-col justify-center items-center py-2 sm:pl-3 lg:pl-6 gap-3'>
         
                 <label htmlFor='username' className='flex flex-col roboto-medium'>
                   <span className='after:content-["*"] after:text-red-500'>Email</span>

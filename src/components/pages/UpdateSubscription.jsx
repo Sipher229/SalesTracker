@@ -147,7 +147,7 @@ function UpdateSubscription() {
     <div className="h-auto w-full flex-grow-0 flex-shrink-0 bg-fadedGrayBg flex flex-col justify-center items-center">
         <h1 className="lg:text-4xl sm:text-2xl roboto-bold my-5">Update your subscription</h1>
     </div>
-    <div className="w-full h-full flex flex-grow-0 flex-shrink-0 justify-center items-center bg-white p-8 oveflow-y-scroll">
+    <div className="w-full min-h-full flex justify-center items-center bg-white p-8 oveflow-y-scroll">
         {
             clientSecret && stripePromise ?                     
             <Elements stripe={stripePromise} options={{clientSecret}} >

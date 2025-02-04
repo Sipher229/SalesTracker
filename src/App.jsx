@@ -121,14 +121,14 @@ function App() {
 
         <div id='loginWrapper' className={`max-w-[50rem] max-h-[26rem] overflow-x-hidden flex flex-grow flex-shrink scrollbar-hide`}>
 
-          <div id='oldUserLogin' className='flex bg-fadedGrayBg h-full min-w-full overflow-hidden rounded-md '>
+          <div className='flex lg:flex-row sm:flex-col sm:overflow-y-scroll bg-fadedGrayBg sm:h-auto sm:w-96 lg:w-full lg:h-full overflow-hidden rounded-md '>
             <LeftSubContainer />
 
-            <div id='rightSubContainer' className='flex flex-col justify-center items-center py-2 pl-6 gap-3'>
+            <div id='rightSubContainer' className='flex flex-col justify-center items-center py-2 lg:pl-6 gap-3'>
 
               <h1 className='text-center  roboto-bold text-2xl'>Login</h1>
 
-              <form className='flex flex-col justify-center items-center py-2 pl-6 gap-3'>
+              <form className='w-full h-auto flex flex-col justify-center items-center py-2 sm:pl-3 lg:pl-6 gap-3'>
         
                 <label htmlFor='username' className='flex flex-col roboto-medium'>
                   <span className='after:content-["*"] after:text-red-500'>Email</span>
