@@ -8,7 +8,8 @@ function Footer() {
             <div className="w-auto h-auto text-white flex sm:flex-col lg:flex-row  justify-center gap-3">
                 <Link to={"/pricing"} className="underline active:no-underline">Pricing</Link>
                 <Link to={"/contact"} className="underline active:no-underline">Contact</Link>
-                <Link to={"/contact"} className="underline active:no-underline">Terms & Conditions</Link>
+                <Link to={"/terms-of-use"} target="_blank" className="underline active:no-underline">Terms & Conditions</Link>
+                <Link to={"/privacy-policy"} target="_blank" className="underline active:no-underline">Privacy Policy</Link>
             </div>
         </div>
         <p className="w-full text-white text-center">SalesVerse Inc. Copyright © {new Date().getFullYear()}</p>

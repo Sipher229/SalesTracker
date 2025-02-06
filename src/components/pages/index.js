@@ -28,6 +28,8 @@ import Checkout from './Checkout.jsx'
 import CompanyPage from './CompanyPage.jsx'
 import UpdateSubscription from './UpdateSubscription.jsx'
 import SubscriptionNotActive from './SubscriptionNotActive.jsx'
+import TermsOfUse from './TermsOfUse.jsx'
+import PrivacyPolicy from './PrivacyPolicy.jsx'
 
 
 
@@ -62,4 +64,6 @@ export {
     CompanyPage,
     SubscriptionNotActive,
     UpdateSubscription,
+    TermsOfUse,
+    PrivacyPolicy
 }

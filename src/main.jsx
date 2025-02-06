@@ -5,7 +5,7 @@ import './index.css'
 import store from './store/store.js'
 import {Provider} from 'react-redux'
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
-import { Sales, AddEmployee, VerifyOtp, Dashboard, PageNotFound, AddSale, Campaigns, AddCampaign, AddGoal, Goals, Campaign, Sale, Goal, ConfirmEmail, ResetPassword, Employees, Employee, MyTeam, MyProfile, AddJobAid, JobAids, Report, Home, Registration, ContactUs, Pricing, Checkout, CompanyPage, SubscriptionNotActive, UpdateSubscription} from './components/pages/index.js'
+import { Sales, AddEmployee, VerifyOtp, Dashboard, PageNotFound, AddSale, Campaigns, AddCampaign, AddGoal, Goals, Campaign, Sale, Goal, ConfirmEmail, ResetPassword, Employees, Employee, MyTeam, MyProfile, AddJobAid, JobAids, Report, Home, Registration, ContactUs, Pricing, Checkout, CompanyPage, SubscriptionNotActive, UpdateSubscription, TermsOfUse, PrivacyPolicy} from './components/pages/index.js'
 import MainBody from './components/page-compontents/dashboard-body/MainBody.jsx'
 
 
@@ -197,6 +197,16 @@ const router = createBrowserRouter([
   {
     path: '/update-subscription/:id',
     element: <UpdateSubscription />,
+    errorElement: <PageNotFound />
+  },
+  {
+    path: '/terms-of-use',
+    element: <TermsOfUse />,
+    errorElement: <PageNotFound />
+  },
+  {
+    path: '/privacy-policy',
+    element: <PrivacyPolicy />,
     errorElement: <PageNotFound />
   },
 ])
