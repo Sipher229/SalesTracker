@@ -12,7 +12,7 @@ import RestrictedAccess from "../page-compontents/RestrictedAccess.jsx";
 
 
 function CompanyComponent({companyName='N/A',subscriptionStatus='N/A', nextBillingDate ='N/A', trialEndsAt='N/A', employeeCount=0, id=-1, handleShowing, popUpShowing=false}){
-  const maintenanceFee = 1000;
+  const maintenanceFee = 150;
   const feePerEmplyee = 10;
   return (
     <>

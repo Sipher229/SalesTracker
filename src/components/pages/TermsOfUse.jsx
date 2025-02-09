@@ -18,7 +18,7 @@ function TermsOfUse() {
             <p className={styles.paragraph}>All content within Salesverse is owned by us. You may not copy or distribute any material without permission.</p>
             
             <h2 className="lg:text-xl sm:text-lg font-semibold">4. Pricing and Refund Policy</h2>
-            <p className={styles.paragraph}>Subscription: $1,000 maintenance fee + $10 per employee + tax. Refunds are available for unused days in a subscription period.</p>
+            <p className={styles.paragraph}>Subscription: $150 maintenance fee + $10 per employee + tax. Refunds are available for unused days in a subscription period.</p>
             
             <h2 className="lg:text-xl sm:text-lg font-semibold">5. Termination of Use</h2>
             <p className={styles.paragraph}>We may terminate accounts due to non-payment or misuse. Data is retained for six months post-termination before deletion.</p>

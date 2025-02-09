@@ -31,6 +31,7 @@ function Checkout() {
             }
         }
         fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     useEffect(() => {
         if (companyId < 0) {
@@ -49,6 +50,7 @@ function Checkout() {
             }
         }
         fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
   return (
 
@@ -83,7 +85,7 @@ function Checkout() {
                             </tr>
                             <tr className="border-b border-white lg:h-12 sm:h-8">
                                <td> Monthly maintenance fee after  trial</td>
-                               <td>$1000</td>
+                               <td>$150</td>
                             </tr>
 
                         </tbody>
