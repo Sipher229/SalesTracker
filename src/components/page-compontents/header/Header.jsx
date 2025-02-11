@@ -72,7 +72,7 @@ function Header({menuIsOpen=false, handleMenuIsOpen}) {
   return (
     <header className="w-screen h-16 bg-gradient-to-tl from-mygreen-700 to-mygreen-500">
       <ErrorDiplayer errorTickets={errorTickets} emptyTickets={emptyTickets} positionForHeader={true} />
-      <nav className="w-full h-full flex justify-between items-center pl-7 pr-2">
+      <nav className="w-full h-full flex justify-between items-center pl-7 pr-6">
         <button onClick={()=> handleMenuIsOpen()} className="w-auto lg:hover:cursor-default h-auto flex justify-start items-center gap-3">
           {!menuIsOpen ? <CloseMenu /> : <MenuIcon /> }
           <Logo />

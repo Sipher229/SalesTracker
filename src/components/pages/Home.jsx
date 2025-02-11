@@ -11,6 +11,7 @@ import Footer from "../page-compontents/Footer/Footer";
 import { useState } from "react";
 import CloseMenu from "../utils/icons/CloseMenu";
 import MenuIcon from "../utils/icons/MenuIcon";
+import transparentLogo from "../page-compontents/image-assets/logo-transparent-png.png"
 
 function DropDownMenu ({handleMenuIsOpen, menuIsOpen=false}) {
     return (
@@ -39,9 +40,9 @@ function Hero() {
 
     return (
         <section className="w-screen min-h-96 bg-gradient-to-br bg-green-analytics bg-no-repeat bg-cover flex flex-col">
-            <header className="w-full h-14 bg-transparent mb-8">
-                <nav className="w-full h-full flex justify-between items-center lg:p-8 sm:p-4 relative">
-                    <h1 name="logo" className="roboto-bold sm:text-3xl lg:text-4xl text-center text-myyellow">SalesVerse</h1>
+            <header className="w-full h-16 bg-transparent mb-8">
+                <nav className="w-full h-full flex justify-between items-center lg:pl-0 lg:pr-8 sm:px-4 relative">
+                    <img src={transparentLogo} width={250} height={250} alt="salesverse logo" className="max-96 max-h-44 object-cover" />
                     <div className="w-96 lg:flex gap-5 h-auto justify-center items-center sm:hidden">
                         <Link to={'/pricing'} className=" text-white roboto-medium hover:border-b-2 hover:border-white hover:duration-100 hover:ease-in-out hover:pb-1">Pricing</Link>
                         <Link to={'/contact'} className="text-white roboto-medium hover:border-b-2 hover:border-white hover:duration-100 hover:ease-in-out hover:pb-1">Contact</Link>

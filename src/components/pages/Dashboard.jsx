@@ -71,10 +71,10 @@ function Dashboard() {
         
       </div>
       <div className={`w-full h-full flex overflow-hidden`}>
-        <div ref={sideBar} className={`basis-72 h-full sm:fixed lg:relative lg:transform-none ${!menuIsOpen ? 'sm:scale-x-100 sm:duration-100 sm:origin-left': 'sm:scale-x-0 sm:duration-100 sm:origin-left'}`}>
+        <div ref={sideBar} className={`w-72 h-full sm:fixed lg:relative lg:transform-none ${!menuIsOpen ? 'sm:scale-x-100 sm:duration-100 sm:origin-left': 'sm:scale-x-0 sm:duration-100 sm:origin-left'}`}>
           <SideNav />
         </div>
-        <div className={`basis-full shrink grow h-full`}>
+        <div className={`w-full shrink grow h-full`}>
           
           <Outlet />
         </div>

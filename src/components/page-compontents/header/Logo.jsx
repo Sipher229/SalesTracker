@@ -1,10 +1,10 @@
-/* eslint-disable react/prop-types */
+import transparentLogo from "../image-assets/logo-transparent-png.png"
 
 function Logo(){
   return (
     <>
-        <span className= {`bg-inherit size-36 w-40 h-16 flex flex-col justify-center items-center `}>
-            <span className={`roboto-bold text-3xl text-center text-myyellow`}>SalesVerse</span>
+        <span className= {`bg-inherit w-auto h-16 flex flex-col justify-center items-center `}>
+            <img src={transparentLogo} width={250} height={250} alt="salesverse logo" className="max-96 max-h-44 object-cover" />
             {/* <span className={`roboto-light text-sm text-center text-white`}>Winning Mode</span> */}
         </span>
     </>

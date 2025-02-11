@@ -5,11 +5,10 @@ import { useEffect } from "react";
 
 function SubscriptionNotActive() {
     const navigate = useNavigate()
-    const {user, isLoggedIn, subscriptionIsActive} = useSelector(state => state.employee);
+    const {user, isLoggedIn} = useSelector(state => state.employee);
 
     useEffect(() => {
         if (!isLoggedIn) navigate("/layout/dashboard");
-        if (subscriptionIsActive) navigate("/layout/dashboard");
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
   return (
