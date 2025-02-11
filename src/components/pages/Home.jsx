@@ -12,6 +12,7 @@ import { useState } from "react";
 import CloseMenu from "../utils/icons/CloseMenu";
 import MenuIcon from "../utils/icons/MenuIcon";
 import transparentLogo from "../page-compontents/image-assets/logo-transparent-png.png"
+import CookieBanner from "../page-compontents/CookieBanner";
 
 function DropDownMenu ({handleMenuIsOpen, menuIsOpen=false}) {
     return (
@@ -180,6 +181,7 @@ function Home() {
   return (
     <>
         <main className=" w-screen h-screen overflow-y-sroll overflow-x-hidden">
+            <CookieBanner />
             <Hero />
             <RemoteTeams />
             <SalesAndCommission />
