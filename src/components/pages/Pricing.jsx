@@ -33,7 +33,7 @@ function Pricing() {
             <h1 className="lg:text-4xl sm:text-xl roboto-bold">Choose the Perfect Plan for Your Team</h1>
         </div>
         <div className="w-full h-4/5 flex justify-center items-cente bg-white p-8 gap-6">
-            <PricingCard title="Monthly Plan" price="$10/employee + $150"/>
+            <PricingCard title="Monthly Plan" price="$10/employee"/>
         </div>
         <Footer />
     </main>

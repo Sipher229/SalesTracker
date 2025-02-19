@@ -35,7 +35,6 @@ function Checkout() {
     }, [])
     useEffect(() => {
         if (companyId < 0) {
-            alert("It looks like you are not registered yet. You will be redirected to the registration page.");
             navigate("/register");
         }
         const fetchData = async () => {
@@ -83,11 +82,6 @@ function Checkout() {
                                <td> Fee per registered employee after trial</td>
                                <td>$10</td>
                             </tr>
-                            <tr className="border-b border-white lg:h-12 sm:h-8">
-                               <td> Monthly maintenance fee after  trial</td>
-                               <td>$150</td>
-                            </tr>
-
                         </tbody>
                     </table>
 

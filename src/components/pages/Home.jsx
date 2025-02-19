@@ -59,8 +59,8 @@ function Hero() {
             <div className="flex flex-col justify-center items-center w-full h-auto gap-4">
                 <h2 className="text-white text-center roboto-medium sm:text-2xl lg:text-3xl lg:mb-6">Simplify Sales and Performance Tracking with SalesVerse </h2>
                 <p className="roboto-regular text-mygreen-100 max-w-[26] text-center sm:text-lg lg:text-xl px-2">Boost productivity and gain real-time insights into your {"workforce's"} performance.</p>
-                <Link to={"/register"} className="bg-white hover:gap-2 hover:duration-100 w-32 h-11 flex justify-center items-center rounded-md gap-1 active:scale-95">
-                    <span className="font-semibold">Get Started</span>
+                <Link to={"/register"} className="bg-white hover:gap-2 hover:duration-100 w-28 h-11 flex justify-center items-center rounded-md gap-1 active:scale-95">
+                    <span className="font-semibold">Free Trial</span>
                     <span><RightFacingArrow /></span>
                 </Link>
             </div>
@@ -92,13 +92,13 @@ function SalesAndCommission() {
     return (
         <section className="w-full min-h-[32rem] flex sm:flex-col-reverse lg:flex-row justify-center bg-mygreen-100">
             <div className="lg:w-1/2 sm:w-full lg:h-full sm:h-1/2 flex flex-col sm:justify-start lg:justify-center items-center sm:gap-2 lg:gap-10 lg:p-10 sm:p-4">
-                <h1 className="roboto-bold text-2xl text-center lg:mt-20">Track Success, Earn Confidence</h1>
+                <h1 className="roboto-bold sm:text-2xl lg:text-4xl text-center lg:mt-20">Track Success, Earn Confidence</h1>
                 <p className="roboto-regular text-center lg:text-lg sm:text-base sm:p-0">
                     Empower your team to monitor their sales and commissions <br /> effortlessly.
                     Boost motivation and drive individual performance <br /> with real-time tracking.
                 </p>
-                <Link to={'/register'} className=" bg-mygreen-700 hover:gap-2 hover:duration-100 w-32 h-11 flex justify-center items-center rounded-md gap-1 active:scale-95 text-white">
-                    <span className="font-semibold text-white">Get Started</span>
+                <Link to={'/register'} className=" bg-mygreen-700 hover:gap-2 hover:duration-100 w-28 h-11 flex justify-center items-center rounded-md gap-1 active:scale-95 text-white">
+                    <span className="font-semibold text-white">Free Trial</span>
                     <span><RightFacingArrow /></span>
                 </Link>
             </div>
@@ -122,8 +122,8 @@ function CampaignsAndGoals() {
                 <p className="roboto-regular text-center sm:text-base lg:text-lg sm:p-0 text-white">
                     Foster collaboration with tailored campaigns <br /> and clear goals. Empower leaders to inspire their teams <br /> and achieve success, one campaign at a time.
                 </p>
-                <Link to={'/register'} className=" bg-white hover:gap-2 hover:duration-100 w-32 h-11 flex justify-center items-center rounded-md gap-1 active:scale-95">
-                    <span className="font-semibold">Get Started</span>
+                <Link to={'/register'} className=" bg-white hover:gap-2 hover:duration-100 w-28 h-11 flex justify-center items-center rounded-md gap-1 active:scale-95">
+                    <span className="font-semibold">Free Trial</span>
                     <span><RightFacingArrow /></span>
                 </Link>
             </div>
