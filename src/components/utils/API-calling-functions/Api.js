@@ -230,6 +230,10 @@ function Api() {
         const response = await axiosInstance.delete("/companies/cancel-subscription");
         return response;
     }
+    this.getIsLoggedIn = async () => {
+        const response = await axiosInstance.get("/employees/is-logged-in");
+        return response;
+    }
 }
 
 const apiObject = new Api()

@@ -1,6 +1,6 @@
 import './App.css'
 import { Link } from 'react-router-dom'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import errorMessages from './components/utils/errorMessages'
 import toggleShowPassword from './components/utils/toggleShowpassword'
 import ShowPasswordCheckBox from './components/page-compontents/Authpages-components/ShowPasswordCheckBox'
@@ -113,6 +113,23 @@ function App() {
     }
     
   }
+  useEffect(() => {
+    const fetchData = async () => {
+      try{
+
+        const reponse = await api.getIsLoggedIn();
+        if (reponse.data.isLoggedIn) navigate("/layout/dashboard");
+
+      }
+      // eslint-disable-next-line no-unused-vars
+      catch(e){
+
+        return
+      }
+    }
+    fetchData()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   return (
     <>
       <main className='h-screen w-screen bg-green-landscape-hd bg-no-repeat bg-cover flex flex-col justify-center items-center gap-4'>
