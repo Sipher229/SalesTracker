@@ -85,7 +85,6 @@ function Sales() {
       setIsLoading(true)
       try {
         const response = await api.getSalesForEmployee()
-        console.log(response.data.requestedData)
         
         if( response.status === 200) {
           dispatch(initializeSales(response.data.requestedData))

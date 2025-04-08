@@ -220,7 +220,6 @@ function Report() {
         const response = await api.getLogsById(id)
         if (response.status === 200) {
           setlogs(response.data.requestedData)
-          console.log(response.data.requestedData)
           if (response.data.requestedData.length > 0) {
             const fName = response.data.requestedData[0].first_name
             const lName = response.data.requestedData[0].last_name

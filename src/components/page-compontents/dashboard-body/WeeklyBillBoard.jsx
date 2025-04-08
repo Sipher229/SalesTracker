@@ -104,7 +104,7 @@ function WeeklyBillBoard() {
   const dispatch = useDispatch()
   const {logs} = useSelector((state) => state.logs)
   const api = new Api()
-  const updateDelay = 1000 * 60 * 10
+  const updateDelay = 1000 * 60 * 5
   const delay = 800
   const updateLogs= data => dispatch(initializeLogs(data))
   useEffect(() => {

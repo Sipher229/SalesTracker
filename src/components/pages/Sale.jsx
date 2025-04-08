@@ -6,7 +6,29 @@ import PopupWindow from "../page-compontents/PopupWindow"
 import { setErrorTickets, updateErrorFlag } from "../../store/features/errorTicketsSlice"
 import Api from "../utils/API-calling-functions/Api"
 
-function SaleComponent({name='N/A', customerNumber='N/A', price='N/A', discount='N/A', commission ='N/A', entryDate='N/A', campaign='N/A', id=-1, handleShowing}){
+function SaleComponent({name='N/A', customerNumber='N/A', price='N/A', discount='N/A', commission ='N/A', entryDate='N/A', campaign='N/A', status='None', details='', id=-1, handleShowing}){
+  // let statusBg = "bg-red-700";
+  const [statusBg, setStatusBg] = useState("bg-red-700");
+  const statusBgColors = {
+    None: "bg-red-700",
+    Lead: "bg-slate-400",
+    Negotiating: "bg-myyellow",
+    Closed: "bg-mylightgreen-700"
+  }
+
+  useEffect(() => {
+    if (!status || status === "") return;
+
+    const keyValuePairs = Object.entries(statusBgColors);
+    keyValuePairs.forEach((kvp) => {
+      const [key, value] = kvp;
+      if (key.toLowerCase() === status.toLowerCase()){
+        // statusBg = value;
+        setStatusBg(value);
+        return
+      }
+    })
+  }, [status])
   return (
     <>
       <div className="w-full h-full bg-white box-border py-2 rounded-md shadow-xl outline-mygreen-500 overflow-hidden">   
@@ -21,32 +43,50 @@ function SaleComponent({name='N/A', customerNumber='N/A', price='N/A', discount=
             <table className=" w-full ">
                 <tbody className="">
                     <tr className="w-full h-9 odd:bg-fadedGrayBg even:bg-white">
-                    <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm">Name</td>
-                    <td className="w-[30rem] h-full text-left px-3 roboto-medium">{name}</td>
+                      <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm">Name</td>
+                      <td className="w-[30rem] h-full text-left px-3 roboto-regular">{name}</td>
+                    </tr>
+                    <tr className="w-full h-9 odd:bg-fadedGrayBg even:bg-white">
+                      <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm">Status</td>
+                      <td className="w-[30rem] h-full text-left px-3 roboto-regular text-sm">
+                        {
+                          <span className={`rounded-md roboto-regular h-6 w-auto p-1 gap-2 flex justify-start items-baseline`}>
+                          <div className={`w-3 h-3 m-0 p-0 ${statusBg}`}></div>
+                          {status}
+                          </span>
+                        }
+                        
+                      </td>
                     </tr>
                     <tr className="w-full h-9  odd:bg-fadedGrayBg even:bg-white">
                       <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm">Campaign</td>
-                      <td className="w-[30rem] h-full text-left px-3 roboto-medium text-sm">{campaign}</td>
+                      <td className="w-[30rem] h-full text-left px-3 roboto-regular text-sm">{campaign}</td>
                     </tr>
                     <tr className="w-full h-9  odd:bg-fadedGrayBg even:bg-white">
                       <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm">Customer Number</td>
-                      <td className="w-[30rem] h-full text-left px-3 roboto-medium text-sm">{customerNumber}</td>
+                      <td className="w-[30rem] h-full text-left px-3 roboto-regular text-sm">{customerNumber}</td>
                     </tr>
                     <tr className="w-full h-9  odd:bg-fadedGrayBg even:bg-white">
                     <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm">Price</td>
-                    <td className="w-[30rem] h-full text-left px-3 roboto-medium text-sm">{price}</td>
+                    <td className="w-[30rem] h-full text-left px-3 roboto-regular text-sm">{price}</td>
                     </tr>
                     <tr className="w-full h-9  odd:bg-fadedGrayBg even:bg-white">
-                    <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm">Discount</td>
-                    <td className="w-[30rem] h-full text-left px-3 roboto-medium text-sm">{discount}</td>
+                      <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm">Discount</td>
+                      <td className="w-[30rem] h-full text-left px-3 roboto-regular text-sm">{discount}%</td>
                     </tr>
                     <tr className="w-full h-9 odd:bg-fadedGrayBg even:bg-white">
-                    <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm">Commission</td>
-                    <td className="w-[30rem] h-full text-left px-3 roboto-medium text-sm">{commission}</td>
+                      <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm">Commission</td>
+                      <td className="w-[30rem] h-full text-left px-3 roboto-regular text-sm">${commission}</td>
                     </tr>
+                    <tr className="w-full min-h-10 odd:bg-fadedGrayBg even:bg-white">
+                      <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm">Details</td>
+                      <td className="w-[30rem] min-h-10 text-left px-3 roboto-regular text-sm">{details}</td>
+                    </tr>
+
+
                     <tr className="w-full h-9 odd:bg-fadedGrayBg even:bg-white">
-                    <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm">Entry Date</td>
-                    <td className="w-[30rem] h-full text-left px-3 roboto-medium text-sm">{entryDate}</td>
+                      <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm">Entry Date</td>
+                      <td className="w-[30rem] h-full text-left px-3 roboto-regular text-sm">{entryDate}</td>
                     </tr>
                     
                 </tbody>
@@ -112,9 +152,10 @@ function Sale() {
     
     if (!subscriptionIsActive) navigate('/layout/subscription-not-active');
     if(id && id> 0) {
-    
+      
       const sl = sales.find((s) => s.id == id)
       setSale(sl)
+      console.log(sl)
 
     }
     
@@ -125,7 +166,7 @@ function Sale() {
       <PopupWindow handleConfirmed={handleDelete} handleShowing={setShowing} showing={showing} isLoading={isLoading} messageBody={message.messageBody} messageTitle={message.messageTitle} actionName={message.actionName}/>
       <main className={`grid w-full h-full grid-cols-12 grid-rows-12 gap-3 bg-fadedGrayBg ${showing? 'filter brightness-75': ''}`}>
 
-        <div className="row-start-2 row-span-7 col-start-3 col-end-11">
+        <div className="row-start-2 row-span-10 col-start-2 col-span-10">
           {id? 
           <SaleComponent 
           name={sale?.sale_name} 
@@ -136,6 +177,8 @@ function Sale() {
           campaign={sale?.name}
           price={sale?.price}
           customerNumber={sale?.customer_number}
+          status={sale?.status}
+          details={sale?.details}
           handleShowing={setShowing}
           />
           :

@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from "react"
-import SubmitButton from "./SubmitButton"
 import Api from "../../utils/API-calling-functions/Api"
 import { useDispatch, useSelector } from "react-redux"
 import { initializeCampaigns } from "../../../store/features/campaignSlice"
 import { useNavigate, useParams } from "react-router-dom"
 import { setErrorTickets, updateErrorFlag } from "../../../store/features/errorTicketsSlice"
 import errorMessages from "../../utils/errorMessages"
+import Spiner from "../../utils/Spiner"
 
 function SaleForm() {
     const api = new Api()
@@ -18,46 +18,67 @@ function SaleForm() {
     const {sales} = useSelector((state) => state.sales)
     const {id} = useParams()
     const delay = 900
+    const detailsRef = useRef(null);
     const [data, setData] = useState({
         name: '',
         campaign: '',
         customerNumber: '',
         tax: '',
-        discount: '',
+        discount: '0',
         price: '',
         commission: '',
         commissionRate: '',
         campaignId: '',
+        status: '',
+        details: '',
     })
 
     const handleChange = (e) => {
         const {value, name} = e.target
 
-        switch (name) {
-            case 'saleName':
-                setData((prev) => {
-                    return{...prev, name: value}
-                })
-                break;
-            case 'discount':
-                setData((prev) => {
-                    return{...prev, discount: value}
-                })
-                break;
-            case 'customerNumber':
-                setData((prev) => {
-                    return{...prev, customerNumber: value}
-                })
-                break;
+        // switch (name) {
+        //     case 'saleName':
+        //         setData((prev) => {
+        //             return{...prev, name: value}
+        //         })
+        //         break;
+        //     case 'discount':
+        //         setData((prev) => {
+        //             return{...prev, discount: value}
+        //         })
+        //         break;
+        //     case 'customerNumber':
+        //         setData((prev) => {
+        //             return{...prev, customerNumber: value}
+        //         })
+        //         break;
         
-            case 'price':
-                setData((prev) => {
-                    return{...prev, price: value}
-                })
-                break;
+        //     case 'price':
+        //         setData((prev) => {
+        //             return{...prev, price: value}
+        //         })
+        //         break;
         
-            default:
-                break;
+        //     default:
+        //         break;
+        // }
+        if (name === "details" && data.details.length >=255) {
+            detailsRef.current.classList.remove("outline-mylightgreen-300");
+            detailsRef.current.classList.add("outline-red-400");
+            setData((prev) => {
+                return {...prev, [name]: value.slice(0, 255)};
+            });
+            return
+
+        }
+        else{
+            if (!detailsRef.current.classList.contains("outline-mylightgreen-300")){
+                detailsRef.current.classList.add("outline-mylightgreen-300");
+                detailsRef.current.classList.remove("outline-red-400");
+            }
+            setData((prev) => {
+                return {...prev, [name]: value};
+            });
         }
     }
     const handleSelect = (e) => {
@@ -67,9 +88,37 @@ function SaleForm() {
             return {...prev, tax:campaign.tax, commissionRate: campaign.commission, campaignId: value, campaign: campaign.campaign_name}
         })
     }
+    const handleDetailsPaste = (e) => {
+        const {name, value} = e.target;
+        if (name === "details" && data.details.length >=255) {
+            detailsRef.current.classList.remove("outline-mylightgreen-300");
+            detailsRef.current.classList.add("outline-red-400");
+            setData((prev) => {
+                return {...prev, [name]: value.slice(0, 255)};
+            });
+            return
+
+        }
+        else{
+            if (!detailsRef.current.classList.contains("outline-mylightgreen-300")){
+                detailsRef.current.classList.add("outline-mylightgreen-300");
+                detailsRef.current.classList.remove("outline-red-400");
+            }
+            setData((prev) => {
+                return {...prev, [name]: value};
+            });
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        if (data.name === "" || data.campaign === "") {
+            console.log(data.commission);
+            dispatch(setErrorTickets(['Make sure all input fields are complete']))
+            dispatch(updateErrorFlag(true))
+            setIsLoading(false)
+            return;
+        };
         setIsLoading(true)
 
         try {
@@ -82,7 +131,9 @@ function SaleForm() {
                 tax: data.tax,
                 employeeId: user.id,
                 commission: commissionRef.current.value,
-                loginTime: user.loginTime
+                loginTime: user.loginTime,
+                details: data.details,
+                status: data.status
             }
             const response = await api.addSale(body)
             if (response.status === 200){
@@ -97,7 +148,9 @@ function SaleForm() {
                     price: '',
                     commission: '',
                     commissionRate: data.commissionRate,
-                    campaignId: data.campaignId
+                    campaignId: data.campaignId,
+                    status: "",
+                    details: ""
                 })
             }
             setIsLoading(false)
@@ -168,7 +221,7 @@ function SaleForm() {
     useEffect(() => {
         if (id && id > 0) {
             const sl = sales.find((s) => s.id == id)
-            console.log(sl)
+            // console.log(sl)
             setData({
                 name: sl.sale_name,
                 campaign: sl.name,
@@ -179,7 +232,9 @@ function SaleForm() {
                 commission: sl.commission,
                 commissionRate: sl.tax,
                 campaignId: sl.campaign_id,
-                entryDate: sl.entry_date
+                entryDate: sl.entry_date,
+                status: sl.status,
+                details: sl.details
             })
         }
         else{
@@ -195,12 +250,12 @@ function SaleForm() {
 
   return (
     <>
-        <form className="w-full h-full bg-white rounded-lg grid grid-cols-12 grid-rows-12 shadow-xl gap-2 p-3">
-            <label className="flex flex-col row-start-1 row-span-2 col-start-2 col-span-9">
+        <form className="w-full h-auto bg-white rounded-lg flex flex-col justify-start items-start shadow-xl gap-2 lg:pl-14 p-3 box-border mb-5">
+            <label className="flex flex-col w-4/5">
                 <span className="roboto-medium">Sale Name:</span>
                 <input 
                 type="text" 
-                name="saleName"
+                name="name"
                 value={data.name}
                 className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
                 placeholder="product+campaign. eg: grup sale for 116.8"
@@ -210,7 +265,7 @@ function SaleForm() {
                 />
 
             </label>
-            <label className={`flex flex-col row-start-3 row-span-2 col-start-2 col-span-8`}>
+            <label className={`flex flex-col w-4/5`}>
                 <span className="roboto-medium">Campaign:</span>
                 <select 
                     id="campaign"
@@ -219,7 +274,7 @@ function SaleForm() {
                     className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
                     onChange={handleSelect}
                     >
-                    <option value={id? data.campaignId : ''} className="">{ data.campaign}</option>
+                    <option value={id? data.campaignId : ''} className="">{ id? data.campaign : ""}</option>
                     {
                         campaigns.map((campaign) => {
                             return <option key={campaign.campaign_id} value={campaign.campaign_id} className="">{campaign.campaign_name}</option>
@@ -229,59 +284,103 @@ function SaleForm() {
                 </select>
                    
             </label>
+            <div className="flex justify-start gap-2 items-center">
 
-            <label className="flex flex-col row-start-5 row-span-2 col-start-2 col-end-10">
-                <span className="roboto-medium">Customer Number:</span>
-                <input 
-                type="text" 
-                name="customerNumber" 
-                className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
-                placeholder="MONT-000000"
-                required
-                autoComplete="off"
-                value={data.customerNumber}
-                onChange={handleChange}
-                />
+                <label className="flex flex-col w-3/5">
+                    <span className="roboto-medium">Customer number:</span>
+                    <input 
+                    type="text" 
+                    name="customerNumber" 
+                    className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
+                    placeholder="Customer number (optional)"
+                    required
+                    autoComplete="off"
+                    value={data.customerNumber}
+                    onChange={handleChange}
+                    />
 
-            </label>
-            <label className="flex flex-col row-start-7 row-span-2 col-start-2 col-end-5">
-                <span className="roboto-medium">Price:</span>
-                <input 
-                type="Number" 
-                name="price"
-                value={data.price}
-                className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
-                placeholder="340.99"
-                required
-                onChange={handleChange}
-                />
+                </label>
+                <label className="flex flex-col w-2/5">
+                    <span className="roboto-medium">Status:</span>
+                    <select 
+                    type="text" 
+                    name="status" 
+                    className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
+                    placeholder="Customer number (optional)"
+                    required
+                    autoComplete="off"
+                    value={data.status}
+                    onChange={handleChange}
+                    >
+                        <option value={"Lead"}>Lead</option>
+                        <option value={"Negotiating"}>Negotiating</option>
+                        <option value={"Closed"}>Closed</option>
+                    </select>
 
-            </label>
-            <label className="flex flex-col row-start-7 row-span-2 col-start-5 col-span-3">
-                <span className="roboto-medium">Discount:</span>
-                <input 
-                type="number" 
-                name="discount" 
-                value={data.discount}
-                className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
-                placeholder="eg: 10"
-                required
-                onChange={handleChange}
-                />
+                </label>
+            </div>
+            <div className="w-full flex flex-col items-start justify-start">
 
-            </label>
+                <label className="flex flex-col w-4/5">
+                    <span className="roboto-medium">Details:</span>
+                    <textarea 
+                    type="text" 
+                    ref={detailsRef}
+                    name="details" 
+                    className="px-2 w-full h-24 resize-none  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
+                    placeholder="Decription (optional)"
+                    required
+                    autoComplete="off"
+                    value={data.details}
+                    onChange={handleChange}
+                    onPaste={handleDetailsPaste}
+                    />
 
-            <label className="flex flex-col row-start-7 row-span-2 col-start-8 col-span-2">
-                <span className="roboto-medium">Tax:</span>
-                <input 
-                type="number" 
-                name="tax"
-                className="px-2 w-full h-10 outline-none border border-mygreen-300 rounded-md"
-                readOnly
-                value={data.tax}
-                />
+                </label>
+                <small className="roboto-regular">255 characters max. {data.details.length}/255 </small>
+            </div>
 
-            </label>
+            <div className="flex gap-2 justify-start items-center pr-2">
+
+                <label className="flex flex-col row-start-9 row-span-2 col-start-2 col-end-5">
+                    <span className="roboto-medium">Price:</span>
+                    <input 
+                    type="Number" 
+                    name="price"
+                    value={data.price}
+                    className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
+                    placeholder="eg: 340.99"
+                    required
+                    onChange={handleChange}
+                    />
+
+                </label>
+                <label className="flex flex-col row-start-11 row-span-2 col-start-5 col-span-3">
+                    <span className="roboto-medium">Discount:</span>
+                    <input 
+                    type="number" 
+                    name="discount" 
+                    value={data.discount}
+                    className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
+                    placeholder="% eg: 10 (optional)"
+                    required
+                    onChange={handleChange}
+                    />
+
+                </label>
+
+                <label className="flex flex-col row-start-7 row-span-2 col-start-8 col-span-2">
+                    <span className="roboto-medium">Tax:</span>
+                    <input 
+                    type="number" 
+                    name="tax"
+                    className="px-2 w-full h-10 outline-none border border-mygreen-300 rounded-md"
+                    readOnly
+                    value={data.tax}
+                    />
+
+                </label>
+            </div>
             <label className="flex flex-col row-start-9 row-span-2 col-start-2 col-span-6">
                 <span className="roboto-medium">Commission:</span>
                 <input
@@ -295,8 +394,24 @@ function SaleForm() {
 
             </label>
 
-            {id? <SubmitButton name={'Save'} isLoading={isLoading} handleSubmit={handleEdit} /> : <SubmitButton isLoading={isLoading} handleSubmit={handleSubmit} name={'Submit'} />}
-
+            <div className="flex justify-end items-center w-full pr-2">
+                {
+                    id? 
+                    <button 
+                    type="submit" 
+                    disabled={isLoading} 
+                    className="outline-white disabled:opacity-35 disabled:cursor-not-allowed h-10 bg-mygreen-700 text-white flex justify-center items-center rounded-md active:scale-95 w-24" 
+                    onClick={handleEdit}> 
+                    {isLoading ? <Spiner /> : "Save"} 
+                    </button> 
+                    :
+                    <button 
+                    type="submit"
+                    disabled={isLoading} 
+                    className="outline-white disabled:opacity-35 disabled:cursor-not-allowed h-10 bg-mygreen-700 text-white flex justify-center items-center rounded-md active:scale-95 w-24" 
+                    onClick={handleSubmit}> {isLoading ? <Spiner /> : "Submit"} </button>
+                }
+            </div>
         </form>
     </>
   )
