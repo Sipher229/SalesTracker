@@ -7,6 +7,7 @@ import { initializeGoals } from "../../../store/features/goalSlice"
 import { setErrorTickets, updateErrorFlag } from "../../../store/features/errorTicketsSlice"
 import SubmitButton from "./SubmitButton"
 import errorMessages from "../../utils/errorMessages"
+import CancelFormButton from "../CancelFormButton"
 
 
 function CampaignForm() {
@@ -224,6 +225,9 @@ function CampaignForm() {
                 />
 
             </label>
+            <div className="col-start-8 col-span-2 row-start-11">
+                {id? <CancelFormButton />: ""}
+            </div>
 
             {id ? <SubmitButton name={'Save'} handleSubmit={handleEdit} isLoading={isLoading} />:<SubmitButton handleSubmit={handleSubmit} isLoading={isLoading} />}
 

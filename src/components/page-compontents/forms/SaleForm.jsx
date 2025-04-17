@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { setErrorTickets, updateErrorFlag } from "../../../store/features/errorTicketsSlice"
 import errorMessages from "../../utils/errorMessages"
 import Spiner from "../../utils/Spiner"
+import CancelFormButton from "../CancelFormButton"
 
 function SaleForm() {
     const api = new Api()
@@ -165,7 +166,14 @@ function SaleForm() {
     }
     const handleEdit = async (e) => {
         e.preventDefault()
+        if(data.status === "") {
+            dispatch(setErrorTickets(['The status field is required']))
+            dispatch(updateErrorFlag(true))
+            setIsLoading(false)
+            return;
+        }
         setIsLoading(true)
+
         try {
             const response = await api.editSale(data, id)
             if (response.status === 200) {
@@ -306,12 +314,14 @@ function SaleForm() {
                     type="text" 
                     name="status" 
                     className="px-2 w-full h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md"
-                    placeholder="Customer number (optional)"
+                    placeholder="Select the status."
                     required
                     autoComplete="off"
                     value={data.status}
                     onChange={handleChange}
                     >
+
+                        <option className="roboto-regular" value={id? data.status : ""}>{id? data.status : "Select the status"}</option>
                         <option value={"Lead"}>Lead</option>
                         <option value={"Negotiating"}>Negotiating</option>
                         <option value={"Closed"}>Closed</option>
@@ -394,7 +404,8 @@ function SaleForm() {
 
             </label>
 
-            <div className="flex justify-end items-center w-full pr-2">
+            <div className="flex justify-end items-center w-full pr-2 gap-2">
+                {id? <CancelFormButton />: ""}
                 {
                     id? 
                     <button 

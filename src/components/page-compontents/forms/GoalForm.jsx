@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import SubmitButton from "./SubmitButton"
 import Api from "../../utils/API-calling-functions/Api"
 import errorMessages from "../../utils/errorMessages"
+import CancelFormButton from "../CancelFormButton"
 
 
 function GoalForm() {
@@ -119,7 +120,7 @@ function GoalForm() {
     },[])
   return (
     <>
-        <form className="w-full h-full bg-white rounded-lg grid grid-cols-12 grid-rows-12 shadow-xl gap-2 p-3">
+        <form className="w-full h-full bg-white rounded-lg grid grid-cols-12 grid-rows-12 shadow-xl gap-2 gap-x-1 p-3">
             <label className="flex flex-col row-start-1 row-span-2 col-start-2 col-end-12">
                 <span className="roboto-medium">Goal Name:</span>
                 <input 
@@ -163,6 +164,9 @@ function GoalForm() {
                 />
 
             </label>
+            <div className="col-start-8 col-span-2 row-start-11">
+                {id? <CancelFormButton />: ""}
+            </div>
 
             {id? <SubmitButton handleSubmit={handleEdit} isLoading={isLoading} name={"Save"} /> :<SubmitButton handleSubmit={handleSubmit} isLoading={isLoading} />}
 

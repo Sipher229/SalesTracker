@@ -5,6 +5,7 @@ import Api from "../../utils/API-calling-functions/Api"
 import { setErrorTickets, updateErrorFlag } from "../../../store/features/errorTicketsSlice"
 import { useDispatch, useSelector } from "react-redux"
 import errorMessages from "../../utils/errorMessages"
+import CancelFormButton from "../CancelFormButton"
 
 
 function JobAidForm() {
@@ -124,7 +125,9 @@ function JobAidForm() {
                 />
 
             </label>
-           
+            <div className="col-start-8 col-span-2 row-start-11">
+                {id? <CancelFormButton />: ""}
+            </div>
 
             {id? <SubmitButton handleSubmit={handleEdit} isLoading={isLoading} name={"Save"} /> :<SubmitButton handleSubmit={handleSubmit} isLoading={isLoading} />}
 

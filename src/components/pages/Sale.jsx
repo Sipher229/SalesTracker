@@ -28,7 +28,8 @@ function SaleComponent({name='N/A', customerNumber='N/A', price='N/A', discount=
         return
       }
     })
-  }, [status])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status]);
   return (
     <>
       <div className="w-full h-full bg-white box-border py-2 rounded-md shadow-xl outline-mygreen-500 overflow-hidden">   

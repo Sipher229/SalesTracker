@@ -9,6 +9,7 @@ import ShowPasswordCheckBox from "../Authpages-components/ShowPasswordCheckBox"
 import toggleShowPassword from "../../utils/toggleShowpassword"
 import { setErrorTickets, updateErrorFlag } from "../../../store/features/errorTicketsSlice"
 import errorMessages from "../../utils/errorMessages"
+import CancelFormButton from "../CancelFormButton"
 
 function EmployeeForm() {
     const [isLoading, setIsLoading] = useState(false)
@@ -354,7 +355,9 @@ function EmployeeForm() {
                 />
 
             </label>
-            
+            <div className="col-start-8 col-span-2 row-start-11">
+                {id? <CancelFormButton />: ""}
+            </div>
             
             {id ? "" : <button onClick={(e) => {e.preventDefault(); generateRandomPassword()}} className="bg-mygreen-700 active:scale-95 text-white rounded-md w-full h-10 outline-white row-start-11 row-span-2 col-start-9 col-span-2">Auto</button>}
 

@@ -234,6 +234,12 @@ function Api() {
         const response = await axiosInstance.get("/employees/is-logged-in");
         return response;
     }
+
+    this.getCommissionForEmployee = async (id) => {
+        const response = await axiosInstance.get(`/sales/get-commission/${id}`);
+
+        return response
+    }
 }
 
 const apiObject = new Api()

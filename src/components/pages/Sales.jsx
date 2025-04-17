@@ -9,16 +9,41 @@ import Loading from "../utils/Loading"
 import DateQryTool from "../page-compontents/DateQryTool"
 
 
-function RowComponent({name='N/A', rowNumber=0, campaign='N/A', customerNumber='N/A', price='N/A', discount='N/A', commission='N/A', id=-1}) {
+function RowComponent({name='N/A', rowNumber=0, campaign='N/A', customerNumber='N/A', price='N/A', status='N/A', commission='N/A', id=-1}) {
+  const [statusBg, setStatusBg] = useState("bg-red-700");
+  const statusBgColors = {
+    None: "bg-red-700",
+    Lead: "bg-slate-400",
+    Negotiating: "bg-myyellow",
+    Closed: "bg-mylightgreen-700"
+  }
+
+  useEffect(() => {
+    if (!status || status === "") return;
+
+    const keyValuePairs = Object.entries(statusBgColors);
+    keyValuePairs.forEach((kvp) => {
+      const [key, value] = kvp;
+      if (key.toLowerCase() === status.toLowerCase()){
+        // statusBg = value;
+        setStatusBg(value);
+        return
+      }
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status]);
   return (
     <tr className="w-full h-9 odd:bg-fadedGrayBg even:bg-white">
-      <td className="w-10 h-full text-left px-3 roboto-medium text-sm">{rowNumber + 1}</td>
+      <td className="w-10 h-full text-left px-3 roboto-regular text-sm">{rowNumber + 1}</td>
       <td className="w-24 h-full text-left px-3 roboto-light text-sm underline text-mygreen-500 underline-offset-2 decoration-inherit"><Link to={`/layout/mysales/sale/${id}`}>{name}</Link></td> 
-      <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">{campaign}</td>
-      <td className="w-28 h-8 text-left px-3 roboto-medium text-sm">{customerNumber}</td>
-      <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">{price}</td>
-      <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">{discount}</td>
-      <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">{commission}</td>
+      <td className="w-24 h-8 text-left px-3 roboto-regular text-sm">{campaign}</td>
+      <td className="w-28 h-8 text-left px-3 roboto-regular text-sm">{customerNumber}</td>
+      <td className="w-24 h-8 text-left px-3 roboto-regular text-sm">{price}</td>
+      <td className="w-24 h-8 text-left px-3 roboto-regular text-sm">{commission}</td>
+      <td className="w-32 h-8 text-left px-3 roboto-regular text-sm flex justify-start items-center gap-2">
+        <div className={`w-3 h-3 m-0 p-0 ${statusBg}`}></div>
+        {status}
+      </td>
                     
     </tr>
   )
@@ -29,7 +54,15 @@ function SalesComponent({sales=[], setTotalCommission}) {
   useEffect(() => {
 
     const calculateTotalCom = () => {  
-      const commissionArray = Array.from(sales, (sale) => parseFloat(sale.commission))
+      const commissionArray = Array.from(sales, (sale) => {
+        if(sale.status.toLowerCase() === "closed"){
+          return parseFloat(sale.commission);
+        }
+        else{
+          return 0;
+        }
+        
+      })
       
       const total = commissionArray.reduce((accumulator, current)=> accumulator + current, 0) 
       setTotalCommission(total)
@@ -49,8 +82,8 @@ function SalesComponent({sales=[], setTotalCommission}) {
                     <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">Campaign</td>
                     <td className="w-28 h-8 text-left px-3 roboto-medium text-sm">Customer Number</td>
                     <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">Price</td>
-                    <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">Discount</td>
                     <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">Commission</td>
+                    <td className="w-24 h-8 text-left px-3 roboto-medium text-sm">Status</td>
                     
                   </tr>
                   {
@@ -58,7 +91,7 @@ function SalesComponent({sales=[], setTotalCommission}) {
                     <RowComponent />
                     :
                     sales.map((sale, index) => {
-                      return <RowComponent key={index} id={sale.id} rowNumber={index} name={sale.sale_name} customerNumber={sale.customer_number} commission={sale.commission} tax={sale.tax} price={sale.price} discount={sale.discount} campaign={sale.name}/> 
+                      return <RowComponent key={index} id={sale.id} rowNumber={index} name={sale.sale_name} customerNumber={sale.customer_number} commission={sale.commission} tax={sale.tax} price={sale.price} status={sale.status} campaign={sale.name}/> 
 
                     })
                   }
@@ -101,7 +134,21 @@ function Sales() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
   // useEffect(() => {
-  
+  //   (async () => {
+  //     const response = await api.getCommissionForEmployee(user.id);
+  //     if(response.status === 200){
+  //       if(response.data.commission){
+
+  //         setTotalCommission(response.data.commission);
+  //       }
+  //       else{
+  //         setTotalCommission(0)
+  //       }
+  //     }
+  //     else{
+
+  //     }
+  //   })
   // // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []) 
   return (
