@@ -47,7 +47,7 @@ function Hero() {
                     <div className="w-96 lg:flex gap-5 h-auto justify-center items-center sm:hidden">
                         <Link to={'/pricing'} className=" text-white roboto-medium hover:border-b-2 hover:border-white hover:duration-100 hover:ease-in-out hover:pb-1">Pricing</Link>
                         <Link to={'/contact'} className="text-white roboto-medium hover:border-b-2 hover:border-white hover:duration-100 hover:ease-in-out hover:pb-1">Contact</Link>
-                        <Link to={"/register"} className="bg-white flex justify-center items-center rounded-md w-20 h-9 font-semibold active:scale-95">Sign Up</Link>
+                        <Link to={"/register"} className="bg-white flex justify-center items-center rounded-md w-20 h-9 font-semibold active:scale-95">Sign up</Link>
                         <Link to={'/login'} className="flex justify-center items-center rounded-md w-20 h-9 roboto-medium border-2 border-white text-white active:scale-95">Log in</Link>
                     </div>
                     <button onClick={()=> setmenuIsOpen(true)} className={`w-auto sm:${!menuIsOpen ? "": "hidden"} h-auto flex justify-start items-center gap-3 lg:hidden`}>

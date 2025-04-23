@@ -143,7 +143,7 @@ function App() {
 
             <div id='rightSubContainer' className='flex flex-col justify-center items-center py-2 lg:pl-6 gap-3'>
 
-              <h1 className='text-center  roboto-bold text-2xl'>Login</h1>
+              <h1 className='text-center  roboto-bold text-2xl'>Log in</h1>
 
               <form className='w-full h-auto flex flex-col justify-center items-center py-2 sm:pl-3 lg:pl-6 gap-3'>
         
