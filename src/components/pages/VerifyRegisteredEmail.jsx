@@ -1,26 +1,25 @@
-import {useState} from 'react'
-import { Link } from 'react-router-dom'
-import LeftSubContainer from "../page-compontents/Authpages-components/LeftSubcontainer"
-import { WIDTH, HEIGHT } from "../utils/authFormContainerSize"
-import { useNavigate } from 'react-router-dom'
-import ErrorDiplayer from '../page-compontents/ErrorDiplayer'
-import { useDispatch, useSelector } from 'react-redux'
-import { setErrorTickets, updateErrorFlag } from '../../store/features/errorTicketsSlice'
-import errorMessages from '../utils/errorMessages'
-import AuthSubmitBtn from '../page-compontents/Authpages-components/AuthSubmitBtn'
-import { updateOtpId } from '../../store/features/otpCredentialsSlice'
-import Api from '../utils/API-calling-functions/Api'
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { apiObject } from "../utils/API-calling-functions/Api"
+import { setErrorTickets, updateErrorFlag } from "../../store/features/errorTicketsSlice"
+import errorMessages from "../utils/errorMessages"
+import { updateEmail, updateOtpId } from "../../store/features/otpCredentialsSlice"
+import ErrorDiplayer from "../page-compontents/ErrorDiplayer"
+import AuthSubmitBtn from "../page-compontents/Authpages-components/AuthSubmitBtn"
+import Logo from "../page-compontents/Authpages-components/Logo"
 
 
 
-function VerifyOtp() {
-    
-    const api = new Api()
+function VerifyRegisteredEmail() {
+     
+
     const otpLenth = 6
     const [isLoading, setIsLoading] = useState()
     const navigate = useNavigate()
 
     const {otpCredentials} = useSelector((state) => state.otpCredentials)
+    const {companyId, company} = useSelector((state) => state.registrationData)
     
     const dispatch = useDispatch()
 
@@ -68,10 +67,10 @@ function VerifyOtp() {
         const otp = getOtpValue()
 
         try {
-          const response = await api.verifyOtp({otp, id: otpCredentials.otpId})
+          const response = await apiObject.verifyOtpRegistrationStep({otp, id: otpCredentials.otpId})
           if ( response.status === 200) {
             setIsLoading(false)
-            navigate('/resetpassword')
+            navigate('/subscription')
           }
           else{
             setIsLoading(false)
@@ -91,42 +90,73 @@ function VerifyOtp() {
       e.preventDefault()
       setIsLoading(true)
       try {
-        const response = await api.resendOtp({username: otpCredentials.email})
+        const response = await apiObject.resendOtpRegistrationStep({username: otpCredentials.email})
         if (response.status === 200){
           dispatch(updateOtpId(response.data.otpId))
-          dispatch(setErrorTickets(["OTP sent to your email"]))
-          dispatch(updateErrorFlag(false))
           setIsLoading(false)
-
         }
         else{
           dispatch(setErrorTickets([errorMessages.internalServerError]))
-          setIsLoading(false)
           dispatch(updateErrorFlag(true))
+          setIsLoading(false)
         }
       // eslint-disable-next-line no-unused-vars
       } catch (error) {
         setIsLoading(false)
-        dispatch(updateErrorFlag(true))
         dispatch(setErrorTickets([errorMessages.internalServerError]))
+        dispatch(updateErrorFlag(true))
       }
     }
+
+    useEffect(() => {
+        if (companyId < 0 || company.email === ""){
+            navigate("/register");
+            return
+        }
+        setIsLoading(true);
+
+        (async () => {
+            try{
+                const response = await apiObject.confirmEmailRegistractionStep({username: company.email});
+                if (response.status === 200){
+                    dispatch(updateEmail(company.email))
+                    dispatch(updateOtpId(response.data.otpId))
+                    setIsLoading(false);
+                    return;
+                }
+                else {
+                    dispatch(setErrorTickets(["Unable to verify the provide email"]));
+                    dispatch(updateErrorFlag(true));
+                    setIsLoading(false);
+                }
+            }
+            catch(err){
+                console.log(err);
+                dispatch(setErrorTickets(["Unable to verify the provide email"]));
+                dispatch(updateErrorFlag(true));
+                setIsLoading(false);
+            }
+        })();
+
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
   return (
     <>
-        <main className='h-screen w-screen bg-green-landscape-hd bg-no-repeat bg-cover flex flex-col justify-center items-center gap-4'>
+        <main className='h-screen w-screen bg-fadedGrayBg bg-no-repeat bg-cover flex flex-col justify-center items-center gap-4'>
         <ErrorDiplayer emptyTickets={emptyTickets} />
 
-        <div id='loginWrapper' className={`max-w-[${WIDTH}rem] max-h-[${HEIGHT}rem] flex-grow flex-shrink overflow-x-hidden flex scrollbar-hide`}>
+        <div className={` overflow-x-hidden flex scrollbar-hide shadow-xl overflow-hidden rounded-lg`}>
 
-          <div id='loginSection' className='flex lg:flex-row sm:flex-col sm:overflow-y-scroll bg-fadedGrayBg sm:h-full sm:w-96 lg:w-full lg:h-full overflow-hidden rounded-md '>
-            <LeftSubContainer />
+          <div className='flex flex-col bg-white  overflow-hidden  p-12 items-center justify-center '>
+            <Logo />
 
-            <div id='rightSubContainer' className='w-full h-auto flex flex-col justify-center items-center py-2 sm:pl-3 lg:pl-6 gap-3'>
+            <div id='rightSubContainer' className='w-full flex flex-col justify-center items-center  gap-3'>
 
-              <h1 className='text-center  roboto-bold text-2xl'>verification</h1>
-              <p className="text-left roboto-light w-72"> Please provide your verification code below:</p>
+              <h1 className='text-center  roboto-bold text-2xl text center my-2'>Email Verification</h1>
+              <p className="text-left roboto-light"> A verification code was sent to your email.</p>
 
-              <form className='w-full h-auto flex flex-col justify-center items-center py-2 pl-6 gap-3'>
+              <form className='w-full h-auto flex flex-col justify-center items-center gap-3 mx-10'>
         
                 <label htmlFor='username' className='flex flex-col roboto-medium'>
                   <span className='roboto-medium'>Enter the code:</span>
@@ -152,8 +182,6 @@ function VerifyOtp() {
 
                 <button onClick={handleResendOtp} disabled={isLoading} className='text-mygreen-500 roboto-medium active:underline-none underline underline-offset-2 decoration-inherit '> Resend Code </button>
 
-                <span>Login instead?  <span className='text-mygreen-700'><Link to={'/login'} >Login</Link></span></span>
-
                 <AuthSubmitBtn handleSubmit={handleSubmit} isLoading={isLoading} name='Verify'/>
 
               </form>
@@ -166,4 +194,4 @@ function VerifyOtp() {
   )
 }
 
-export default VerifyOtp
+export default VerifyRegisteredEmail

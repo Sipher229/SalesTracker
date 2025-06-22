@@ -133,12 +133,12 @@ function Body() {
 
                 if (response.data.companyExists && response.data.employeeExists) {
                     setMessage({isError: true, message: "The company already exists. You will be redirected to the subscription page", showing:true})
-                    navigate("/subscription")
+                    navigate("/email-verification")
                     return
                 }
                 setisLoading(false)
 
-                navigate("/subscription")
+                navigate("/email-verification")
 
             }
         } catch (error) {

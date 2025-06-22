@@ -17,7 +17,7 @@ function Api() {
     }
 
     this.resendOtp = async (body) => {
-        const response = await axiosInstance.get('/employees/resendotp', body)
+        const response = await axiosInstance.post('/employees/resendotp', body)
 
         return response
     }
@@ -239,6 +239,20 @@ function Api() {
         const response = await axiosInstance.get(`/sales/get-commission/${id}`);
 
         return response
+    }
+
+    this.confirmEmailRegistractionStep = async (body) => {
+        const response = await axiosInstance.post(`/registration/confirm-email`, body);
+        return response;
+    }
+    this.resendOtpRegistrationStep = async (body) => {
+        const response = await axiosInstance.post(`/registration/resend-otp`, body);
+        return response;
+    }
+    this.verifyOtpRegistrationStep = async (body) => {
+        const response = await axiosInstance.post(`/registration/verify-otp`, body);
+
+        return response;
     }
 }
 

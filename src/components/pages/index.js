@@ -30,6 +30,7 @@ import UpdateSubscription from './UpdateSubscription.jsx'
 import SubscriptionNotActive from './SubscriptionNotActive.jsx'
 import TermsOfUse from './TermsOfUse.jsx'
 import PrivacyPolicy from './PrivacyPolicy.jsx'
+import VerifyRegisteredEmail from './VerifyRegisteredEmail.jsx'
 
 
 
@@ -65,5 +66,6 @@ export {
     SubscriptionNotActive,
     UpdateSubscription,
     TermsOfUse,
-    PrivacyPolicy
+    PrivacyPolicy,
+    VerifyRegisteredEmail
 }
