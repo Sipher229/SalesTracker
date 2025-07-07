@@ -10,7 +10,7 @@ function PrivacyPolicy() {
         <section className="mb-6">
             <h2 className="text-2xl font-semibold text-gray-800">1. Introduction</h2>
             <p className="text-gray-700">Welcome to Salesverse. This Privacy Policy explains how we collect, use, and protect your personal information when you use our workforce management platform. By using Salesverse, you agree to the terms outlined in this policy.</p>
-            <p className="text-gray-700"><strong>Company Details:</strong><br/>Salesverse, Ottawa, ON, Canada<br/>Email: customer.support@salesverse.org<br/>Phone: 343-462-8385</p>
+            <p className="text-gray-700"><strong>Company Details:</strong><br/>Salesverse, Montreal, QC, Canada<br/>Email: customer.support@salesverse.org<br/>Phone: 343-462-8385</p>
         </section>
         
         <section className="mb-6">
