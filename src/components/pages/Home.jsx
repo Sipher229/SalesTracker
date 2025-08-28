@@ -72,14 +72,13 @@ function Hero() {
       variants={fadeIn}
     >
       <header className="w-full h-16 bg-transparent mb-8">
-        <nav className="w-full h-full flex justify-between items-center lg:pl-0 lg:pr-8 sm:px-4 relative">
+        <nav className="w-full h-full flex justify-between items-center lg:pl-0 lg:pr-8 sm:pr-4 relative">
           <motion.img
             src={transparentLogo}
             width={250}
             height={250}
             alt="salesverse logo"
-            className="max-96 max-h-44 object-cover"
-            whileHover={{ scale: 1.05 }}
+            className="max-96 max-h-44 object-cover -translate-x-1/4"
           />
           <div className="w-96 lg:flex gap-5 h-auto justify-center items-center sm:hidden">
             <Link to={"/pricing"} className=" text-white roboto-medium hover:border-b-2 hover:border-white hover:pb-1">Pricing</Link>

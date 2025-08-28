@@ -52,7 +52,7 @@ function Pricing() {
         </div>
         <div className="w-full h-4/5 sm:flex sm:flex-col md:flex md:flex-row justify-center items-center bg-white p-8 gap-6">
             <PricingCard title="Standard Plan" price="$10/employee" featuresArray={featuresStandard}/>
-            <PricingCard title="Enterprise Plan" price="Custom" featuresArray={featuresEnterprise} ctaText="Contact Sales"/>
+            <PricingCard title="Enterprise Plan" price="Over 300 employees" featuresArray={featuresEnterprise} ctaText="Contact Sales"/>
         </div>
         <Footer />
     </main>
