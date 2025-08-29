@@ -98,7 +98,7 @@ function Hero() {
         initial="hidden"
         animate="visible"
       >
-        <motion.h2 variants={fadeUp} className="text-white text-center roboto-medium sm:text-2xl lg:text-3xl lg:mb-6">
+        <motion.h2 variants={fadeUp} className="text-white text-center roboto-medium sm:text-2xl lg:text-3xl lg:mb-6 mt-28">
           Simplify Sales and Performance Tracking with SalesVerse
         </motion.h2>
         <motion.p variants={fadeUp} className="roboto-regular text-mygreen-100 max-w-[26] text-center sm:text-lg lg:text-xl px-2">
