@@ -2,7 +2,7 @@ import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-
 import Footer from "../page-compontents/Footer/Footer"
 import PublicFacingMsgComponent from "../page-compontents/PublicFacingMsgComponent"
 import { useEffect, useState } from "react"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { apiObject } from "../utils/API-calling-functions/Api"
 import Loading from "../utils/Loading"
 import {loadStripe} from "@stripe/stripe-js"
@@ -103,17 +103,17 @@ function PaymentForm() {
 function UpdateSubscription() {
     const [stripePromise, setstripePromise] = useState(null)
     const [clientSecret, setclientSecret] = useState(null)
-    const {id} = useParams()
+    // const {id} = useParams()
     const navigate = useNavigate()
     useEffect(() => {
         const fetchData = async () => {
             try{
-                const subscriptionIsActive = (await apiObject.getSubscriptionStatus(id)).data.subscriptionIsActive;
+                // const subscriptionIsActive = (await apiObject.getSubscriptionStatus(id)).data.subscriptionIsActive;
 
-                if(subscriptionIsActive){
-                    navigate("/layout/dashboard");
-                    return
-                }
+                // if(subscriptionIsActive){
+                //     navigate("/layout/dashboard");
+                //     return
+                // }
 
                 const response = await apiObject.getPublishableKey()
 
@@ -147,7 +147,7 @@ function UpdateSubscription() {
     <div className="h-auto w-full flex-grow-0 flex-shrink-0 bg-fadedGrayBg flex flex-col justify-center items-center">
         <h1 className="lg:text-4xl sm:text-2xl roboto-bold my-5">Update your subscription</h1>
     </div>
-    <div className="w-full min-h-full flex justify-center items-center bg-white p-8 oveflow-y-scroll">
+    <div className="w-full flex justify-center items-center bg-white p-8 oveflow-y-scroll">
         {
             clientSecret && stripePromise ?                     
             <Elements stripe={stripePromise} options={{clientSecret}} >

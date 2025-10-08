@@ -12,7 +12,6 @@ import RestrictedAccess from "../page-compontents/RestrictedAccess.jsx";
 
 
 function CompanyComponent({companyName='N/A',subscriptionStatus='N/A', nextBillingDate ='N/A', trialEndsAt='N/A', employeeCount=0, id=-1, handleShowing, popUpShowing=false}){
-  const maintenanceFee = 150;
   const feePerEmplyee = 10;
   return (
     <>
@@ -53,7 +52,7 @@ function CompanyComponent({companyName='N/A',subscriptionStatus='N/A', nextBilli
                     </tr>
                     <tr className="w-full h-9  odd:bg-fadedGrayBg even:bg-white">
                       <td className="w-[30rem] h-full text-left px-3 roboto-light text-sm"> Monthly Charge</td>
-                      <td className="w-[30rem] h-full text-left px-3 roboto-regular text-sm">{`CAD ${(employeeCount * feePerEmplyee) + maintenanceFee}`}</td>
+                      <td className="w-[30rem] h-full text-left px-3 roboto-regular text-sm">{`CAD ${(employeeCount * feePerEmplyee)}`}</td>
                     </tr>
                     
                 </tbody>
@@ -69,7 +68,7 @@ function CompanyPage() {
   const [showing, setShowing] = useState(false);
   const [subscriptionStatus, setSubscriptionStatus] = useState(null);
   const navigate = useNavigate();
-  const { isLoggedIn, user} = useSelector((state) => state.employee);
+  const { user} = useSelector((state) => state.employee);
   const [company, setcompany] = useState(null);
   const dispatch = useDispatch();
   const message = {
@@ -96,9 +95,11 @@ function CompanyPage() {
   }
 
   useEffect(() => {
-    if (!isLoggedIn) return navigate("/layout/dashboard");
     
     const fetchData = async () => {
+      const isLoggedIn = (await apiObject.getIsLoggedIn()).data.isLoggedIn;
+      console.log(isLoggedIn);
+      if (!isLoggedIn) return navigate("/layout/dashboard");
       setisLoading(true);
       try {
         const response = await apiObject.getCompany();

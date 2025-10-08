@@ -3,7 +3,7 @@ import PublicFacingHeader from "../page-compontents/header/PublicFacingHeader"
 import { Link } from "react-router-dom"
 
 /* eslint-disable react/prop-types */
-function PricingCard( {price="price",featuresArray=["7 days free trial", "24/7 support", "Free staff training","Access to built-in guides", "No commitent, cancel anytime",], title="Card Title", ctaText="Get Started" }) {
+function PricingCard( {price="price",featuresArray=["7 days free trial", "24/7 support", "Free staff training","Access to built-in guides", "No commitent, cancel anytime",], title="Card Title", ctaText="Get Started", path="/register" }) {
     return (
         <div className="py-4 px-10 bg-gradient-to-br from-mygreen-750 via-mygreen-500 to-mygreen-300 rounded-lg shadow-lg flex flex-col justify-start items-center lg:gap-4 text-white">
             <h2 id="card-header" className="w-full h-1/6 flex justify-center items-center sm:text-base lg:text-xl roboto-medium-italic mb-3 border-b border-white ">{title}</h2>
@@ -15,7 +15,7 @@ function PricingCard( {price="price",featuresArray=["7 days free trial", "24/7 s
                         })
                     }
             </ul>
-            <Link to={"/register"} className="bg-white px-4 flex justify-center items-center sm:h-12 rounded-md text-black roboto-medium shadow-md active:scale-95 my-2"> {ctaText} </Link>
+            <Link to={`${path}`} className="bg-white px-4 flex justify-center items-center sm:h-12 rounded-md text-black roboto-medium shadow-md active:scale-95 my-2"> {ctaText} </Link>
 
         </div>
     )
@@ -52,7 +52,7 @@ function Pricing() {
         </div>
         <div className="min-h-[32rem] min-w-full py-4 sm:flex sm:flex-col md:flex md:flex-row sm:justify-start md:justify-center items-center bg-white gap-6 overflow-y-scroll">
             <PricingCard title="Standard Plan" price="$10/employee" featuresArray={featuresStandard}/>
-            <PricingCard title="Enterprise Plan" price="Over 300 employees" featuresArray={featuresEnterprise} ctaText="Contact Sales"/>
+            <PricingCard title="Enterprise Plan" price="Over 300 employees" featuresArray={featuresEnterprise} ctaText="Contact Sales" path="/contact"/>
         </div>
         <Footer />
     </main>

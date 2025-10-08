@@ -254,13 +254,26 @@ function Api() {
 
         return response;
     }
+    this.saveSubscriptionNoCard = async (body) => {
+        const response = await axiosInstance.post(`/registration/save-subscription-no-card`, body);
+        return response;
+    }
+    this.getTrialEndsAt = async (id) => {
+        const response = await axiosInstance.get(`/companies/trial-ends-at/${id}`);
+        return response.data.requestedData;
+    }
+    this.getCompanyId = async (email) => {
+        const response = await axiosInstance.post(`/companies/get-company-id`, { email });
+        const companyId = response.data.requestedData;
+        return companyId;
+    }
+    this.subscriptionStatus = async (id) => {
+        const response = await axiosInstance.get(`/companies/get-subscription-status-verbose/${id}`);
+        return response.data;
+    }
 }
 
 const apiObject = new Api()
 export {apiObject}
 export default Api
-
-// should have created an api object here and exported that instead 
-// (better practice to avoid memory leakage.) Probably too late, 
-// but I will be adding the additional export just to feel good about my self
 

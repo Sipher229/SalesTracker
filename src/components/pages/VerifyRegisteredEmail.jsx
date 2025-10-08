@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { apiObject } from "../utils/API-calling-functions/Api"
 import { setErrorTickets, updateErrorFlag } from "../../store/features/errorTicketsSlice"
 import errorMessages from "../utils/errorMessages"
-import { updateEmail, updateOtpId } from "../../store/features/otpCredentialsSlice"
+import { updateOtpId } from "../../store/features/otpCredentialsSlice"
 import ErrorDiplayer from "../page-compontents/ErrorDiplayer"
 import AuthSubmitBtn from "../page-compontents/Authpages-components/AuthSubmitBtn"
 import Logo from "../page-compontents/Authpages-components/Logo"
@@ -12,8 +12,6 @@ import Logo from "../page-compontents/Authpages-components/Logo"
 
 
 function VerifyRegisteredEmail() {
-     
-
     const otpLenth = 6
     const [isLoading, setIsLoading] = useState()
     const navigate = useNavigate()
@@ -67,10 +65,28 @@ function VerifyRegisteredEmail() {
         const otp = getOtpValue()
 
         try {
-          const response = await apiObject.verifyOtpRegistrationStep({otp, id: otpCredentials.otpId})
+          const response = await apiObject.verifyOtpRegistrationStep({otp})
           if ( response.status === 200) {
+            const subscriptionSaved = await apiObject.saveSubscriptionNoCard({companyId, companyName: company.companyName, email: company.email, planName: "Standard Plan"})
+            if (subscriptionSaved.status === 200){
+                setIsLoading(false)
+                dispatch(updateErrorFlag(false))
+                const createSessionForUser = await apiObject.loginAfterRegistration({email: company.email, tz: Intl.DateTimeFormat().resolvedOptions().timeZone})
+                if (createSessionForUser.status === 200){ 
+                  navigate('/layout/dashboard')
+                  
+                }
+                else{
+                  dispatch(setErrorTickets(["something went wrong. Please contact us for further details"]))
+                  dispatch(updateErrorFlag(true))
+                }
+            }
+            else {
+                console.error("Subscription saving failed")
+                dispatch(updateErrorFlag(true))
+                dispatch(setErrorTickets(["Something went wrong. Please contact us for further details"]))
+            }
             setIsLoading(false)
-            navigate('/subscription')
           }
           else{
             setIsLoading(false)
@@ -113,31 +129,6 @@ function VerifyRegisteredEmail() {
             navigate("/register");
             return
         }
-        setIsLoading(true);
-
-        (async () => {
-            try{
-                const response = await apiObject.confirmEmailRegistractionStep({username: company.email});
-                if (response.status === 200){
-                    dispatch(updateEmail(company.email))
-                    dispatch(updateOtpId(response.data.otpId))
-                    setIsLoading(false);
-                    return;
-                }
-                else {
-                    dispatch(setErrorTickets(["Unable to verify the provide email"]));
-                    dispatch(updateErrorFlag(true));
-                    setIsLoading(false);
-                }
-            }
-            catch(err){
-                console.log(err);
-                dispatch(setErrorTickets(["Unable to verify the provide email"]));
-                dispatch(updateErrorFlag(true));
-                setIsLoading(false);
-            }
-        })();
-
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

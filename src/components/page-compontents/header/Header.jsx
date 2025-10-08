@@ -60,6 +60,7 @@ function UserProfile({name='User\'s full name'}){
   )
 }
 
+
 function Header({menuIsOpen=false, handleMenuIsOpen}) {
   const {errorTickets} = useSelector((state) => state.errorTickets)
   const {user} = useSelector((state) => state.employee)
@@ -69,8 +70,9 @@ function Header({menuIsOpen=false, handleMenuIsOpen}) {
   const emptyTickets = () => {
     dispacth(setErrorTickets([]))
   }
+
   return (
-    <header className="w-screen h-16 bg-gradient-to-tl from-mygreen-700 to-mygreen-500">
+    <header className="w-screen h-auto bg-gradient-to-tl from-mygreen-700 to-mygreen-500 flex flex-col items-end">
       <ErrorDiplayer errorTickets={errorTickets} emptyTickets={emptyTickets} positionForHeader={true} />
       <nav className="w-full h-full flex justify-between items-center pl-7 pr-6">
         <button onClick={()=> handleMenuIsOpen()} className="w-auto lg:hover:cursor-default h-auto flex justify-start items-center gap-3">
@@ -85,10 +87,3 @@ function Header({menuIsOpen=false, handleMenuIsOpen}) {
 }
 
 export default Header
-
-//TODO: create header, add background (complete)
-//TODO: create  profile and logo  component (partially complete)
-
-// TODO: add an error pop up component
-// the state of the particular component would be managed globally. The state would feature to
-// two properties (showPopUp and message). Whenever needed these two would be updated to show the popup with a particular message

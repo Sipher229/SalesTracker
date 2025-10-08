@@ -192,7 +192,7 @@ function Body() {
                     <h1 className="w-full text-center roboto-bold text-2xl sm:mb-2 lg:mb-4">Register</h1>
                     <div className="w-full h-auto flex lg:flex-row sm:flex-col sm:gap-1 lg:gap-3 flex-grow-0 flex-shrink-0">
                         
-                        <label className="w-full flex flex-col roboto-medium">
+                        <label className="w-full flex flex-col roboto-regular">
                             <span className="after:content-['*'] after:text-red-500">First Name:</span>
                             <input
                             name="firstName"
@@ -203,7 +203,7 @@ function Body() {
                             onChange={handleChange}
                             className="px-2 lg:max-w-64 sm:max-w-96 grow shrink h-10 outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
                         </label>
-                        <label className="w-full flex flex-col roboto-medium">
+                        <label className="w-full flex flex-col roboto-regular">
                             <span className="after:content-['*'] after:text-red-500">Last Name:</span>
                             <input
                                 name="lastName"
@@ -217,7 +217,7 @@ function Body() {
                     </div>
                     <div className="w-full h-auto flex lg:flex-row sm:flex-col sm:gap-1 lg:gap-3 flex-grow-0 flex-shrink-0">
                         
-                        <label className="w-full flex flex-col roboto-medium">
+                        <label className="w-full flex flex-col roboto-regular">
                             <span className="after:content-['*'] after:text-red-500">Company Name:</span>
                             <input 
                             name="companyName"
@@ -228,7 +228,7 @@ function Body() {
                             onChange={handleChange}
                             className="px-2 lg:max-w-64 sm:max-w-96 grow shrink h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
                         </label>
-                        <label className="w-full flex flex-col roboto-medium">
+                        <label className="w-full flex flex-col roboto-regular">
                             <span className="after:content-['*'] after:text-red-500">Email:</span>
                             <input
                                 ref={emailRef}
@@ -241,7 +241,7 @@ function Body() {
                                 className="px-2 lg:max-w-64 sm:max-w-96 h-10 grow shrink  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
                         </label>
                     </div>
-                    <label className="w-full flex flex-col roboto-medium">
+                    <label className="w-full flex flex-col roboto-regular">
                             <span className="after:content-['*'] after:text-red-500">Employee Count:</span>
                             <select 
                                 name="employeeCount"
@@ -260,7 +260,7 @@ function Body() {
 
                     <div className="w-full h-auto flex lg:flex-row sm:flex-col sm:gap-1 lg:gap-3 flex-grow-0 flex-shrink-0">
                         
-                        <label className="w-full flex flex-col roboto-medium">
+                        <label className="w-full flex flex-col roboto-regular">
                             <span className="after:content-['*'] after:text-red-500">Password:</span>
                             <input 
                                 ref={passwordRef}
@@ -272,7 +272,7 @@ function Body() {
                                 required 
                                 className="px-2 lg:max-w-64 sm:max-w-96 grow shrink h-10  outline-mylightgreen-300 outline-offset-2 outline-4 border border-mygreen-300 rounded-md" />
                         </label>
-                        <label className="w-full flex flex-col roboto-medium">
+                        <label className="w-full flex flex-col roboto-regular">
                             <span className="after:content-['*'] after:text-red-500">Confirm Password:</span>
                             <input
                                 ref={confirmPasswordRef}

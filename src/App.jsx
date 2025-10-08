@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setErrorTickets, updateErrorFlag } from './store/features/errorTicketsSlice'
 import ErrorDiplayer from './components/page-compontents/ErrorDiplayer'
-import { updateIsLoggedIn } from './store/features/employeeSlice'
+import { initializeEmployee, updateIsLoggedIn, updateSubscriptionStatus } from './store/features/employeeSlice'
 import AuthSubmitBtn from './components/page-compontents/Authpages-components/AuthSubmitBtn'
 import Api from './components/utils/API-calling-functions/Api'
 
@@ -93,7 +93,9 @@ function App() {
       const response = await api.logUserIn(credentials)
       if (response.status === 200){
         setIsLoading(false)
-        dispatch(updateIsLoggedIn(true))
+        dispatch(updateIsLoggedIn(true));
+        dispatch(initializeEmployee(response.data.requestedData.pop()))
+        dispatch(updateSubscriptionStatus(response.data.subscriptionIsActive));
         
         navigate('/layout/dashboard')
         
