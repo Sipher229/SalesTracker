@@ -6,6 +6,7 @@ import PublicFacingMsgComponent from "../page-compontents/PublicFacingMsgCompone
 import invalidateInputs from "../utils/invalidateInputs"
 import normalizeInputs from "../utils/normalizeInputs"
 import Api from "../utils/API-calling-functions/Api"
+import useLogVisit from "../utils/custom-hooks/useLogVisit"
 
 function Body() {
     const [isLoading, setisLoading] = useState(false)
@@ -221,6 +222,7 @@ function Body() {
 }
 
 function ContactUs() {
+    useLogVisit(window.location.href);
   return (
     <main className="w-screen h-screen flex flex-col overflow-y-hidden overflow-x-hidden">
         <PublicFacingHeader />

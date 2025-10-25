@@ -14,6 +14,7 @@ import CloseMenu from "../utils/icons/CloseMenu";
 import MenuIcon from "../utils/icons/MenuIcon";
 import transparentLogo from "../page-compontents/image-assets/logo-transparent-png.png";
 import CookieBanner from "../page-compontents/CookieBanner";
+import useLogVisit from "../utils/custom-hooks/useLogVisit";
 
 
 // Framer Motion Variants
@@ -160,7 +161,7 @@ function ServicesOffered() {
                     className="mt-8 bg-white hover:gap-2 hover:duration-100 w-32 h-12 flex justify-center items-center rounded-md gap-1 active:scale-95"
                 >
                     <span className="font-semibold text-black">Free Trial</span>
-                    <spa className="text-black"><RightFacingArrow /></spa>
+                    <span className="text-black"><RightFacingArrow /></span>
                 </Link>
             </motion.div>
 
@@ -388,6 +389,7 @@ function StandOut() {
 
 
 function Home() {
+    useLogVisit(window.location.href);
   return (
     <>
       <main className="w-screen h-screen overflow-y-scroll overflow-x-hidden">

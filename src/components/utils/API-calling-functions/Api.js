@@ -271,6 +271,11 @@ function Api() {
         const response = await axiosInstance.get(`/companies/get-subscription-status-verbose/${id}`);
         return response.data;
     }
+
+    this.LogVisit = async (url) => {
+        const response = await axiosInstance.post('/log-visit', { url });
+        return response;
+    }
 }
 
 const apiObject = new Api()

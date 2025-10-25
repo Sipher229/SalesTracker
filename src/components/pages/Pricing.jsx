@@ -1,6 +1,7 @@
 import Footer from "../page-compontents/Footer/Footer"
 import PublicFacingHeader from "../page-compontents/header/PublicFacingHeader"
 import { Link } from "react-router-dom"
+import useLogVisit from "../utils/custom-hooks/useLogVisit"
 
 /* eslint-disable react/prop-types */
 function PricingCard( {price="price",featuresArray=["7 days free trial", "24/7 support", "Free staff training","Access to built-in guides", "No commitent, cancel anytime",], title="Card Title", ctaText="Get Started", path="/register" }) {
@@ -40,6 +41,7 @@ function Pricing() {
         "Access to built-in guides",
         "Custom pricing"
     ];
+    useLogVisit(window.location.href);
   return (
     <main className="w-screen h-screen flex flex-col items-center justifify-center overflow-x-hidden">
         <PublicFacingHeader />

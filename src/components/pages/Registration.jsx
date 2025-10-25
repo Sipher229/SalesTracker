@@ -9,6 +9,7 @@ import PublicFacingMsgComponent from "../page-compontents/PublicFacingMsgCompone
 import ShowPasswordCheckBox from "../page-compontents/Authpages-components/ShowPasswordCheckBox"
 import toggleShowPassword from "../utils/toggleShowpassword"
 import invalidateInputs from "../utils/invalidateInputs"
+import useLogVisit from "../utils/custom-hooks/useLogVisit"
 
 function Body() {
     const [isLoading, setisLoading] = useState(false)
@@ -296,6 +297,7 @@ function Body() {
     )
 }
 function Registration() {
+    useLogVisit(window.location.href);
   return (
     <main className="w-screen h-screen flex flex-col overflow-y-hidden overflow-x-hidden">
         <PublicFacingHeader />
